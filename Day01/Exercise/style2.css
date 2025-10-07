@@ -1,0 +1,116 @@
+:root {
+  --color-background: #fcf8f3;
+  --color-category: #4e4e4e;
+  --color-title: #222222;
+  --color-description: #595959;
+  --color-price-current: #4e806e;
+  --color-price-old: #999999;
+  --color-button: #598b79;
+}
+
+body {
+  background-color: var(--color-background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.product-card {
+  width: 330px;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.card-image-container {
+  width: 100%;
+  max-height: 450px;
+  overflow: hidden;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card-category {
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  color: var(--color-category);
+  font-weight: 400;
+  margin: 0;
+}
+
+.card-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-title);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.card-description {
+  font-size: 0.95rem;
+  color: var(--color-description);
+  line-height: 1.6;
+  margin: 0;
+  padding-bottom: 5px;
+}
+
+.card-pricing {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.price-current {
+  font-family: "Playfair Display", serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-price-current);
+}
+
+.price-old {
+  font-size: 0.9rem;
+  color: var(--color-price-old);
+  text-decoration: line-through;
+}
+
+.add-to-cart-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px 0;
+  background-color: var(--color-button);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: background-color 0.2s;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #4a7566;
+}
+
+.add-to-cart-btn i {
+  font-size: 1rem;
+}

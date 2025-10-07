@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intro DOM</title>
+  </head>
+  <body>
+    <h1 id="title">Original Text</h1>
+    <input type="text" name="student" id="student" />
+    <button type="button" onclick="updateText()" id="update">
+      Update Text
+    </button>
+    <button type="button" onclick="resetPage()" id="reset">Reset Text</button>
+    <hr />
+    <!-- Calculator -->
+    <h1>Calculator</h1>
+    <input type="text" placeholder="masukan angka1" id="angka1" />
+    <input type="text" placeholder="masukan angka2" id="angka2" />
+    <br />
+    <br />
+    <button type="button" id="tambah" onclick="tambah()">+</button>
+    <button type="button" id="kurang" onclick="kurang()">-</button>
+    <button type="button" id="bagi" onclick="bagi()">/</button>
+    <button type="button" id="kali" onclick="kali()">*</button>
+    <div>
+      <h1 id="hasil">Hasil :</h1>
+    </div>
+    <hr />
+    <!-- Name List -->
+    <h1>Name List</h1>
+    <input type="text" id="inputList" placeholder="Masukan Nama" />
+    <button type="button" onclick="nameList()">Create</button>
+    <div>
+      <ol id="nameList"></ol>
+    </div>
+  </body>
+
+  <!-- Script Ditunjukan untuk menyiapkan fungsi javascript pada html -->
+  <script>
+    function updateText(val) {
+      // 1. akses element html yang ingin dimanipulasi
+      const titleElement = document.getElementById("title");
+      const valueText = document.getElementById("student");
+      console.log(titleElement);
+      titleElement.textContent = valueText.value;
+    }
+
+    function resetPage() {
+      const titleElement = document.getElementById("title");
+      titleElement.textContent = "Original Text";
+    }
+  </script>
+  <script>
+    const inputAngka1 = document.getElementById("angka1");
+    const inputAngka2 = document.getElementById("angka2");
+    const hasilElement = document.getElementById("hasil");
+
+    const tombolTambah = document.getElementById("tambah");
+    const tombolKurang = document.getElementById("kurang");
+    const tombolBagi = document.getElementById("bagi");
+    const tombolKali = document.getElementById("kali");
+
+    function getNumbers() {
+      const num1 = parseFloat(inputAngka1.value);
+      const num2 = parseFloat(inputAngka2.value);
+
+      if (isNaN(num1) || isNaN(num2)) {
+        alert("Mohon masukkan angka yang valid di kedua kolom!");
+        return null;
+      }
+      return { num1, num2 };
+    }
+    function tambah() {
+      const numbers = getNumbers();
+      if (numbers) {
+        const nilai = numbers.num1 + numbers.num2;
+        hasilElement.textContent = `Hasil : ${nilai}`;
+      }
+    }
+    function kurang() {
+      const numbers = getNumbers();
+      if (numbers) {
+        const nilai = numbers.num1 - numbers.num2;
+        hasilElement.textContent = `Hasil : ${nilai}`;
+      }
+    }
+    function kali() {
+      const numbers = getNumbers();
+      if (numbers) {
+        const nilai = numbers.num1 * numbers.num2;
+        hasilElement.textContent = `Hasil : ${nilai}`;
+      }
+    }
+    function bagi() {
+      const numbers = getNumbers();
+      if (numbers) {
+        const nilai = numbers.num1 / numbers.num2;
+        hasilElement.textContent = `Hasil : ${nilai}`;
+      }
+    }
+  </script>
+  <script>
+    const inputText = document.getElementById("inputList");
+    const nameListElement = document.getElementById("nameList");
+
+    function nameList() {
+      const listBaru = inputText.value.trim();
+
+      if (listBaru === "") {
+        alert("Nama Gk Boleh Kosong");
+        return;
+      }
+      const listItem = document.createElement("li");
+
+      listItem.textContent = listBaru;
+
+      nameListElement.appendChild(listItem);
+      inputText.value = "";
+    }
+  </script>
+</html>

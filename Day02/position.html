@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS: Position</title>
+    <style>
+      * {
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+      }
+      #container {
+        height: 50vh;
+        min-height: 80vw;
+        margin: 20px auto;
+        border: 1px solid black;
+      }
+      #container > div {
+        width: 300px;
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="static" style="top: -10px">
+        <h2>Position : Static</h2>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,
+          ducimus dicta nostrum, similique maiores atque veniam incidunt tempore
+          modi voluptas soluta qui quaerat id nulla. Atque, debitis neque, quos
+          repellat, ad expedita voluptatibus corporis sapiente accusantium
+          voluptatem quidem nemo quia maxime dolorem quis blanditiis laborum
+          autem consequuntur sunt veritatis non consectetur. Sit asperiores
+          deserunt, perferendis quasi non iste assumenda voluptate atque alias.
+          Quidem, amet, qui quas accusamus voluptas ducimus optio laborum
+          facilis inventore hic illum quis dignissimos! Voluptate labore
+          reiciendis nulla minus. Aliquid ipsam magnam laborum, iure placeat in
+          numquam eos voluptatem, cum ullam, debitis et vero dolor. Ullam, quos?
+        </p>
+      </div>
+      <div id="relative" style="top: -10px">
+        <h2>Position : relative</h2>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,
+          ducimus dicta nostrum, similique maiores atque veniam incidunt tempore
+          modi voluptas soluta qui quaerat id nulla. Atque, debitis neque, quos
+          repellat, ad expedita voluptatibus corporis sapiente accusantium
+          voluptatem quidem nemo quia maxime dolorem quis blanditiis laborum
+          autem consequuntur sunt veritatis non consectetur. Sit asperiores
+          deserunt, perferendis quasi non iste assumenda voluptate atque alias.
+          Quidem, amet, qui quas accusamus voluptas ducimus optio laborum
+          facilis inventore hic illum quis dignissimos! Voluptate labore
+          reiciendis nulla minus. Aliquid ipsam magnam laborum, iure placeat in
+          numquam eos voluptatem, cum ullam, debitis et vero dolor. Ullam, quos?
+        </p>
+      </div>
+      <div id="absolute" style="background-color: yellow; position: absolute">
+        <h2>Position : absolute</h2>
+        <p>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Inventore,
+          ducimus dicta nostrum, similique maiores atque veniam incidunt tempore
+          modi voluptas soluta qui quaerat id nulla. Atque, debitis neque, quos
+          repellat, ad expedita voluptatibus corporis sapiente accusantium
+          voluptatem quidem nemo quia maxime dolorem quis blanditiis laborum
+          autem consequuntur sunt veritatis non consectetur. Sit asperiores
+          deserunt, perferendis quasi non iste assumenda voluptate atque alias.
+          Quidem, amet, qui quas accusamus voluptas ducimus optio laborum
+          facilis inventore hic illum quis dignissimos! Voluptate labore
+          reiciendis nulla minus. Aliquid ipsam magnam laborum, iure placeat in
+          numquam eos voluptatem, cum ullam, debitis et vero dolor. Ullam, quos?
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

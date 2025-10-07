@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Management Data</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+      .container {
+        padding: 20px;
+        width: 800px;
+        border: 1px solid #ccc;
+      }
+      #data-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        padding: 5px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+      thead th {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        font-size: 1.1em;
+        font-weight: bold;
+      }
+      .col-no {
+        width: 5%;
+      }
+      .col-nama {
+        width: 25%;
+      }
+      .col-usia {
+        width: 10%;
+      }
+      .col-email {
+        width: 35%;
+      }
+      .col-action {
+        width: 100%;
+        text-align: center;
+      }
+      .btn-edit {
+        width: 30%;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        background-color: rgb(78, 190, 194);
+        padding: 10px;
+        text-align: center;
+      }
+      .btn-delete {
+        width: 35%;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        background-color: red;
+        padding: 10px;
+        text-align: center;
+      }
+      .submitBtn {
+        width: 20%;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        background-color: rgb(78, 190, 194);
+        padding: 10px;
+        text-align: center;
+      }
+      .edit-input {
+        width: 95%;
+        padding: 5px;
+        border-radius: 50px;
+        box-sizing: border-box;
+      }
+      .inputForm {
+        width: 95%;
+        padding: 5px;
+        border-radius: 50px;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-section">
+        <h2>Management Data</h2>
+        <form id="data-form">
+          <div class="form-group">
+            <label for="inputName">Name</label>
+            <input
+              type="text"
+              placeholder="Masukan Nama"
+              class="inputForm"
+              id="inputName"
+            />
+          </div>
+          <div class="form-group">
+            <label for="inputUsia">Usia</label>
+            <input
+              type="text"
+              placeholder="Masukan Usia"
+              id="inputUsia"
+              class="inputForm"
+            />
+          </div>
+          <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input
+              type="email"
+              placeholder="Input Email"
+              id="inputEmail"
+              class="inputForm"
+            />
+          </div>
+          <button type="submit" class="submitBtn">Submit</button>
+        </form>
+      </div>
+      <br />
+      <table>
+        <thead>
+          <tr>
+            <th class="col-no">No</th>
+            <th class="col-nama">Nama</th>
+            <th class="col-usia">Usia</th>
+            <th class="col-email">Email</th>
+            <th class="col-action">Action</th>
+          </tr>
+        </thead>
+        <tbody id="dataOutput"></tbody>
+      </table>
+    </div>
+  </body>
+  <script>
+    let dataList = [
+      { id: 1, name: "Hakim", usia: 12, email: "hakim@gmail.com" },
+      { id: 2, name: "Hakim", usia: 12, email: "hakim@gmail.com" },
+      { id: 3, name: "Hakim", usia: 12, email: "hakim@gmail.com" },
+    ];
+    let nextId = 4;
+    let ediDataId = null;
+
+    const dataForm = document.getElementById("data-form");
+    const inputName = document.getElementById("inputName");
+    const inputUsia = document.getElementById("inputUsia");
+    const inputEmail = document.getElementById("inputEmail");
+    const dataOutput = document.getElementById("dataOutput");
+
+    function renderData() {
+      dataOutput.innerHTML = "";
+      dataList.forEach((data, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+                        <td class="col-no" id="id-${data.id}">${index + 1}</td>
+                        <td class="col-nama" id="name-${data.id}">${
+          data.name
+        }</td>
+                        <td class="col-usia" id="usia-${data.id}">${
+          data.usia
+        }</td>
+                        <td class="col-email" id="email-${data.id}">${
+          data.email
+        }</td>
+                        <td class="col-action" id="action-${data.id}">
+                            <button class="btn-edit" onclick="editData(${
+                              data.id
+                            })">edit</button>
+                            <button class="btn-delete" onclick="deleteData(${
+                              data.id
+                            })">hapus</button>
+                        </td>`;
+        dataOutput.appendChild(row);
+      });
+    }
+    function editData(id) {
+      if (!ediDataId != null && ediDataId !== id) {
+        cancelEdit(ediDataId);
+      }
+      ediDataId = id;
+      const dataToEdit = dataList.find((d) => d.id == id);
+      const cellName = document.getElementById(`name-${id}`);
+      const cellUsia = document.getElementById(`usia-${id}`);
+      const cellEmail = document.getElementById(`email-${id}`);
+      const actionCell = document.getElementById(`action-${id}`);
+
+      cellName.innerHTML = `<input type="text" id="edit-name-${id}" class="edit-input" value=${dataToEdit.name}>`;
+      cellUsia.innerHTML = `<input type="number" id="edit-usia-${id}" class="edit-input" value=${dataToEdit.usia}>`;
+      cellEmail.innerHTML = `<input type="email" id="edit-email-${id}" class="edit-input" value=${dataToEdit.email}>`;
+
+      actionCell.innerHTML = `
+      <button class="btn-edit" onclick="saveEdit(${id})">Save</button>
+      <button class="btn-delete" onclick="cancelEdit(${id})">Cancel</button>
+      `;
+    }
+    function cancelEdit(id) {
+      const dataToRevert = dataList.find((d) => d, id === id);
+
+      if (!dataToRevert) {
+        ediDataId = null;
+        return;
+      }
+      const cellName = document.getElementById(`name-${id}`);
+      const cellUsia = document.getElementById(`usia-${id}`);
+      const cellEmail = document.getElementById(`email-${id}`);
+      const actionCell = document.getElementById(`action-${id}`);
+
+      if (cellName) cellName.textContent = dataToRevert.name;
+      if (cellUsia) cellUsia.textContent = dataToRevert.usia;
+      if (cellEmail) cellEmail.textContent = dataToRevert.email;
+
+      // Revert the buttons back to Edit/Hapus
+      if (actionCell) {
+        actionCell.innerHTML = `
+            <button class="btn-edit" onclick="editData(${id})">edit</button>
+            <button class="btn-delete" onclick="deleteData(${id})">hapus</button>
+        `;
+      }
+
+      // Reset the tracker if the ID we cancelled is the one being tracked
+      if (ediDataId === id) {
+        ediDataId = null;
+      }
+    }
+
+    function deleteData(id) {
+      if (confirm("Yakin nih mau hapus data")) {
+        dataList = dataList.filter((d) => d.id !== id);
+        console.log(dataList);
+      }
+      renderData();
+    }
+    function saveEdit(id) {
+      const nameEditElement = document
+        .getElementById(`edit-name-${id}`)
+        .value.trim();
+      const usiaEditElement = document
+        .getElementById(`edit-usia-${id}`)
+        .value.trim();
+      const emailEditElement = document
+        .getElementById(`edit-email-${id}`)
+        .value.trim();
+
+      if (!emailEditElement || isNaN(usiaEditElement) || !nameEditElement) {
+        alert("Data yang anda input tidak valid");
+        return;
+      }
+      const data = dataList.find((d) => d.id === id);
+      if (data) {
+        if (confirm("yakin mau simpan perubahan ini ?")) {
+          data.name = nameEditElement;
+          data.usia = usiaEditElement;
+          data.email = emailEditElement;
+        }
+      }
+      renderData();
+    }
+    dataForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const newName = inputName.value.trim();
+      const newAge = parseFloat(inputUsia.value.trim());
+      const newEmail = inputEmail.value.trim();
+
+      if (isNaN(newAge) || !newName || !newEmail) {
+        alert("Data yang dimasukan harus semua dan usia harus angka");
+        return;
+      }
+      const newData = {
+        id: nextId++,
+        name: newName,
+        usia: newAge,
+        email: newEmail,
+      };
+      console.log(newData);
+      dataList.push(newData);
+      console.log(dataList);
+      inputName.value = "";
+      inputUsia.value = "";
+      inputEmail.value = "";
+      renderData();
+    });
+    renderData();
+  </script>
+</html>
