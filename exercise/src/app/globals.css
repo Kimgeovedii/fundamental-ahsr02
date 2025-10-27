@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+}
+
+/* If you still want Josefin Sans fallback globally (next/font will set the font via body classes),
+   this is a safe fallback: */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

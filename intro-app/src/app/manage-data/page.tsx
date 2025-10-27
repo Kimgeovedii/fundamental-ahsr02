@@ -10,7 +10,10 @@ const ManageData = () => {
   const hitung = (operator: string) => {
     const a = parseFloat(angka1.current?.value || "0");
     const b = parseFloat(angka2.current?.value || "0");
-
+    if (!a || !b) {
+      alert("Mohon isi kedua angka.");
+      return;
+    }
     switch (operator) {
       case "+":
         setHasil(a + b);
