@@ -1,94 +1,205 @@
 "use client";
-import { motion, animate } from "framer-motion";
-import React, { useEffect, useState } from "react";
 
-// Menggunakan tipe React.FC untuk definisi komponen
+import {
+  motion,
+  AnimatePresence,
+  Variants, // 👈 Import Variants
+  Transition, // 👈 Import Transition
+} from "framer-motion";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useCallback,
+} from "react";
+import { Menu, X } from "lucide-react";
+
 const NavDots: React.FC = () => {
-  const sections = ["hero", "about", "skills", "work", "contact"];
+  const sections = ["hero", "about", "skills", "work", "testimoni", "contact"];
   const [activeSection, setActiveSection] = useState("hero");
+  const [theme, setTheme] = useState<"dark" | "light">("light");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
-  // Fungsi untuk mendapatkan nama yang diformat (misal: "hero" -> "Hero")
-  const getSectionName = (id: string) => {
-    // Kapitalisasi huruf pertama
-    return id.charAt(0).toUpperCase() + id.slice(1);
-  };
+  // === Deteksi mode layar (pakai useLayoutEffect biar langsung sinkron sebelum render) ===
+  useLayoutEffect(() => {
+    const checkScreen = () => {
+      setIsMobile(window.matchMedia("(max-width: 767px)").matches);
+    };
+    checkScreen();
+    window.addEventListener("resize", checkScreen);
+    return () => window.removeEventListener("resize", checkScreen);
+  }, []);
 
+  // === Ambil tema dari <html data-theme="..."> ===
   useEffect(() => {
-    const handleScroll = () => {
-      // Dapatkan semua elemen section
-      const sectionElements = sections
-        .map((id) => document.getElementById(id))
-        .filter((el): el is HTMLElement => el !== null);
-
-      // Cari section yang paling dekat dengan bagian atas viewport (misal: 1/3 layar)
-      const closestSection = sectionElements.find((el) => {
-        const rect = el.getBoundingClientRect();
-        // Cek apakah section dimulai di bagian atas layar atau sedikit di bawahnya
-        return (
-          rect.top <= window.innerHeight / 3 &&
-          rect.bottom > window.innerHeight / 3
-        );
-      });
-
-      if (closestSection?.id) {
-        setActiveSection(closestSection.id);
-      }
+    const updateTheme = () => {
+      const htmlTheme =
+        document.documentElement.getAttribute("data-theme") === "dark"
+          ? "dark"
+          : "light";
+      setTheme(htmlTheme);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    // Tambahkan delay kecil untuk memastikan semua elemen termuat saat inisialisasi
-    setTimeout(handleScroll, 100);
+    updateTheme();
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+    return () => observer.disconnect();
   }, []);
+
+  // === Scroll detection ===
+  const handleScroll = useCallback(() => {
+    const sectionElements = sections
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const closest = sectionElements.find((el) => {
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.top <= window.innerHeight / 3 &&
+        rect.bottom > window.innerHeight / 3
+      );
+    });
+
+    if (closest?.id) setActiveSection(closest.id);
+  }, [sections]);
+
+  useEffect(() => {
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   const scrollToSection = (id: string) => {
     const target = document.getElementById(id);
     if (!target) return;
-    // Scroll ke posisi target dikurangi sedikit offset untuk centering visual
-    const y = target.offsetTop;
-    animate(window.scrollY, y, {
-      duration: 0.8,
-      onUpdate: (val) => window.scrollTo(0, val),
-    });
+    window.scrollTo({ top: target.offsetTop, behavior: "smooth" });
+    setMenuOpen(false);
+  };
+
+  // === Variants untuk animasi awal ===
+  // 💡 FIX: Tentukan tipe sebagai Variants dan gunakan 'as any' pada 'ease'
+  const fadeIn: Variants = {
+    hidden: { opacity: 0, y: -8 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" as any } as Transition, // 👈 Perbaikan di sini
+    },
   };
 
   return (
-    <div className="fixed right-10 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-end space-y-6 z-50 text-white">
-      {sections.map((id) => (
-        <a
-          key={id}
-          href={`#${id}`} // Tetap gunakan a href untuk aksesibilitas dan fallback
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection(id);
-          }}
-          className="relative flex items-center group cursor-pointer"
+    <AnimatePresence mode="wait">
+      {isMobile ? (
+        // === MOBILE MODE ===
+        <motion.div
+          key="mobile"
+          variants={fadeIn}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          className="fixed top-4 right-4 z-50"
         >
-          {/* TOOLTIP/LABEL SECTION */}
-          <motion.span
-            className="absolute right-full mr-4 px-3 py-1 bg-gray-700 text-white text-xs font-semibold rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-            initial={{ x: 10 }} // Pindahkan sedikit ke kanan
-            whileHover={{ x: 0 }} // Kembali ke posisi saat hover
-            transition={{ duration: 0.2 }}
-          >
-            {getSectionName(id)}
-          </motion.span>
-
-          {/* DOT */}
-          <motion.span
-            className={`block w-3 h-3 rounded-full transition-all duration-300 ${
-              id === activeSection
-                ? "bg-purple-500 scale-125"
-                : "border border-gray-500 hover:bg-gray-400"
-            }`}
-            whileHover={{ scale: 1.2 }}
+          <motion.button
             whileTap={{ scale: 0.9 }}
-          />
-        </a>
-      ))}
-    </div>
+            onClick={() => setMenuOpen((prev) => !prev)}
+            className={`p-2 rounded-lg shadow-md transition-colors duration-300 ${
+              theme === "dark"
+                ? "bg-white text-gray-800 border border-gray-200"
+                : "bg-gray-800 text-gray-100"
+            }`}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </motion.button>
+
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{ duration: 0.25 }}
+                className={`absolute right-0 mt-3 w-44 rounded-xl shadow-lg p-2 flex flex-col gap-1 text-sm font-medium backdrop-blur-md
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-800/90 text-white border border-gray-700"
+                      : "bg-white/90 text-gray-900 border border-gray-200"
+                  }`}
+              >
+                {sections.map((id) => (
+                  <button
+                    key={id}
+                    onClick={() => scrollToSection(id)}
+                    className={`text-left px-3 py-2 rounded-md transition-colors ${
+                      id === activeSection
+                        ? "bg-purple-500 text-white"
+                        : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                    }`}
+                  >
+                    {id.charAt(0).toUpperCase() + id.slice(1)}
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      ) : (
+        // === DESKTOP MODE ===
+        <motion.div
+          key="desktop"
+          variants={fadeIn}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          className="fixed right-10 top-1/2 -translate-y-1/2 flex flex-col items-end space-y-6 z-50"
+        >
+          {sections.map((id) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(id);
+              }}
+              className="relative flex items-center group cursor-pointer"
+            >
+              {/* Label hover */}
+              <motion.span
+                className={`absolute right-full mr-4 px-3 py-1 text-xs font-semibold rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none
+                  ${
+                    theme === "dark"
+                      ? "bg-gray-700 text-white"
+                      : "bg-gray-200 text-gray-900"
+                  }`}
+                initial={{ x: 10 }}
+                whileHover={{ x: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                {id.charAt(0).toUpperCase() + id.slice(1)}
+              </motion.span>
+
+              {/* Dot */}
+              <motion.span
+                className={`block w-3 h-3 rounded-full transition-all duration-300 ${
+                  id === activeSection
+                    ? "bg-purple-500 scale-125"
+                    : theme === "dark"
+                    ? "border border-gray-500 hover:bg-gray-400"
+                    : "border border-gray-300 hover:bg-gray-300"
+                }`}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+              />
+            </a>
+          ))}
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
+
 export default NavDots;

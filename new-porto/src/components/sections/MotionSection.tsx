@@ -11,7 +11,11 @@ export default function MotionSection({ id, children }: MotionSectionProps) {
   return (
     <motion.section
       id={id}
-      initial={{ opacity: 0, y: 60 }}
+      initial={{
+        opacity:
+          typeof window !== "undefined" && window.innerWidth < 768 ? 1 : 0,
+        y: typeof window !== "undefined" && window.innerWidth < 768 ? 0 : 60,
+      }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
       viewport={{ once: false, amount: 0.3 }}

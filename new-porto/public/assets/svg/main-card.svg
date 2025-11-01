@@ -1,0 +1,24 @@
+<svg width="549" height="668" viewBox="0 0 549 668" fill="none" xmlns="http://www.w3.org/2000/svg">
+<foreignObject x="-6.59998" y="-15.6" width="562" height="682.871"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(12.5px);clip-path:url(#bgblur_0_3_6_clip_path);height:100%;width:100%"></div></foreignObject><g filter="url(#filter0_d_3_6)" data-figma-bg-blur-radius="25">
+<path d="M18.4 88.1763C18.4 40.1212 61.9673 3.62103 109.575 10.1594C160.849 17.201 224.399 24.2022 274.4 24.2022C324.401 24.2022 387.952 17.201 439.225 10.1594C486.833 3.62104 530.4 40.1212 530.4 88.1763V562.871C530.4 605.396 495.926 639.871 453.4 639.871H95.4C52.8741 639.871 18.4 605.396 18.4 562.871V88.1763Z" fill="white" fill-opacity="0.05" shape-rendering="crispEdges"/>
+<path d="M439.361 11.1498C486.394 4.69069 529.4 40.7533 529.4 88.1762V562.871C529.4 604.844 495.374 638.871 453.4 638.871H95.4C53.4264 638.871 19.4 604.844 19.4 562.871V88.1762C19.4001 40.7533 62.4061 4.69068 109.439 11.1498C160.72 18.1926 224.327 25.2025 274.4 25.2025C324.473 25.2025 388.08 18.1926 439.361 11.1498Z" stroke="url(#paint0_linear_3_6)" stroke-width="2" shape-rendering="crispEdges"/>
+</g>
+<defs>
+<filter id="filter0_d_3_6" x="-6.59998" y="-15.6" width="562" height="682.871" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="9"/>
+<feGaussianBlur stdDeviation="9.2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_3_6"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_3_6" result="shape"/>
+</filter>
+<clipPath id="bgblur_0_3_6_clip_path" transform="translate(6.59998 15.6)"><path d="M18.4 88.1763C18.4 40.1212 61.9673 3.62103 109.575 10.1594C160.849 17.201 224.399 24.2022 274.4 24.2022C324.401 24.2022 387.952 17.201 439.225 10.1594C486.833 3.62104 530.4 40.1212 530.4 88.1763V562.871C530.4 605.396 495.926 639.871 453.4 639.871H95.4C52.8741 639.871 18.4 605.396 18.4 562.871V88.1763Z"/>
+</clipPath><linearGradient id="paint0_linear_3_6" x1="30.4" y1="56.3705" x2="471.4" y2="615.871" gradientUnits="userSpaceOnUse">
+<stop stop-color="white" stop-opacity="0.2"/>
+<stop offset="0.52" stop-opacity="0"/>
+<stop offset="1" stop-color="white" stop-opacity="0.2"/>
+</linearGradient>
+</defs>
+</svg>
