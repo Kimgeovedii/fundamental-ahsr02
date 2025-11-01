@@ -2,8 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import * as React from "react";
-import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface ISignUpPageProps {}
 interface IUserData {
@@ -13,31 +13,26 @@ interface IUserData {
 const SignUpPage: React.FunctionComponent<ISignUpPageProps> = (props) => {
   const SIGNUP_ENDPOINT =
     "https://kemptdigestion-us.backendless.app/api/data/accounts";
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
+  const router = useRouter;
+  const emailRef = React.useRef<HTMLInputElement>(null);
+  const passRef = React.useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = React.useState(false);
+  const [message, setMessage] = React.useState("");
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
     const userData: IUserData = {
-      email: email,
-      password: password,
+      email: emailRef.current?.value ?? "",
+      password: passRef.current?.value ?? "",
     };
     console.log(userData);
     try {
-      const response = await axios.post(SIGNUP_ENDPOINT, userData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(SIGNUP_ENDPOINT, userData);
       const data = response.data;
       setMessage(`🎉 Yeay akun ${data.email} berhasil dibuat`);
       console.log("Data akun", data);
-      setEmail("");
-      setPassword("");
     } catch (error) {
       let errorMessage = "terjadi kesalahan jaringan atau server";
       if (axios.isAxiosError(error) && error.response) {
@@ -72,20 +67,20 @@ const SignUpPage: React.FunctionComponent<ISignUpPageProps> = (props) => {
           type="email"
           placeholder="input email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          ref={emailRef}
           required
         />
         <Input
           type="password"
           placeholder="input password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          ref={passRef}
           required
         />
         <Button
           type="submit"
           className="w-full "
-          disabled={loading || !email || !password}
+          disabled={loading || !emailRef || !passRef}
         >
           {loading ? "Menyimpan Data" : "Sign Up"}
         </Button>

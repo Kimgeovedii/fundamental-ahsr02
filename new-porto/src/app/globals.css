@@ -2,7 +2,7 @@
 @import "tw-animate-css";
 
 .main-card {
-  background-image: url(../assets/svg/main-card.svg);
+  /* background-image: url(../assets/svg/main-card.svg); */
 }
 @layer base {
   * {
@@ -12,6 +12,9 @@
   body {
     background-color: #021a38;
     font-family: "Inter", sans-serif;
-    background-image: url("../assets/bg/bg-image.svg");
+    /* background-image: url("../assets/bg/bg-image.svg"); */
+  }
+  .hide-spline-watermark > .spline-watermark {
+    display: none !important;
   }
 }
