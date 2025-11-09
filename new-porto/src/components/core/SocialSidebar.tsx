@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 const SocialSidebar: React.FC = () => {
   const [theme, setTheme] = useState<"dark" | "light">("light");
 
-  // Pantau perubahan data-theme di <html>
   useEffect(() => {
     const updateTheme = () => {
       const htmlTheme =
@@ -16,10 +15,8 @@ const SocialSidebar: React.FC = () => {
       setTheme(htmlTheme);
     };
 
-    // Jalankan di awal
     updateTheme();
 
-    // Observe perubahan atribut data-theme
     const observer = new MutationObserver(updateTheme);
     observer.observe(document.documentElement, {
       attributes: true,
@@ -29,7 +26,6 @@ const SocialSidebar: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // 🎨 Warna disesuaikan (dibalik)
   const lineColor = theme === "dark" ? "bg-gray-600" : "bg-gray-300";
   const iconColor = theme === "dark" ? "text-gray-700" : "text-gray-200";
   const hoverColor =
@@ -37,12 +33,10 @@ const SocialSidebar: React.FC = () => {
 
   return (
     <div className="fixed left-10 top-1/2 -translate-y-1/2 hidden md:flex flex-col items-center space-y-6 z-50 transition-colors duration-300">
-      {/* Garis atas */}
       <div
         className={`w-[1px] h-16 ${lineColor} transition-colors duration-300`}
       />
 
-      {/* GITHUB */}
       <motion.a
         href="https://github.com/Kimgeovedii"
         target="_blank"
@@ -56,7 +50,6 @@ const SocialSidebar: React.FC = () => {
         />
       </motion.a>
 
-      {/* LINKEDIN */}
       <motion.a
         href="https://www.linkedin.com/in/mohamad-mustofa-hakim/"
         target="_blank"
@@ -70,7 +63,6 @@ const SocialSidebar: React.FC = () => {
         />
       </motion.a>
 
-      {/* EMAIL */}
       <motion.a
         href="mailto:mohamadmustofahakim@gmail.com"
         aria-label="Email"
@@ -82,7 +74,6 @@ const SocialSidebar: React.FC = () => {
         />
       </motion.a>
 
-      {/* Garis bawah */}
       <div
         className={`w-[1px] h-16 ${lineColor} transition-colors duration-300`}
       />

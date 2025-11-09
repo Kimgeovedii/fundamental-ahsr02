@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  motion,
-  AnimatePresence,
-  Variants, // 👈 Import Variants
-  Transition, // 👈 Import Transition
-} from "framer-motion";
+import { motion, AnimatePresence, Variants, Transition } from "framer-motion";
 import React, {
   useEffect,
   useLayoutEffect,
@@ -15,13 +10,20 @@ import React, {
 import { Menu, X } from "lucide-react";
 
 const NavDots: React.FC = () => {
-  const sections = ["hero", "about", "skills", "work", "testimoni", "contact"];
+  const sections = [
+    "hero",
+    "about",
+    "skills",
+    "portofolio",
+    "experience",
+    "testimonials",
+    "contact",
+  ];
   const [activeSection, setActiveSection] = useState("hero");
   const [theme, setTheme] = useState<"dark" | "light">("light");
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
-  // === Deteksi mode layar (pakai useLayoutEffect biar langsung sinkron sebelum render) ===
   useLayoutEffect(() => {
     const checkScreen = () => {
       setIsMobile(window.matchMedia("(max-width: 767px)").matches);
@@ -30,8 +32,6 @@ const NavDots: React.FC = () => {
     window.addEventListener("resize", checkScreen);
     return () => window.removeEventListener("resize", checkScreen);
   }, []);
-
-  // === Ambil tema dari <html data-theme="..."> ===
   useEffect(() => {
     const updateTheme = () => {
       const htmlTheme =
@@ -51,7 +51,6 @@ const NavDots: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // === Scroll detection ===
   const handleScroll = useCallback(() => {
     const sectionElements = sections
       .map((id) => document.getElementById(id))
@@ -81,8 +80,6 @@ const NavDots: React.FC = () => {
     setMenuOpen(false);
   };
 
-  // === Variants untuk animasi awal ===
-  // 💡 FIX: Tentukan tipe sebagai Variants dan gunakan 'as any' pada 'ease'
   const fadeIn: Variants = {
     hidden: { opacity: 0, y: -8 },
     visible: {
@@ -95,7 +92,6 @@ const NavDots: React.FC = () => {
   return (
     <AnimatePresence mode="wait">
       {isMobile ? (
-        // === MOBILE MODE ===
         <motion.div
           key="mobile"
           variants={fadeIn}
@@ -148,7 +144,6 @@ const NavDots: React.FC = () => {
           </AnimatePresence>
         </motion.div>
       ) : (
-        // === DESKTOP MODE ===
         <motion.div
           key="desktop"
           variants={fadeIn}
@@ -167,7 +162,6 @@ const NavDots: React.FC = () => {
               }}
               className="relative flex items-center group cursor-pointer"
             >
-              {/* Label hover */}
               <motion.span
                 className={`absolute right-full mr-4 px-3 py-1 text-xs font-semibold rounded-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none
                   ${
@@ -182,7 +176,6 @@ const NavDots: React.FC = () => {
                 {id.charAt(0).toUpperCase() + id.slice(1)}
               </motion.span>
 
-              {/* Dot */}
               <motion.span
                 className={`block w-3 h-3 rounded-full transition-all duration-300 ${
                   id === activeSection

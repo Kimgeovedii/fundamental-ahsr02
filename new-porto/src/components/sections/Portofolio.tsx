@@ -49,7 +49,7 @@ const mockProjects: Project[] = [
   },
 ];
 
-const WorkSection: React.FC = () => {
+const Portofolio: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const numProjects = mockProjects.length;
@@ -92,7 +92,6 @@ const WorkSection: React.FC = () => {
                  relative overflow-hidden 
                  transition-colors duration-500"
     >
-      {/* HEADER */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -108,7 +107,6 @@ const WorkSection: React.FC = () => {
         </h2>
       </motion.div>
 
-      {/* CAROUSEL CONTAINER */}
       <div className="relative w-full max-w-5xl h-[550px] md:mt-1 mt-14  md:h-[650px] flex items-center justify-center">
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
@@ -158,7 +156,6 @@ const WorkSection: React.FC = () => {
           </motion.div>
         </AnimatePresence>
 
-        {/* Navigation */}
         <button
           onClick={handlePrev}
           className="absolute left-0 md:-left-12 top-1/2 transform -translate-y-1/2 
@@ -182,7 +179,6 @@ const WorkSection: React.FC = () => {
         </button>
       </div>
 
-      {/* Indicator */}
       <div className="flex space-x-2 mt-16 lg:mt-0 z-10">
         {mockProjects.map((_, index) => (
           <button
@@ -203,4 +199,4 @@ const WorkSection: React.FC = () => {
   );
 };
 
-export default WorkSection;
+export default Portofolio;

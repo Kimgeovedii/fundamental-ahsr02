@@ -16,30 +16,27 @@ export default function SplashScreen({
   const [started, setStarted] = useState(false);
   const [showPrompt, setShowPrompt] = useState(true);
 
-  // Fungsi play sound
   const playSound = (url: string, volume = 0.6, delay = 0) => {
     setTimeout(() => {
       const audio = new Audio(url);
       audio.volume = volume;
       audio.play().catch(() => {});
-    }, delay * 1000);
+    }, delay * 500);
   };
 
-  // Jalankan animasi selesai
   useEffect(() => {
     if (!started) return;
     const timer = setTimeout(() => {
       onFinish();
-    }, duration * 1000);
+    }, duration * 500);
     return () => clearTimeout(timer);
   }, [started, duration, onFinish]);
 
-  // Klik pertama untuk mulai animasi
   const handleStart = () => {
     if (started) return;
     setShowPrompt(false);
     setStarted(true);
-    playSound("/sounds/Transition-woosh.mp3", 0.6, 0); // play langsung saat klik
+    playSound("/sounds/Transition-woosh.mp3", 0.6, 0);
   };
 
   return (
@@ -47,7 +44,6 @@ export default function SplashScreen({
       className="fixed inset-0 flex flex-col items-center justify-center bg-black text-white z-[9999] cursor-pointer select-none"
       onClick={handleStart}
     >
-      {/* Prompt awal */}
       {showPrompt && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -64,7 +60,6 @@ export default function SplashScreen({
         </motion.div>
       )}
 
-      {/* Setelah diklik */}
       {started && (
         <motion.div
           className="flex flex-col items-center gap-6"
@@ -72,7 +67,6 @@ export default function SplashScreen({
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          {/* Icon komputer */}
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
             animate={{
@@ -88,7 +82,6 @@ export default function SplashScreen({
             <Laptop2 className="w-24 h-24 text-transparent bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text" />
           </motion.div>
 
-          {/* Teks utama */}
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}

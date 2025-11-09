@@ -16,7 +16,6 @@ const AboutSection: React.FC = () => {
              transition-colors duration-500"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-40 items-center relative">
-        {/* === KIRI: Konten Teks === */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -31,7 +30,6 @@ const AboutSection: React.FC = () => {
             Software Engineer & Frontend Developer
           </h2>
 
-          {/* === PARAGRAF === */}
           <p className="text-base text-gray-300 dark:text-gray-600 leading-relaxed max-w-xl">
             I’m <strong>Mohamad Mustofa Hakim</strong>, a Software Engineer
             focused on building modern, responsive, and user-friendly
@@ -57,7 +55,6 @@ const AboutSection: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* === KANAN: GAMBAR === */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -66,7 +63,6 @@ const AboutSection: React.FC = () => {
           className="relative order-2 lg:order-2 flex justify-center lg:justify-start"
         >
           <div className="relative w-[300px] h-[350px] md:w-[350px] md:h-[400px] lg:w-[400px] lg:h-[450px]">
-            {/* FRAME PUTIH / DARK */}
             <div
               className="absolute w-full h-[90%] 
                          bg-white dark:bg-[#1e1e2f] 
@@ -85,7 +81,6 @@ const AboutSection: React.FC = () => {
               priority
             />
 
-            {/* SHADOW PUTIH/DARK */}
             <div
               className="absolute bottom-10 right-[-5%] h-[20%] w-[97%] 
                             bg-gradient-to-t from-white via-white/70 to-transparent 
@@ -93,7 +88,6 @@ const AboutSection: React.FC = () => {
                             rounded-b-lg z-20 transition-all duration-500"
             />
 
-            {/* DOT UNGU */}
             <div className="absolute bottom-4 right-4 w-16 h-16 bg-transparent z-30">
               <div className="grid grid-cols-4 gap-0.5">
                 {[...Array(16)].map((_, i) => (

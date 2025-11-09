@@ -1,11 +1,9 @@
 import Footer from "@/components/core/Footer";
 import Navbar from "@/components/core/Navbar";
 import * as React from "react";
-
 interface IMainLayoutProps {
   children: React.ReactNode;
 }
-
 const MainLayout: React.FunctionComponent<IMainLayoutProps> = (props) => {
   return (
     <div>

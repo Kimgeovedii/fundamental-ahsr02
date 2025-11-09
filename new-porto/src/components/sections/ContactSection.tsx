@@ -40,7 +40,6 @@ const ContactSection: React.FC = () => {
       dark:bg-gray-50 dark:text-gray-900"
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24">
-        {/* === LEFT: Contact Info === */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -63,7 +62,6 @@ const ContactSection: React.FC = () => {
             solutions.
           </p>
 
-          {/* === SOCIAL LINKS === */}
           <div className="flex items-center space-x-6 pt-8">
             <div className="h-[1px] w-12 bg-gray-600 dark:bg-gray-300"></div>
             <a
@@ -108,7 +106,6 @@ const ContactSection: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* === RIGHT: Contact Form === */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -148,7 +145,6 @@ const ContactSection: React.FC = () => {
               </label>
             </div>
 
-            {/* Subject */}
             <div className="relative">
               <input
                 type="text"
@@ -172,7 +168,6 @@ const ContactSection: React.FC = () => {
               </label>
             </div>
 
-            {/* Message */}
             <div className="relative pt-4">
               <textarea
                 id="description"
@@ -196,7 +191,6 @@ const ContactSection: React.FC = () => {
               </label>
             </div>
 
-            {/* Submit Button */}
             <div className="pt-6">
               <button
                 type="submit"
@@ -209,7 +203,6 @@ const ContactSection: React.FC = () => {
             </div>
           </form>
 
-          {/* Decorative Dots */}
           <div className="absolute top-4 right-4 z-0">
             <div className="flex flex-col space-y-1 opacity-60 dark:opacity-30">
               {[...Array(3)].map((_, i) => (

@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { CodeSquare, Zap, Server, LucideIcon } from "lucide-react";
 import React from "react";
 
-// --- Tipe Data dan Interface ---
 interface SkillCardProps {
   Icon: LucideIcon;
   title: string;
@@ -17,7 +16,6 @@ interface Skill {
   description: string;
 }
 
-// --- Komponen ---
 const SkillCard: React.FC<SkillCardProps> = ({ Icon, title, description }) => {
   return (
     <div
@@ -80,7 +78,6 @@ const SkillSection: React.FC = () => {
                  transition-colors duration-500"
     >
       <div className="max-w-7xl mx-auto">
-        {/* Header Section */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -96,7 +93,6 @@ const SkillSection: React.FC = () => {
           </h2>
         </motion.div>
 
-        {/* Skills Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {skills.map((skill, index) => (
             <motion.div

@@ -57,15 +57,13 @@ const WorkExperienceSection: React.FC = () => {
   return (
     <section
       id="experience"
-      // Menggunakan background gelap keunguan (mirip gambar)
       className="min-h-screen py-24 bg-gray-900 text-white dark:bg-white dark:text-gray-900 flex flex-col items-center px-6 md:px-20 lg:px-32"
       style={{
-        backgroundImage: "linear-gradient(180deg, #110038 0%, #0c021c 100%)", // Gradasi Ungu-Hitam
-        color: "white", // Memastikan teks tetap putih
+        backgroundImage: "linear-gradient(180deg, #110038 0%, #0c021c 100%)",
+        color: "white",
       }}
     >
       <div className="max-w-6xl w-full mx-auto">
-        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -73,7 +71,6 @@ const WorkExperienceSection: React.FC = () => {
           viewport={{ once: true, amount: 0.3 }}
           className="mb-16 text-center"
         >
-          {/* Judul Utama (mirip "Our Testimonials") */}
           <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-2">
             Professional <span className="text-purple-400">Experience</span>
           </h2>
@@ -83,7 +80,6 @@ const WorkExperienceSection: React.FC = () => {
           </p>
         </motion.div>
 
-        {/* EXPERIENCE CARDS GRID */}
         <div className="relative pt-8 pb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 relative gap-8">
             {experiences.map((item, index) => (
@@ -93,34 +89,26 @@ const WorkExperienceSection: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true, amount: 0.3 }}
-                // Style Card Mirip Testimonials: Latar belakang gelap, rounded-2xl, hover effect
                 className="relative p-6 rounded-2xl shadow-xl border border-transparent 
                            bg-[#1a0f3d] text-white
                            hover:border-purple-600 
                            transform transition duration-500 hover:scale-[1.03] 
                            cursor-pointer hover:shadow-[0_12px_40px_rgba(100,0,255,0.2)] dark:hover:shadow-[0_8px_25px_rgba(0,0,0,0.1)"
               >
-                {/* Garis Vertikal (Timeline) untuk Mobile SAJA (Dipertahankan) */}
                 <div className="absolute left-0 top-0 h-full w-[2px] bg-purple-700 md:hidden" />
                 <span className="absolute left-[-6px] top-6 w-3 h-3 rounded-full bg-cyan-400 md:hidden" />
 
                 <div className="mt-0 pl-0 md:pl-0">
-                  {/* Tanggal: Warna lebih cerah untuk kontras */}
-                  {/* text-left di mobile untuk timeline, center di desktop */}
                   <p className="text-md font-bold text-purple-400 mb-2 text-left md:text-center">
                     {item.date}
                   </p>
-
-                  {/* Role: Judul utama card */}
                   <h3 className="text-xl font-extrabold text-cyan-400 mb-1 text-left md:text-center">
                     {item.role}
                   </h3>
-                  {/* Perusahaan: Teks pendukung */}
                   <p className="text-md text-gray-300 mb-4 text-left md:text-center">
                     {item.company}
                   </p>
 
-                  {/* Deskripsi: Rata Kanan-Kiri (text-justify) */}
                   <p className="text-base text-gray-400 leading-relaxed text-justify">
                     {item.description}
                   </p>

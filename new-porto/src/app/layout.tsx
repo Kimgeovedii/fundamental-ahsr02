@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Providers } from "@/components/core/Providers";
 import React from "react";
-// Components
+
 import SocialSidebar from "@/components/core/SocialSidebar";
 import NavDots from "@/components/core/NavDots";
 import ThemeToggle from "@/components/core/ThemeToggle";
