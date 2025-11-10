@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 
 interface IBlogsPageProps {}
 
-const BlogsPage: React.FunctionComponent<IBlogsPageProps> = (props) => {
+const BlogsPage: React.FunctionComponent<IBlogsPageProps> = () => {
   const router = useRouter();
   const { userToken, _hasHydrated } = useAuthStore();
 

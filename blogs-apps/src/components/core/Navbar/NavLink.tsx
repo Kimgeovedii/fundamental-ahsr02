@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface NavLinkProps {
   href: string;
@@ -24,7 +25,7 @@ export const NavLink: React.FC<NavLinkProps> = ({
   };
 
   return (
-    <a
+    <Link
       href={href}
       onClick={handleNavigation}
       className={`text-lg font-medium transition-colors hover:text-fuchsia-700 ${
@@ -32,6 +33,6 @@ export const NavLink: React.FC<NavLinkProps> = ({
       }`}
     >
       {children}
-    </a>
+    </Link>
   );
 };
