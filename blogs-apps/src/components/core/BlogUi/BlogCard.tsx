@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical, Edit, Trash2 } from "lucide-react";
+import Link from "next/link";
 
 interface BlogProps {
   objectId: string;
@@ -87,9 +88,7 @@ const BlogCard: React.FC<BlogProps> = ({
       </CardContent>
 
       <CardFooter className="flex justify-end pt-0">
-        <Button variant="link" size="sm">
-          Baca Selengkapnya
-        </Button>
+        <Link href={`/blogs/${objectId}`}>Baca Selengkapnya</Link>
       </CardFooter>
     </Card>
   );

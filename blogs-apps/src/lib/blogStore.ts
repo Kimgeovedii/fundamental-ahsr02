@@ -34,9 +34,11 @@ export interface Blog {
 
 interface BlogState {
   blogs: Blog[];
+  blog: Blog | null;
   isLoading: boolean;
   error: string | null;
   fetchBlogs: (userToken: string) => Promise<void>;
+  getDetailBlog: (userToken: string, blogId: string) => Promise<void>;
 
   createBlog: (
     title: string,
@@ -54,6 +56,7 @@ interface BlogState {
 }
 export const useBlogStore = create<BlogState>((set, get) => ({
   blogs: [],
+  blog: null,
   isLoading: false,
   error: null,
 
@@ -124,6 +127,86 @@ export const useBlogStore = create<BlogState>((set, get) => ({
 
       set({ error: message, isLoading: false });
       console.error("Fetch Blogs Error:", error);
+      toast.error(message);
+    }
+  },
+  getDetailBlog: async (userToken, blogId) => {
+    // Pastikan ID blog valid sebelum memulai proses
+    if (!blogId) {
+      set({ error: "ID Blog tidak valid.", isLoading: false });
+      return;
+    }
+
+    set({ isLoading: true, error: null });
+
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_URL}${endpoint}/${blogId}`,
+        {
+          headers: getAuthHeader(userToken),
+          params: {
+            where: `objectId='${blogId}'`,
+          },
+        }
+      );
+
+      if (response.status < 200 || response.status >= 300) {
+        throw new Error(
+          `Gagal mengambil data: ${response.statusText || response.status}`
+        );
+      }
+
+      const rawBlogData = Array.isArray(response.data)
+        ? response.data[0]
+        : response.data;
+
+      if (!rawBlogData) {
+        throw new Error(`Detail blog dengan ID ${blogId} tidak ditemukan.`);
+      }
+
+      const ownerId = rawBlogData.ownerId;
+      let authorName = "Anonim";
+
+      if (ownerId) {
+        const userResponse = await axios.get(
+          `${process.env.NEXT_PUBLIC_URL}/data/Users`,
+          {
+            headers: getAuthHeader(userToken),
+            params: {
+              where: `objectId='${ownerId}'`,
+              property: ["objectId", "name"],
+            },
+          }
+        );
+
+        // Cek apakah user ditemukan
+        if (userResponse.data && userResponse.data.length > 0) {
+          authorName = userResponse.data[0].name;
+        }
+      }
+
+      // --- Langkah 4: Format Data ---
+      const formatedData = {
+        objectId: rawBlogData.objectId,
+        title: rawBlogData.title,
+        description: rawBlogData.description || null,
+        created: new Date(rawBlogData.created),
+        updated: new Date(rawBlogData.updated),
+        owner: null, // Asumsi ini adalah field yang tidak diisi di sini
+        ownerId: ownerId || "",
+        authorName: authorName,
+      };
+
+      // Update state dengan detail blog tunggal
+      set({ blog: formatedData, isLoading: false });
+    } catch (error) {
+      const message =
+        (axios.isAxiosError(error) && error.response?.data?.message) ||
+        (error as Error).message ||
+        "Gagal memuat blog. Cek koneksi.";
+
+      set({ error: message, isLoading: false });
+      console.error("Fetch Blog Detail Error:", error);
       toast.error(message);
     }
   },
