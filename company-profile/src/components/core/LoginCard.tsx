@@ -64,7 +64,7 @@ export function LoginCard() {
         </CardDescription>
         <CardAction>
           <Link
-            className="cursor-pointer text-primary underline-offset-4 hover:underline"
+            className="cursor-pointer font-semibold text-primary underline-offset-4 hover:underline"
             href={"signup"}
           >
             Sign Up
@@ -125,31 +125,49 @@ export function LoginCard() {
               )}
             </div>
           </div>
+          <p className="text-xs text-center text-gray-500 mt-6 mb-4">
+            Dengan menekan tombol Masuk, Anda menyetujui
+            <a
+              href="/terms"
+              className="text-indigo-600 hover:text-indigo-800 underline ml-1"
+            >
+              Ketentuan Layanan
+            </a>
+            dan
+            <a
+              href="/privacy"
+              className="text-indigo-600 hover:text-indigo-800 underline ml-1"
+            >
+              Kebijakan Privasi
+            </a>
+            .
+          </p>
+          <CardFooter className="flex-col gap-2 py-4 w-full ">
+            <Button
+              type="submit"
+              variant={"default"}
+              className="w-full cursor-pointer"
+              onClick={() => formik.handleSubmit()}
+            >
+              {isLoading ? (
+                <div className="flex flex-row items-center">
+                  <Spinner className="mr-2" />
+                  Looging In
+                </div>
+              ) : (
+                <div className="flex flex-row items-center">
+                  <FiLogIn className="mr-2" />
+                  Login
+                </div>
+              )}
+            </Button>
+            <Button variant="outline" className="w-full cursor-pointer">
+              <FcGoogle />
+              Login with Google
+            </Button>
+          </CardFooter>
         </form>
       </CardContent>
-      <CardFooter className="flex-col gap-2">
-        <Button
-          type="submit"
-          className="w-full cursor-pointer"
-          onClick={() => formik.handleSubmit()}
-        >
-          {isLoading ? (
-            <div>
-              <Spinner className="mr-2" />
-              Looging In
-            </div>
-          ) : (
-            <div className="flex flex-row items-center">
-              <FiLogIn className="mr-2" />
-              Login
-            </div>
-          )}
-        </Button>
-        <Button variant="outline" className="w-full cursor-pointer">
-          <FcGoogle />
-          Login with Google
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

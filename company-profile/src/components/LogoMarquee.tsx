@@ -41,7 +41,7 @@ const logos = [...randomLogos, ...randomLogos];
 
 export default function LogoMarquee() {
   return (
-    <div className="w-full py-8 bg-[#0B0E14] overflow-hidden border-t border-b border-gray-700/50">
+    <div className="w-full h-full border py-8 bg-white dark:bg-[#0B0E14] overflow-hidden border-t border-b border-gray-700/50">
       <div className="flex flex-nowrap w-fit gap-x-20 animate-marquee">
         {logos.map((logo, index) => (
           <div

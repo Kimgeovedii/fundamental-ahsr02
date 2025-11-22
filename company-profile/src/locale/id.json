@@ -1,0 +1,117 @@
+{
+  "login": "Masuk",
+  "navigation": [
+    {
+      "name": "Beranda",
+      "url": "/"
+    },
+    {
+      "name": "Layanan",
+      "url": "/services"
+    },
+    {
+      "name": "Portofolio",
+      "url": "/portofolio"
+    },
+    {
+      "name": "Tentang Kami",
+      "url": "/about"
+    },
+    {
+      "name": "Karir",
+      "url": "/careers"
+    }
+  ],
+  "header": {
+    "tagline_pre": "MITRA BISNIS STRATEGIS: TATA KELOLA & SOFTWARE",
+    "tagline_main": "Transformasi Bisnis Tepat Sasaran,",
+    "tagline_accent": "Dengan Kemitraan Tata Kelola IT & Solusi Software."
+  },
+  "hero": {
+    "title_part1": "Tata Kelola IT yang Kokoh",
+    "title_part2": "Solusi Software yang Tepat.",
+    "description": "Digiforma membantu bisnis Anda bertransformasi dengan strategi IT yang jelas dan software kustom yang benar-benar dibutuhkan — bukan yang berlebihan.",
+    "cta_start": "Mulai Konsultasi Gratis",
+    "cta_discover": "Lihat Solusi",
+    "social_proof": [
+      { "value": "50+", "label": "Strategi IT Terimplementasi" },
+      { "value": "35%", "label": "Efisiensi Operasional Naik" },
+      { "value": "100%", "label": "Sistem Handal & Terukur" }
+    ]
+  },
+
+  "about": {
+    "tagline_pre": "MITRA BISNIS STRATEGIS: TATA KELOLA & SOFTWARE",
+    "tagline_main": "Transformasi Bisnis Tepat Sasaran,",
+    "tagline_accent": "Dengan Kemitraan Tata Kelola IT & Solusi Software.",
+    "description": "Sebagai Mitra Bisnis, Digiforma hadir untuk membangun solusi teknologi Anda dari hulu ke hilir. Kami fokus pada pembangunan Tata Kelola IT yang matang dan pengembangan perangkat lunak (software) kustom yang presisi, menjadikan tantangan teknologi sebagai keunggulan kompetitif jangka panjang.",
+    "solutions": [
+      {
+        "icon": "HardHat",
+        "title": "Peningkatan Tata Kelola IT (IT Governance)",
+        "description": "Kami melakukan audit dan pembenahan komprehensif pada struktur dan operasional TI Anda, memastikan tata kelola yang matang, terstruktur, dan siap menopang skalabilitas serta pertumbuhan bisnis jangka panjang."
+      },
+      {
+        "icon": "BarChart3",
+        "title": "Pembangunan Solusi Software Kustom & Data Analytics",
+        "description": "Kami adalah mitra pembangunan perangkat lunak (software) yang spesifik dan presisi untuk kebutuhan bisnis Anda. Pendekatan berbasis data kami menciptakan Transparansi Operasional, memungkinkan pengambilan keputusan yang lebih cepat dan akurat."
+      },
+      {
+        "icon": "FileText",
+        "title": "Perumusan Rencana Induk Strategis TI (IT Master Plan)",
+        "description": "Kami merancang Rencana Induk Strategis TI (RSTI) yang terukur dan selaras 100% dengan tujuan bisnis utama Anda, memberikan peta jalan yang jelas dan terarah untuk implementasi digitalisasi yang efektif."
+      }
+    ]
+  },
+  "whychooseus": {
+    "header": "Mengapa Memilih Kami",
+    "pillars": [
+      {
+        "title": "Inovasi",
+        "description": "Mendorong batasan dalam AI, blockchain, dan trading kuantitatif untuk memberikan solusi mutakhir."
+      },
+      {
+        "title": "Kolaborasi",
+        "description": "Bekerja erat dengan klien untuk mengembangkan solusi yang disesuaikan yang mendorong keberhasilan terukur."
+      },
+      {
+        "title": "Keunggulan",
+        "description": "Mempertahankan standar tertinggi dalam kualitas kode, kinerja sistem, dan hasil yang dicapai klien."
+      },
+      {
+        "title": "Integritas",
+        "description": "Beroperasi dengan transparansi dan pertimbangan etis sebagai prioritas utama dalam semua keputusan."
+      }
+    ]
+  },
+  "faq": {
+    "header": "Pertanyaan yang Sering Diajukan",
+    "items": [
+      {
+        "id": 1,
+        "question": "Layanan apa saja yang disediakan Catalyst Analytics?",
+        "answer": "Catalyst Analytics menawarkan berbagai layanan termasuk desain, rekayasa, pengembangan web, pengembangan aplikasi seluler, pengembangan perangkat lunak khusus, branding, identitas, dan lainnya. Kami berspesialisasi dalam desain pengalaman pengguna dan manajemen proyek."
+      },
+      {
+        "id": 2,
+        "question": "Berapa lama waktu yang dibutuhkan untuk proyek biasa?",
+        "answer": "Durasi proyek sangat bervariasi berdasarkan kompleksitas dan cakupan. Situs web kecil mungkin memakan waktu 4-6 minggu, sementara solusi perangkat lunak kustom yang besar dapat memakan waktu 3-6 bulan."
+      },
+      {
+        "id": 3,
+        "question": "Apakah Anda menawarkan dukungan dan pemeliharaan pasca-peluncuran?",
+        "answer": "Ya, kami menyediakan berbagai paket dukungan untuk memastikan solusi Anda tetap aman, mutakhir, dan berkinerja optimal setelah diluncurkan."
+      },
+      {
+        "id": 4,
+        "question": "Apa model penetapan harga Anda?",
+        "answer": "Kami terutama bekerja berdasarkan model harga tetap untuk proyek yang terdefinisi dengan baik, dan model waktu & material untuk pengembangan berkelanjutan atau proyek dengan persyaratan yang terus berkembang."
+      },
+      {
+        "id": 5,
+        "question": "Bisakah Anda berintegrasi dengan sistem yang sudah ada?",
+        "answer": "Tentu saja. Tim rekayasa kami berspesialisasi dalam integrasi API dan memastikan komunikasi yang mulus antara platform baru dan platform yang sudah ada."
+      }
+    ]
+  }
+}

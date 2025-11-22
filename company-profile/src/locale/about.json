@@ -1,0 +1,42 @@
+{
+  "id": {
+    "tagline_pre": "KEMITRAAN STRATEGIS UNTUK AKSELERASI",
+    "tagline_main": "Menyederhanakan Kompleksitas,",
+    "tagline_accent": "Memastikan Akselerasi Bisnis Anda.",
+    "description": "Banyak perusahaan menghadapi kompleksitas dalam mengelola kapabilitas TI. Digiforma adalah konsultan terpercaya yang hadir untuk memastikan setiap investasi teknologi berkontribusi langsung pada efisiensi, transparansi, dan akselerasi bisnis Anda.",
+    "solutions": [
+      {
+        "title": "Memperkuat Maturitas Tata Kelola TI",
+        "description": "Kami membenahi struktur dan operasional TI Anda secara komprehensif agar lebih efisien, terstruktur, dan siap menjadi pondasi yang kuat untuk pertumbuhan bisnis di masa depan."
+      },
+      {
+        "title": "Mewujudkan Transparansi Operasional Berbasis Data",
+        "description": "Kami menjadi mitra transformasi Anda untuk mempercepat digitalisasi proses bisnis, memastikan semua data transparan dan dapat digunakan untuk pengambilan keputusan yang lebih akurat dan cepat."
+      },
+      {
+        "title": "Perumusan IT Master Plan (RSTI) yang Jelas",
+        "description": "Kami merumuskan IT Master Plan (RSTI) yang terukur dan selaras dengan tujuan utama perusahaan, memberikan Anda peta jalan yang pasti dalam setiap langkah transformasi digital."
+      }
+    ]
+  },
+  "en": {
+    "tagline_pre": "STRATEGIC PARTNERSHIP FOR ACCELERATION",
+    "tagline_main": "Simplifying Complexity,",
+    "tagline_accent": "Ensuring Your Business Acceleration.",
+    "description": "Many companies face complexity in managing IT capabilities. Digiforma is a trusted consultant dedicated to ensuring every technology investment directly contributes to your efficiency, transparency, and business acceleration.",
+    "solutions": [
+      {
+        "title": "Strengthening IT Governance Maturity",
+        "description": "We comprehensively optimize your IT structure and operations to be more efficient, structured, and ready to serve as a solid foundation for future business growth."
+      },
+      {
+        "title": "Achieving Data-Driven Operational Transparency",
+        "description": "We act as your transformation partner to accelerate the digitalization of business processes, ensuring all data is transparent and usable for accurate and faster decision-making."
+      },
+      {
+        "title": "Formulating Clear Strategic IT Master Plan (SITP)",
+        "description": "We formulate a measurable Strategic IT Master Plan (SITP) aligned with the company's core objectives, giving you a clear roadmap for effective digital transformation."
+      }
+    ]
+  }
+}

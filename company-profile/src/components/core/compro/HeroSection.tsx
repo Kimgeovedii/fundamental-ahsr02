@@ -2,38 +2,95 @@
 
 import React from "react";
 import Spline from "@splinetool/react-spline";
+import LogoMarquee from "@/components/LogoMarquee";
+import { ArrowRight } from "lucide-react";
+import { useHydratedLanguageStore } from "@/lib/stores/language-store";
+import { getLocale } from "@/lib/get-locale";
+import { Spinner } from "@/components/ui/spinner";
+
+interface HeroTranslations {
+  title_part1: string;
+  title_part2: string;
+  description: string;
+  cta_start: string;
+  cta_discover: string;
+  social_proof: Array<{ value: string; label: string }>;
+}
 
 export default function HeroSection() {
-  return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-[#0B0E14] ">
-      {/* GRADIENT OVERLAY */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0B0E14] via-[#0B0E14]/50 to-transparent z-10 pointer-events-none" />
+  const { lang, hydrated } = useHydratedLanguageStore();
+  const [heroData, setHeroData] = React.useState<HeroTranslations | null>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [isMobile, setIsMobile] = React.useState(false);
 
-      {/* CONTENT — DITURUNKAN */}
-      <div className="relative z-20 max-w-7xl mx-auto px-8 py-36 mt-20 ">
-        <h1 className="text-5xl font-bold text-white leading-tight max-w-xl">
-          Build an AI Driven Future <br /> for Your Business
-        </h1>
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-        <p className="text-slate-300 mt-4 text-lg max-w-lg">
-          Bring custom AI practice to any of your business processes, on
-          premises.
-        </p>
+  React.useEffect(() => {
+    if (!hydrated) return;
+    setIsLoading(true);
+    getLocale(lang)
+      .then((data: any) => data?.hero && setHeroData(data.hero))
+      .finally(() => setIsLoading(false));
+  }, [lang, hydrated]);
 
-        <div className="flex items-center gap-4 mt-8">
-          <button className="px-6 py-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition">
-            Get it for your business →
-          </button>
-
-          <button className="px-6 py-3 rounded-full border border-blue-500 text-blue-400 hover:bg-blue-500/10 transition font-medium">
-            Discover more →
-          </button>
-        </div>
-        {/* SPLINE DI KANAN */}
-        <div className="absolute top-11 -right-[80px]   h-full w-[50%] min-w-[500px] pointer-events-auto z-0">
-          <Spline scene="/scene2.splinecode" />
-        </div>
+  if (isLoading || !heroData) {
+    return (
+      <div className="bg-[#0B0E14] text-white py-24 px-4 sm:px-8 text-center">
+        <Spinner />
       </div>
+    );
+  }
+
+  const t = heroData;
+
+  return (
+    <section className="w-full min-h-screen bg-white dark:bg-[#0B0E14] dark:text-white flex flex-col py-10  sm:py-0 relative overflow-hidden">
+      <div
+        className={`
+          max-w-7xl mx-auto px-6
+          flex flex-col ${!isMobile ? "md:flex-row" : "md:flex-col"}  
+          items-center sm:justify-between justify-center 
+          gap-10 md:gap-16 
+          min-h-[calc(100vh-120px)]
+          w-full
+        `}
+      >
+        {/* LEFT CONTENT */}
+        <div className="text-center md:text-left max-w-lg space-y-6">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white">
+            {t.title_part1}
+          </h1>
+
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-md mx-auto md:mx-0 leading-relaxed">
+            {t.description}
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
+            <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white rounded-xl shadow-lg shadow-blue-500/30 dark:shadow-indigo-600/30 flex items-center gap-2 transition">
+              {t.cta_start} <ArrowRight className="w-4 h-4" />
+            </button>
+
+            <button className="px-6 py-3 border border-blue-400 dark:border-indigo-500 text-blue-600 dark:text-indigo-400 hover:bg-blue-50 dark:hover:bg-indigo-900/30 rounded-xl flex items-center gap-2 transition">
+              {t.cta_discover} <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {!isMobile && (
+          <div className="flex justify-center pointer-events-auto">
+            <div className="w-[300px] h-[300px] lg:w-[380px] lg:h-[380px] opacity-95">
+              <Spline scene="/scene2.splinecode" />
+            </div>
+          </div>
+        )}
+      </div>
+
+      <LogoMarquee />
     </section>
   );
 }

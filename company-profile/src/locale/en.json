@@ -1,0 +1,117 @@
+{
+  "login": "Login",
+  "navigation": [
+    {
+      "name": "Home",
+      "url": "/"
+    },
+    {
+      "name": "Services",
+      "url": "/services"
+    },
+    {
+      "name": "Portfolio",
+      "url": "/portofolio"
+    },
+    {
+      "name": "About Us",
+      "url": "/about"
+    },
+    {
+      "name": "Careers",
+      "url": "/careers"
+    }
+  ],
+  "header": {
+    "tagline_pre": "STRATEGIC BUSINESS PARTNER: GOVERNANCE & SOFTWARE",
+    "tagline_main": "Focused Business Transformation,",
+    "tagline_accent": "Powered by IT Governance Partnership & Custom Software."
+  },
+  "hero": {
+    "title_part1": "Make Your Digital Solutions",
+    "title_part2": "Accelerate Your Business",
+    "description": "Digiforma helps your business transform with clear IT strategy and custom-built software — designed only for what your operations truly need.",
+    "cta_start": "Start Free Consultation",
+    "cta_discover": "Explore Solutions",
+    "social_proof": [
+      { "value": "50+", "label": "Implemented IT Strategies" },
+      { "value": "35%", "label": "Operational Efficiency Boost" },
+      { "value": "100%", "label": "Reliable & Scalable Systems" }
+    ]
+  },
+
+  "about": {
+    "tagline_pre": "STRATEGIC BUSINESS PARTNER: GOVERNANCE & SOFTWARE",
+    "tagline_main": "Focused Business Transformation,",
+    "tagline_accent": "Powered by IT Governance Partnership & Custom Software.",
+    "description": "As your Business Partner, Digiforma provides end-to-end technology solutions. We focus on building mature IT Governance and developing precise custom software, turning technological challenges into long-term competitive advantages.",
+    "solutions": [
+      {
+        "icon": "HardHat",
+        "title": "Strengthening IT Governance Maturity",
+        "description": "We conduct comprehensive audits and restructuring of your IT operations, ensuring mature, structured governance ready to support scalability and long-term business growth."
+      },
+      {
+        "icon": "BarChart3",
+        "title": "Custom Software Development & Data Analytics",
+        "description": "We are your partner in building specific and precise software for your business needs. Our data-driven approach creates Operational Transparency, enabling faster and more accurate decision-making."
+      },
+      {
+        "icon": "FileText",
+        "title": "Formulating Clear Strategic IT Master Plan (SITP)",
+        "description": "We design a measurable Strategic IT Master Plan (SITP) that is 100% aligned with your core business objectives, providing a clear and directed roadmap for effective digitalization implementation."
+      }
+    ]
+  },
+  "whychooseus": {
+    "header": "Why Choose Us",
+    "pillars": [
+      {
+        "title": "Innovation",
+        "description": "Pushing boundaries in AI, blockchain, and quantitative trading to deliver cutting-edge solutions."
+      },
+      {
+        "title": "Collaboration",
+        "description": "Working closely with clients to develop tailored solutions that drive measurable success."
+      },
+      {
+        "title": "Excellence",
+        "description": "Maintaining the highest standards in code quality, system performance, and client outcomes."
+      },
+      {
+        "title": "Integrity",
+        "description": "Operating with transparency and ethical considerations at the forefront of all decisions."
+      }
+    ]
+  },
+  "faq": {
+    "header": "Frequently Asked Questions",
+    "items": [
+      {
+        "id": 1,
+        "question": "What services does Catalyst Analytics provide?",
+        "answer": "Catalyst Analytics offers a range of services including design, engineering, web development, mobile app development, custom software development, branding and identity, and more. We specialize in user experience design and project management."
+      },
+      {
+        "id": 2,
+        "question": "How long does a typical project take?",
+        "answer": "Project duration varies significantly based on complexity and scope. A small website might take 4-6 weeks, while a large custom software solution can take 3-6 months."
+      },
+      {
+        "id": 3,
+        "question": "Do you offer post-launch support and maintenance?",
+        "answer": "Yes, we provide various support packages to ensure your solution remains secure, up-to-date, and performs optimally after launch."
+      },
+      {
+        "id": 4,
+        "question": "What is your pricing model?",
+        "answer": "We primarily work on a fixed-price model for well-defined projects, and a time & material model for ongoing development or projects with evolving requirements."
+      },
+      {
+        "id": 5,
+        "question": "Can you integrate with existing systems?",
+        "answer": "Absolutely. Our engineering team specializes in API integration and ensuring seamless communication between new and existing platforms."
+      }
+    ]
+  }
+}
