@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import Head from "next/head";
 import { BlogForm } from "@/components/core/cms/blog/BlogForm";

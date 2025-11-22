@@ -1,3 +1,4 @@
+"use client";
 import SignInForm from "@/components/core/SignForm";
 import * as React from "react";
 

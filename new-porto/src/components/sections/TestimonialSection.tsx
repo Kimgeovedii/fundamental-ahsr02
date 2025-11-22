@@ -75,6 +75,7 @@ export default function TestimonialSection() {
                 alt={item.name}
                 width={50}
                 height={50}
+                unoptimized
                 className="rounded-full border border-gray-700 dark:border-gray-300"
               />
               <div>

@@ -15,7 +15,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { CompanyProfile } from "./CompanyProfile";
-import { useAuthStore } from "@/lib/useAuthStore";
+import { useAuthStore } from "@/lib/stores";
 
 // This is sample data.
 const data = {

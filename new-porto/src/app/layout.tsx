@@ -7,7 +7,7 @@ import SocialSidebar from "@/components/core/SocialSidebar";
 import NavDots from "@/components/core/NavDots";
 import ThemeToggle from "@/components/core/ThemeToggle";
 export const metadata: Metadata = {
-  title: "My Portfolio",
+  title: "Kim Geovedi | Software Enggineer",
   description: "Personal Portfolio Website",
 };
 

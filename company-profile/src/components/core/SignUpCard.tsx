@@ -16,7 +16,7 @@ import { FiEye, FiEyeOff, FiUserPlus } from "react-icons/fi";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/lib/useAuthStore";
+import { useAuthStore } from "@/lib/stores";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
 

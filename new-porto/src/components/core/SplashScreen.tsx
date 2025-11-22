@@ -79,7 +79,7 @@ export default function SplashScreen({
               times: [0, 0.6, 1],
             }}
           >
-            <Laptop2 className="w-24 h-24 text-transparent bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text" />
+            <Laptop2 className="w-24 h-24 text-white bg-clip-text" />
           </motion.div>
 
           <motion.h1

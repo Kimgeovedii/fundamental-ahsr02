@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useAuthStore } from "@/lib/useAuthStore";
+import { useAuthStore } from "@/lib/stores";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Link from "next/link";
@@ -52,7 +52,7 @@ export function LoginCard() {
         return;
       }
       toast.success("Login sukses! Selamat datang 👋");
-      router.push("/cms");
+      router.push("/cms/dashboard");
     },
   });
   return (

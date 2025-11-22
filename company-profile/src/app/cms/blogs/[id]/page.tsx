@@ -1,28 +1,31 @@
 "use client";
 
-import * as React from "react";
-import { useRouter } from "next/navigation";
-import { useBlogStore } from "@/lib/blogStore";
 import Image from "next/image";
 import { Calendar, PenTool } from "lucide-react";
+import { useBlogDetail } from "@/lib/hooks/useBlogDetail";
+import { useParams } from "next/navigation";
 
-interface CmsBlogDetailPageProps {
-  params: { id: string };
-}
+export default function CmsBlogDetailPage() {
+  const params = useParams();
+  const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
-const CmsBlogDetailPage: React.FC<CmsBlogDetailPageProps> = ({ params }) => {
-  const { id } = params;
-  const { blogs } = useBlogStore();
-  const blog = blogs.find((b) => b.id === id);
+  if (!id) return <div>Invalid Blog ID</div>;
 
-  const formatDate = (dateString: string) =>
-    new Date(dateString).toLocaleDateString("id-ID", {
+  const blog = useBlogDetail(id);
+
+  const formatDate = (date: string) =>
+    new Date(date).toLocaleDateString("id-ID", {
       year: "numeric",
       month: "short",
       day: "numeric",
     });
 
-  if (!blog) return <p className="p-8">Blog tidak ditemukan</p>;
+  if (!blog)
+    return (
+      <main className="min-h-screen flex justify-center items-center text-gray-500">
+        Loading...
+      </main>
+    );
 
   return (
     <main className="min-h-screen bg-gray-50 p-8 md:p-12">
@@ -42,10 +45,13 @@ const CmsBlogDetailPage: React.FC<CmsBlogDetailPageProps> = ({ params }) => {
 
         <div className="flex items-center gap-4 text-gray-500 text-sm mb-6">
           <div className="flex items-center gap-1">
-            <Calendar className="w-4 h-4" /> {formatDate(blog.created_at)}
+            <Calendar className="w-4 h-4" />
+            {formatDate(blog.created_at)}
           </div>
+
           <div className="flex items-center gap-1">
-            <PenTool className="w-4 h-4" /> {blog.author_name || "Unknown"}
+            <PenTool className="w-4 h-4" />
+            {blog.author_name || "Unknown"}
           </div>
         </div>
 
@@ -56,6 +62,4 @@ const CmsBlogDetailPage: React.FC<CmsBlogDetailPageProps> = ({ params }) => {
       </div>
     </main>
   );
-};
-
-export default CmsBlogDetailPage;
+}

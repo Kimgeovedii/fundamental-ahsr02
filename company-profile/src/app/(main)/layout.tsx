@@ -1,11 +1,15 @@
 "use client";
-import { Header } from "@/components/core/cms/layouts/Header";
-
+import Navbar from "@/components/core/compro/layouts/Navbar";
 import { useAuthStore } from "@/lib/stores";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import React from "react";
+import { useEffect } from "react";
 
-export default function CmsLayout({ children }: { children: React.ReactNode }) {
+export default function MainLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   const { checkSession } = useAuthStore();
   const [Loading, setLoading] = React.useState(true);
@@ -31,7 +35,7 @@ export default function CmsLayout({ children }: { children: React.ReactNode }) {
   }
   return (
     <div>
-      <Header />
+      <Navbar />
       {children}
     </div>
   );

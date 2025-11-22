@@ -11,8 +11,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { useAuthStore } from "@/lib/useAuthStore";
-import { supabase } from "@/lib/supabaseClient";
+import { useAuthStore } from "@/lib/stores";
+import { supabase } from "@/lib/supabase/client";
 
 interface BlogItem {
   id: string;
