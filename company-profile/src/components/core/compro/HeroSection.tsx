@@ -5,12 +5,12 @@ import Spline from "@splinetool/react-spline";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full  overflow-hidden bg-[#0B0E14] ">
+    <section className="relative w-full min-h-screen overflow-hidden bg-[#0B0E14] ">
       {/* GRADIENT OVERLAY */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#0B0E14] via-[#0B0E14]/50 to-transparent z-10 pointer-events-none" />
 
       {/* CONTENT — DITURUNKAN */}
-      <div className="relative z-20 max-w-7xl mx-auto px-8 py-32 mt-20 ">
+      <div className="relative z-20 max-w-7xl mx-auto px-8 py-36 mt-20 ">
         <h1 className="text-5xl font-bold text-white leading-tight max-w-xl">
           Build an AI Driven Future <br /> for Your Business
         </h1>

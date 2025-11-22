@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 const Navbar: React.FC = () => {
   const router = useRouter();
   const { user, token } = useAuthStore();
-  console.log(token);
+  // console.log(token); // Dinonaktifkan untuk output yang lebih bersih
 
   const navLinks = [
     { name: "Home", url: "/" },
@@ -29,12 +29,45 @@ const Navbar: React.FC = () => {
 
   const isLoggedIn = !!token && !!user;
 
+  // --- LOGIKA SCROLL BARU ---
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      // Ubah status jika posisi scrollY melewati 50px
+      const scrolled = window.scrollY > 50;
+      if (scrolled !== isScrolled) {
+        setIsScrolled(scrolled);
+      }
+    };
+
+    // Tambahkan event listener saat komponen dipasang (mount)
+    window.addEventListener("scroll", handleScroll);
+
+    // Hapus event listener saat komponen dilepas (unmount)
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isScrolled]); // Dependensi [isScrolled] memastikan efek berjalan jika status berubah
+
+  // Tentukan kelas CSS berdasarkan status scroll
+  const navbarClasses = `
+    w-full fixed top-0 z-50 transition-all duration-300
+    ${
+      isScrolled
+        ? "bg-black/80 backdrop-blur-md border-b border-white/10" // Saat di-scroll: buram, border, lebih gelap
+        : "bg-transparent border-b border-transparent" // Default: transparan penuh, tanpa border
+    }
+  `;
+  // --- END LOGIKA SCROLL BARU ---
+
   return (
-    <nav className="w-full fixed top-0 z-50 bg-black/40 backdrop-blur-md border-b border-white/10">
+    // Gunakan kelas yang ditentukan oleh state
+    <nav className={navbarClasses}>
       <div className="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <div className="text-white font-bold text-xl">Catalyst Analytics</div>
+          <div className="text-white font-bold text-xl">Digiforma Tech</div>
         </div>
 
         {/* Navigation */}
@@ -58,7 +91,7 @@ const Navbar: React.FC = () => {
             className="rounded-full h-10 w-10 p-0 focus-visible:ring-offset-0 hover:bg-white/30 transition-colors"
             aria-label="User menu"
           >
-            <Avatar className="h-9 w-9 border-2 border-white/80">
+            <Avatar className="h-9 w-9 border-2 border-white/80 hover:bg-white/30 cursor-pointer">
               <AvatarFallback className="bg-white text-blue-700 text-sm font-medium">
                 {getInitials(user?.displayName ?? undefined)}
               </AvatarFallback>
