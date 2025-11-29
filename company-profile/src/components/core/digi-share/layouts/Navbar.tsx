@@ -13,7 +13,16 @@ import {
 import { useAuthStore } from "@/lib/stores";
 import { useRouter } from "next/navigation";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
-import { Languages, PenTool, Home, User, LogOut, Settings, Search, Menu } from "lucide-react";
+import {
+  Languages,
+  PenTool,
+  Home,
+  User,
+  LogOut,
+  Settings,
+  Search,
+  Menu,
+} from "lucide-react";
 import { getLocale } from "@/lib/get-locale";
 import {
   Sheet,
@@ -36,7 +45,8 @@ const DigiShareNavbar: React.FC = () => {
   const { user, token } = useAuthStore();
   const { lang, toggleLang, hydrated } = useHydratedLanguageStore();
 
-  const [localeData, setLocaleData] = React.useState<DigiShareNavbarLocale | null>(null);
+  const [localeData, setLocaleData] =
+    React.useState<DigiShareNavbarLocale | null>(null);
   const [isLoadingLocale, setIsLoadingLocale] = React.useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
@@ -49,9 +59,7 @@ const DigiShareNavbar: React.FC = () => {
             setLocaleData(data.digi_share_navbar as DigiShareNavbarLocale);
           }
         })
-        .catch(() => {
-          // Silent fail - locale will use default
-        })
+        .catch(() => {})
         .finally(() => {
           setIsLoadingLocale(false);
         });
@@ -109,14 +117,17 @@ const DigiShareNavbar: React.FC = () => {
   return (
     <nav className={navbarClasses}>
       <div className="max-w-7xl mx-auto flex items-center justify-between py-3 md:py-4 px-4 sm:px-6">
-        <Link href="/digi-share" className="text-gray-900 dark:text-white font-bold text-lg sm:text-xl">
+        <Link
+          href="/digi-share"
+          className="text-gray-900 dark:text-white font-bold text-lg sm:text-xl"
+        >
           Digi-Share
         </Link>
 
         <ul className="hidden md:flex items-center gap-6 lg:gap-8 text-sm">
           <li>
             <Link
-              href="/"
+              href="/digi-share"
               className="text-gray-800 dark:text-gray-300 font-medium hover:text-gray-900 dark:hover:text-white transition-colors flex items-center gap-1"
             >
               <Home className="w-4 h-4" />
@@ -185,9 +196,14 @@ const DigiShareNavbar: React.FC = () => {
                     </Avatar>
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                <DropdownMenuContent
+                  align="end"
+                  className="w-48 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                >
                   <DropdownMenuItem
-                    onClick={() => router.push(`/digi-share/profile/${user?.authorId || ''}`)}
+                    onClick={() =>
+                      router.push(`/digi-share/profile/${user?.authorId || ""}`)
+                    }
                     className="cursor-pointer text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                   >
                     <User className="w-4 h-4 mr-2" />
@@ -232,7 +248,10 @@ const DigiShareNavbar: React.FC = () => {
                     <Menu className="w-5 h-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[280px] sm:w-[300px] bg-white dark:bg-gray-800">
+                <SheetContent
+                  side="right"
+                  className="w-[280px] sm:w-[300px] bg-white dark:bg-gray-800"
+                >
                   <SheetHeader>
                     <SheetTitle className="text-left text-gray-900 dark:text-white">
                       Menu
@@ -277,7 +296,7 @@ const DigiShareNavbar: React.FC = () => {
                           {localeData.write_post}
                         </Button>
                         <Link
-                          href={`/digi-share/profile/${user?.authorId || ''}`}
+                          href={`/digi-share/profile/${user?.authorId || ""}`}
                           onClick={() => setMobileMenuOpen(false)}
                           className="flex items-center gap-2 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                         >
@@ -387,7 +406,10 @@ const DigiShareNavbar: React.FC = () => {
                     <Menu className="w-5 h-5" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[280px] sm:w-[300px] bg-white dark:bg-gray-800">
+                <SheetContent
+                  side="right"
+                  className="w-[280px] sm:w-[300px] bg-white dark:bg-gray-800"
+                >
                   <SheetHeader>
                     <SheetTitle className="text-left text-gray-900 dark:text-white">
                       Menu
@@ -450,4 +472,3 @@ const DigiShareNavbar: React.FC = () => {
 };
 
 export default DigiShareNavbar;
-
