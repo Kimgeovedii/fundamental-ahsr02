@@ -176,33 +176,34 @@ export const BlogForm: React.FC<BlogFormProps> = ({
         <Form className="space-y-8">
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-3">
-              <Label>Article Title *</Label>
+              <Label className="text-gray-900 dark:text-white">Article Title *</Label>
               <Field name="title">
                 {({ field }: any) => (
-                  <Input {...field} placeholder="Enter article title" />
+                  <Input {...field} placeholder="Enter article title" className="text-gray-900 dark:text-white" />
                 )}
               </Field>
               {errors.title && touched.title && (
-                <p className="text-red-500 text-sm">{errors.title}</p>
+                <p className="text-red-500 dark:text-red-400 text-sm">{errors.title}</p>
               )}
             </div>
 
             <div className="space-y-3">
-              <Label>Image {!isEditMode ? "*" : ""}</Label>
+              <Label className="text-gray-900 dark:text-white">Image {!isEditMode ? "*" : ""}</Label>
               <Input
                 type="file"
                 accept="image/png, image/jpeg, image/jpg"
                 onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
                 required={!isEditMode}
+                className="text-gray-900 dark:text-white file:text-gray-900 dark:file:text-white"
               />
 
               {imageFile && (
-                <p className="text-sm text-gray-600 dark:text-gray-400">{imageFile.name}</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300">{imageFile.name}</p>
               )}
 
               {currentImageUrl && !imageFile && (
                 <div className="mt-2">
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Current image:</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">Current image:</p>
                   <img
                     src={currentImageUrl}
                     alt="Current"
@@ -214,36 +215,36 @@ export const BlogForm: React.FC<BlogFormProps> = ({
           </div>
 
           <div className="space-y-3">
-            <Label>Article Content *</Label>
+            <Label className="text-gray-900 dark:text-white">Article Content *</Label>
             <Field name="content">
               {({ field }: any) => (
                 <Textarea
                   {...field}
-                  className="min-h-[200px]"
+                  className="min-h-[200px] text-gray-900 dark:text-white"
                   placeholder="Write here..."
                 />
               )}
             </Field>
             {errors.content && touched.content && (
-              <p className="text-red-500 text-sm">{errors.content}</p>
+              <p className="text-red-500 dark:text-red-400 text-sm">{errors.content}</p>
             )}
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-3">
-              <Label>Category *</Label>
+              <Label className="text-gray-900 dark:text-white">Category *</Label>
 
               <Select
                 value={values.category}
                 onValueChange={(v) => setFieldValue("category", v)}
               >
-                <SelectTrigger>
+                <SelectTrigger className="text-gray-900 dark:text-white">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
 
-                <SelectContent>
+                <SelectContent className="text-gray-900 dark:text-white">
                   {categories.map((cat) => (
-                    <SelectItem key={cat.id} value={String(cat.id)}>
+                    <SelectItem key={cat.id} value={String(cat.id)} className="text-gray-900 dark:text-white">
                       {cat.name}
                     </SelectItem>
                   ))}
@@ -251,18 +252,18 @@ export const BlogForm: React.FC<BlogFormProps> = ({
               </Select>
 
               {errors.category && touched.category && (
-                <p className="text-red-500 text-sm">{errors.category}</p>
+                <p className="text-red-500 dark:text-red-400 text-sm">{errors.category}</p>
               )}
             </div>
 
             <div className="space-y-3">
-              <Label>Featured</Label>
+              <Label className="text-gray-900 dark:text-white">Featured</Label>
               <div className="flex items-center gap-4">
                 <Switch
                   checked={values.featured}
                   onCheckedChange={(v) => setFieldValue("featured", v)}
                 />
-                <p>⭐ Feature this article</p>
+                <p className="text-gray-900 dark:text-white">⭐ Feature this article</p>
               </div>
             </div>
           </div>

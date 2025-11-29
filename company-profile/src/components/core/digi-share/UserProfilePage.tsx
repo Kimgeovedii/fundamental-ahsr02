@@ -102,7 +102,7 @@ const UserProfilePage = () => {
           setAuthor(authorData);
         }
         if (blogs) {
-          setUserBlogs(blogs);
+          setUserBlogs(blogs.filter((blog) => blog.is_featured === true));
         }
       } catch (error: any) {
         console.error("Failed to fetch data:", error);
@@ -181,7 +181,7 @@ const UserProfilePage = () => {
               <div className="flex items-center gap-4 text-blue-100 dark:text-blue-200">
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-5 h-5" />
-                  <span>{userBlogs.length} Posts</span>
+                  <span>{userBlogs.length} Featured Posts</span>
                 </div>
               </div>
             </div>

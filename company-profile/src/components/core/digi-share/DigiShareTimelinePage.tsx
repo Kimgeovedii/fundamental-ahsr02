@@ -5,7 +5,7 @@ import { Search, Tag, Plus, BookOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useBlogs } from "@/lib/hooks/useBlogs";
 import { useCategoryStore } from "@/lib/stores/categoryStore";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
@@ -59,16 +59,38 @@ const BlogPostCard = ({
     });
   };
 
-  const calculateReadingTime = (text: string) => {
-    const wordsPerMinute = 200;
-    const words = text.split(/\s+/).length;
-    const minutes = Math.ceil(words / wordsPerMinute);
-    return minutes;
-  };
+  const getTimeAgo = (dateString: string): string => {
+    const now = new Date();
+    const date = new Date(dateString);
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-  const readingTime = blog.description
-    ? calculateReadingTime(blog.description)
-    : 1;
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} sec`;
+    }
+
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes} min`;
+    }
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) {
+      return `${diffInHours} hour${diffInHours > 1 ? 's' : ''}`;
+    }
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 30) {
+      return `${diffInDays} day${diffInDays > 1 ? 's' : ''}`;
+    }
+
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) {
+      return `${diffInMonths} month${diffInMonths > 1 ? 's' : ''}`;
+    }
+
+    const diffInYears = Math.floor(diffInMonths / 12);
+    return `${diffInYears} year${diffInYears > 1 ? 's' : ''}`;
+  };
 
   return (
     <motion.article
@@ -88,6 +110,13 @@ const BlogPostCard = ({
                 className="flex items-center gap-3"
               >
                 <Avatar className="h-8 w-8 border border-gray-200 dark:border-gray-700 cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all">
+                  {blog.author_avatar ? (
+                    <AvatarImage 
+                      src={blog.author_avatar} 
+                      alt={blog.author_name || "Author"}
+                      className="object-cover"
+                    />
+                  ) : null}
                   <AvatarFallback className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 text-xs">
                     {getInitials(blog.author_name)}
                   </AvatarFallback>
@@ -104,7 +133,7 @@ const BlogPostCard = ({
                 <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                   <span>{formatDate(blog.created_at)}</span>
                   <span>•</span>
-                  <span>{readingTime} {minutesReadText}</span>
+                  <span>{getTimeAgo(blog.created_at)}</span>
                 </div>
               </Link>
               {blog.category && (
@@ -196,6 +225,8 @@ const DigiShareTimelinePage = () => {
   const filteredBlogs = React.useMemo(() => {
     let filtered = blogs || [];
 
+    filtered = filtered.filter((blog) => blog.is_featured === true);
+
     if (selectedCategory !== "all") {
       filtered = filtered.filter(
         (blog) => blog.category_id === selectedCategory
@@ -248,10 +279,11 @@ const DigiShareTimelinePage = () => {
             {isLoggedIn && (
               <Button
                 onClick={() => router.push("/digi-share/create")}
-                className="bg-white text-blue-600 hover:bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700 font-semibold"
+                className="bg-white text-blue-600 hover:bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700 font-semibold text-xs sm:text-sm px-3 sm:px-4 py-2 sm:py-2.5 whitespace-nowrap"
               >
-                <Plus className="w-4 h-4 mr-2" />
-                {data.write_post}
+                <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                <span className="hidden sm:inline">{data.write_post}</span>
+                <span className="sm:hidden">Write</span>
               </Button>
             )}
           </motion.div>
@@ -305,10 +337,10 @@ const DigiShareTimelinePage = () => {
                 {data.no_results}
               </p>
               {!isLoggedIn && (
-                <p className="text-gray-500 dark:text-gray-500 text-sm mt-2">
+                <p className="text-gray-600 dark:text-gray-400 text-sm mt-2">
                   <Link
                     href="/login"
-                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline font-medium"
                   >
                     Login
                   </Link>{" "}

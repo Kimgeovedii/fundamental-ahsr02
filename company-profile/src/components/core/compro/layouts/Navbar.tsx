@@ -2,7 +2,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,8 +13,15 @@ import {
 import { useAuthStore } from "@/lib/stores";
 import { useRouter } from "next/navigation";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
-import { Languages, LogOut, BookOpen } from "lucide-react";
+import { Languages, LogOut, BookOpen, Menu, X } from "lucide-react";
 import { getLocale } from "@/lib/get-locale";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 interface NavLink {
   url: string;
@@ -32,6 +39,7 @@ const Navbar: React.FC = () => {
 
   const [localeData, setLocaleData] = React.useState<LocaleData | null>(null);
   const [isLoadingLocale, setIsLoadingLocale] = React.useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     if (hydrated) {
@@ -86,8 +94,8 @@ const Navbar: React.FC = () => {
   if (!hydrated || isLoadingLocale) {
     return (
       <div className={navbarClasses}>
-        <div className="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
-          <div className="text-gray-900 dark:text-white font-bold text-xl">
+        <div className="max-w-7xl mx-auto flex items-center justify-between py-3 md:py-4 px-4 sm:px-6">
+          <div className="text-gray-900 dark:text-white font-bold text-lg sm:text-xl">
             Digiforma Tech
           </div>
         </div>
@@ -99,19 +107,17 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={navbarClasses}>
-      <div className="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
-        <div className="flex items-center gap-2">
-          <div className="text-gray-900 dark:text-white font-bold text-xl">
-            Digiforma Tech
-          </div>
-        </div>
+      <div className="max-w-7xl mx-auto flex items-center justify-between py-3 md:py-4 px-4 sm:px-6">
+        <Link href="/" className="text-gray-900 dark:text-white font-bold text-lg sm:text-xl">
+          Digiforma Tech
+        </Link>
 
-        <ul className="hidden md:flex items-center gap-8 text-gray-600 dark:text-gray-400 text-sm">
+        <ul className="hidden md:flex items-center gap-6 lg:gap-8 text-sm">
           {navLinks.map((link, i) => (
             <li key={i}>
               <Link
                 href={link.url}
-                className="hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="text-gray-800 dark:text-gray-300 font-medium hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 {link.name}
               </Link>
@@ -119,65 +125,220 @@ const Navbar: React.FC = () => {
           ))}
         </ul>
 
-        <div className="flex gap-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {hydrated && (
-            <div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={toggleLang}
-                className="text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-colors duration-500 p-2 h-auto"
-                aria-label="Toggle language"
-              >
-                <Languages className="w-4 h-4 mr-1" />
-                {lang.toUpperCase()}
-              </Button>
-            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={toggleLang}
+              className="hidden sm:flex text-gray-800 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-colors duration-500 p-2 h-auto font-medium"
+              aria-label="Toggle language"
+            >
+              <Languages className="w-4 h-4 mr-1" />
+              <span className="hidden lg:inline">{lang.toUpperCase()}</span>
+            </Button>
           )}
           {isLoggedIn ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="rounded-full h-10 w-10 p-0 focus-visible:ring-offset-0 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                  aria-label="User menu"
+            <>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="hidden sm:flex rounded-full h-10 w-10 p-0 focus-visible:ring-offset-0 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    aria-label="User menu"
+                  >
+                    <Avatar className="h-9 w-9 border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+                      {user?.avatar && (
+                        <AvatarImage
+                          src={user.avatar}
+                          alt={user.displayName || "User"}
+                          className="object-cover"
+                        />
+                      )}
+                      <AvatarFallback className="bg-gray-200 dark:bg-white text-blue-700 text-sm font-medium">
+                        {getInitials(user?.displayName ?? undefined)}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-48 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
                 >
-                  <Avatar className="h-9 w-9 border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
-                    <AvatarFallback className="bg-gray-200 dark:bg-white text-blue-700 text-sm font-medium">
-                      {getInitials(user?.displayName ?? undefined)}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-                <DropdownMenuItem
-                  onClick={() => router.push("/digi-share")}
-                  className="cursor-pointer text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  <BookOpen className="w-4 h-4 mr-2" />
-                  Digi-Share
-                </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-700" />
-                <DropdownMenuItem
-                  onClick={async () => {
-                    await useAuthStore.getState().logout();
-                    router.push("/");
-                  }}
-                  className="cursor-pointer text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
-                  variant="destructive"
-                >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  <DropdownMenuItem
+                    onClick={() => router.push("/digi-share")}
+                    className="cursor-pointer text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    <BookOpen className="w-4 h-4 mr-2" />
+                    Digi-Share
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-700" />
+                  <DropdownMenuItem
+                    onClick={async () => {
+                      await useAuthStore.getState().logout();
+                      router.push("/");
+                    }}
+                    className="cursor-pointer text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                    variant="destructive"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="sm:hidden text-gray-900 dark:text-white p-2"
+                    aria-label="Open menu"
+                  >
+                    <Menu className="w-5 h-5" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[280px] sm:w-[300px] bg-white dark:bg-gray-800">
+                  <SheetHeader>
+                    <SheetTitle className="text-left text-gray-900 dark:text-white">
+                      Menu
+                    </SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-6 space-y-4">
+                    <div className="space-y-2">
+                      {navLinks.map((link, i) => (
+                        <Link
+                          key={i}
+                          href={link.url}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                        >
+                          {link.name}
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+                      {hydrated && (
+                        <Button
+                          variant="ghost"
+                          onClick={toggleLang}
+                          className="w-full justify-start text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                          <Languages className="w-4 h-4 mr-2" />
+                          {lang.toUpperCase()}
+                        </Button>
+                      )}
+                      <Link
+                        href="/digi-share"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                      >
+                        <BookOpen className="w-4 h-4 inline mr-2" />
+                        Digi-Share
+                      </Link>
+                      <Button
+                        variant="ghost"
+                        onClick={async () => {
+                          await useAuthStore.getState().logout();
+                          setMobileMenuOpen(false);
+                          router.push("/");
+                        }}
+                        className="w-full justify-start text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Logout
+                      </Button>
+                    </div>
+                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                      <div className="px-4 py-2">
+                        <div className="flex items-center gap-3">
+                          <Avatar className="h-10 w-10 border-2 border-gray-300 dark:border-gray-600">
+                            {user?.avatar && (
+                              <AvatarImage
+                                src={user.avatar}
+                                alt={user.displayName || "User"}
+                                className="object-cover"
+                              />
+                            )}
+                            <AvatarFallback className="bg-gray-200 dark:bg-white text-blue-700 text-sm font-medium">
+                              {getInitials(user?.displayName ?? undefined)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                              {user?.displayName || "User"}
+                            </p>
+                            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                              {user?.email}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </>
           ) : (
-            <Link
-              href="/digi-share"
-              className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition text-white text-sm px-5 py-2 rounded-xl shadow-lg"
-            >
-              {localeData?.login || "Digi-share"}
-            </Link>
+            <>
+              <Link
+                href="/digi-share"
+                className="hidden sm:inline-block bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition text-white text-xs sm:text-sm px-3 sm:px-5 py-2 rounded-xl shadow-lg whitespace-nowrap"
+              >
+                {localeData?.login || "Digi-share"}
+              </Link>
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="sm:hidden text-gray-900 dark:text-white p-2"
+                    aria-label="Open menu"
+                  >
+                    <Menu className="w-5 h-5" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="w-[280px] sm:w-[300px] bg-white dark:bg-gray-800">
+                  <SheetHeader>
+                    <SheetTitle className="text-left text-gray-900 dark:text-white">
+                      Menu
+                    </SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-6 space-y-4">
+                    <div className="space-y-2">
+                      {navLinks.map((link, i) => (
+                        <Link
+                          key={i}
+                          href={link.url}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                        >
+                          {link.name}
+                        </Link>
+                      ))}
+                    </div>
+                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+                      {hydrated && (
+                        <Button
+                          variant="ghost"
+                          onClick={toggleLang}
+                          className="w-full justify-start text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        >
+                          <Languages className="w-4 h-4 mr-2" />
+                          {lang.toUpperCase()}
+                        </Button>
+                      )}
+                      <Link
+                        href="/digi-share"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="block w-full text-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                      >
+                        {localeData?.login || "Digi-share"}
+                      </Link>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+            </>
           )}
         </div>
       </div>

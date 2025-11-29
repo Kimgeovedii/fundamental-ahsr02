@@ -5,6 +5,7 @@ export type Blog = {
   image_url: string;
   author_id: string;
   author_name?: string;
+  author_avatar?: string;
   category_id?: string;
   is_featured: boolean;
   category: Category;

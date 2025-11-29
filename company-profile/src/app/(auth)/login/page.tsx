@@ -21,9 +21,9 @@ interface ILoginPageProps {}
 
 const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
   return (
-    <div className="grid grid-cols-2 w-screen h-screen">
+    <div className="grid grid-cols-1 lg:grid-cols-2 w-screen min-h-screen">
       <div
-        className="w-full h-full flex flex-col justify-center items-center p-12"
+        className="hidden lg:flex w-full h-full flex-col justify-center items-center p-8 lg:p-12"
         style={{
           backgroundImage: "url('/img/corporate.png')",
           backgroundSize: "cover",
@@ -35,7 +35,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
       >
         <div
           className="
-          w-full max-w-lg p-10 
+          w-full max-w-lg p-8 lg:p-10 
           rounded-2xl 
           shadow-2xl 
           border border-white/30 
@@ -47,11 +47,11 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
           text-center
         "
         >
-          <h1 className="text-5xl font-extrabold tracking-tight mb-2 drop-shadow-lg">
+          <h1 className="text-4xl lg:text-5xl font-extrabold tracking-tight mb-2 drop-shadow-lg">
             DIGIFORMA
           </h1>
 
-          <p className="text-xl font-light leading-relaxed text-white/90 drop-shadow-md">
+          <p className="text-lg lg:text-xl font-light leading-relaxed text-white/90 drop-shadow-md">
             Partner Digitalisasi Bisnis B2B Anda.
             <br />
             Transformasi dimulai di sini.
@@ -59,10 +59,10 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
         </div>
       </div>
 
-      <div className="flex justify-center items-center flex-col w-full h-full bg-gray-50">
+      <div className="flex justify-center items-center flex-col w-full min-h-screen py-8 lg:py-0 bg-gray-50 dark:bg-gray-900 px-4">
         <LoginCard />
-        <div className="text-center p-4 pt-2 border-t border-gray-100 mt-4">
-          <p className="text-xs text-gray-400">
+        <div className="text-center p-4 pt-2 border-t border-gray-200 dark:border-gray-700 mt-4 w-full max-w-sm">
+          <p className="text-xs text-gray-500 dark:text-gray-400">
             © 2025 Digiforma Tech Solution. All rights reserved.
           </p>
         </div>

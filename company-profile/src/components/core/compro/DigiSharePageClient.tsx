@@ -65,16 +65,38 @@ const BlogPostCard = ({
     });
   };
 
-  const calculateReadingTime = (text: string) => {
-    const wordsPerMinute = 200;
-    const words = text.split(/\s+/).length;
-    const minutes = Math.ceil(words / wordsPerMinute);
-    return minutes;
-  };
+  const getTimeAgo = (dateString: string): string => {
+    const now = new Date();
+    const date = new Date(dateString);
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-  const readingTime = blog.description
-    ? calculateReadingTime(blog.description)
-    : 1;
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} sec`;
+    }
+
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes} min`;
+    }
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) {
+      return `${diffInHours} hour${diffInHours > 1 ? 's' : ''}`;
+    }
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 30) {
+      return `${diffInDays} day${diffInDays > 1 ? 's' : ''}`;
+    }
+
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) {
+      return `${diffInMonths} month${diffInMonths > 1 ? 's' : ''}`;
+    }
+
+    const diffInYears = Math.floor(diffInMonths / 12);
+    return `${diffInYears} year${diffInYears > 1 ? 's' : ''}`;
+  };
 
   return (
     <motion.article
@@ -100,7 +122,7 @@ const BlogPostCard = ({
                 <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                   <span>{formatDate(blog.created_at)}</span>
                   <span>•</span>
-                  <span>{readingTime} {minutesReadText}</span>
+                  <span>{getTimeAgo(blog.created_at)}</span>
                 </div>
               </div>
               {blog.category && (
@@ -178,6 +200,8 @@ const DigiSharePageClient = () => {
 
   const filteredBlogs = React.useMemo(() => {
     let filtered = blogs || [];
+
+    filtered = filtered.filter((blog) => blog.is_featured === true);
 
     if (selectedCategory !== "all") {
       filtered = filtered.filter(

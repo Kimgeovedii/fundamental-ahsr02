@@ -189,7 +189,7 @@ const ServicesPageClient = () => {
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <Card className="h-full hover:shadow-xl transition-shadow duration-300 hover:border-blue-500 dark:hover:border-blue-400 bg-white dark:bg-gray-900 border-border">
+                  <Card className="h-full hover:shadow-xl transition-shadow duration-300 hover:border-blue-500 dark:hover:border-blue-400 bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
                     <CardHeader>
                       <div className="flex items-start gap-4">
                         {IconComponent && (
@@ -256,12 +256,12 @@ const ServicesPageClient = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <Card className="shadow-xl bg-white dark:bg-gray-900 border-border">
+            <Card className="shadow-xl bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700">
               <CardContent className="p-6 md:p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="company_name">
+                      <Label htmlFor="company_name" className="text-gray-900 dark:text-white">
                         {data.contact.form.company_name}
                       </Label>
                       <Input
@@ -272,11 +272,12 @@ const ServicesPageClient = () => {
                         value={formData.company_name}
                         onChange={handleChange}
                         placeholder={data.contact.form.company_name}
+                        className="text-gray-900 dark:text-white"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="name">{data.contact.form.name}</Label>
+                      <Label htmlFor="name" className="text-gray-900 dark:text-white">{data.contact.form.name}</Label>
                       <Input
                         id="name"
                         name="name"
@@ -285,13 +286,14 @@ const ServicesPageClient = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder={data.contact.form.name}
+                        className="text-gray-900 dark:text-white"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="email">{data.contact.form.email}</Label>
+                      <Label htmlFor="email" className="text-gray-900 dark:text-white">{data.contact.form.email}</Label>
                       <Input
                         id="email"
                         name="email"
@@ -300,11 +302,12 @@ const ServicesPageClient = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder={data.contact.form.email}
+                        className="text-gray-900 dark:text-white"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="phone">{data.contact.form.phone}</Label>
+                      <Label htmlFor="phone" className="text-gray-900 dark:text-white">{data.contact.form.phone}</Label>
                       <Input
                         id="phone"
                         name="phone"
@@ -313,12 +316,13 @@ const ServicesPageClient = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder={data.contact.form.phone}
+                        className="text-gray-900 dark:text-white"
                       />
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="service_interest">
+                    <Label htmlFor="service_interest" className="text-gray-900 dark:text-white">
                       {data.contact.form.service_interest}
                     </Label>
                     <Select
@@ -328,14 +332,14 @@ const ServicesPageClient = () => {
                       }
                       required
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="text-gray-900 dark:text-white">
                         <SelectValue
                           placeholder={data.contact.form.service_interest}
                         />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className="text-gray-900 dark:text-white">
                         {data.items.map((service) => (
-                          <SelectItem key={service.id} value={service.title}>
+                          <SelectItem key={service.id} value={service.title} className="text-gray-900 dark:text-white">
                             {service.title}
                           </SelectItem>
                         ))}
@@ -344,7 +348,7 @@ const ServicesPageClient = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message">{data.contact.form.message}</Label>
+                    <Label htmlFor="message" className="text-gray-900 dark:text-white">{data.contact.form.message}</Label>
                     <Textarea
                       id="message"
                       name="message"
@@ -353,6 +357,7 @@ const ServicesPageClient = () => {
                       value={formData.message}
                       onChange={handleChange}
                       placeholder={data.contact.form.message}
+                      className="text-gray-900 dark:text-white"
                     />
                   </div>
 
@@ -378,7 +383,7 @@ const ServicesPageClient = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6"
           >
-            <div className="text-center p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-border">
+            <div className="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
               <Mail className="w-8 h-8 mx-auto mb-3 text-blue-600 dark:text-blue-400" />
               <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
                 Email
@@ -387,7 +392,7 @@ const ServicesPageClient = () => {
                 info@digiforma.com
               </p>
             </div>
-            <div className="text-center p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-border">
+            <div className="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
               <Phone className="w-8 h-8 mx-auto mb-3 text-blue-600 dark:text-blue-400" />
               <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
                 Phone
@@ -396,7 +401,7 @@ const ServicesPageClient = () => {
                 +62 812-3456-7890
               </p>
             </div>
-            <div className="text-center p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border border-border">
+            <div className="text-center p-6 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
               <MapPin className="w-8 h-8 mx-auto mb-3 text-blue-600 dark:text-blue-400" />
               <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
                 Address

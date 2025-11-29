@@ -18,6 +18,7 @@ export const blogService = {
     return data.map((blog: any) => ({
       ...blog,
       author_name: blog.author?.name || null,
+      author_avatar: blog.author?.avatar || null,
       author_id: blog.author_id,
     }));
   },
@@ -39,6 +40,7 @@ export const blogService = {
     return {
       ...data,
       author_name: data.author?.name || null,
+      author_avatar: data.author?.avatar || null,
       author_id: data.author_id,
     };
   },
@@ -93,6 +95,7 @@ export const blogService = {
     return data.map((blog: any) => ({
       ...blog,
       author_name: blog.author?.name || null,
+      author_avatar: blog.author?.avatar || null,
       author_id: blog.author_id,
     }));
   },

@@ -57,12 +57,12 @@ export function SignUpCard() {
     },
   });
   return (
-    <Card className="w-full max-w-sm p-2">
+    <Card className="w-full max-w-sm p-2 bg-white dark:bg-gray-800">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-semibold">
+        <CardTitle className="text-2xl font-semibold text-gray-900 dark:text-white">
           Create an account
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-gray-600 dark:text-gray-400">
           Fill the form below to register a new account
         </CardDescription>
       </CardHeader>
@@ -70,47 +70,49 @@ export function SignUpCard() {
       <CardContent>
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-6">
           <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-gray-900 dark:text-white">Email</Label>
             <Input
               id="email"
               type="email"
               placeholder="m@example.com"
               required
+              className="text-gray-900 dark:text-white"
               {...formik.getFieldProps("email")}
             />
             {formik.touched.email && formik.errors.email && (
-              <p className="text-red-500 text-sm italic">
+              <p className="text-red-500 dark:text-red-400 text-sm italic">
                 {formik.errors.email}
               </p>
             )}
           </div>
 
           <div className="grid gap-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-gray-900 dark:text-white">Password</Label>
             <div className="relative">
               <Input
                 id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
                 required
+                className="text-gray-900 dark:text-white"
                 {...formik.getFieldProps("password")}
               />
               <button
                 onClick={() => setShowPassword(!showPassword)}
                 type="button"
-                className="absolute right-3 -translate-y-1/2 top-1/2 text-gray-500 duration-300 cursor-pointer"
+                className="absolute right-3 -translate-y-1/2 top-1/2 text-gray-500 dark:text-gray-400 duration-300 cursor-pointer"
               >
                 {showPassword ? <FiEyeOff /> : <FiEye />}
               </button>
             </div>
             {formik.touched.password && formik.errors.password && (
-              <p className="text-red-500 text-sm italic">
+              <p className="text-red-500 dark:text-red-400 text-sm italic">
                 {formik.errors.password}
               </p>
             )}
           </div>
           {errorMsg && (
-            <p className="text-red-500 text-sm italic text-center">
+            <p className="text-red-500 dark:text-red-400 text-sm italic text-center">
               {errorMsg}
             </p>
           )}
@@ -135,16 +137,16 @@ export function SignUpCard() {
           )}
         </Button>
 
-        <Button variant="outline" className="w-full cursor-pointer">
+        <Button variant="outline" className="w-full cursor-pointer border-gray-200 dark:border-gray-700">
           <FcGoogle className="mr-2" />
           Sign Up with Google
         </Button>
 
-        <p className="text-sm text-center text-muted-foreground">
+        <p className="text-sm text-center text-gray-600 dark:text-gray-400">
           Already have an account?{" "}
           <a
             href="/login"
-            className="underline underline-offset-4 hover:text-primary"
+            className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 underline underline-offset-4"
           >
             Login
           </a>

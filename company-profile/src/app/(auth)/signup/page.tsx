@@ -21,7 +21,7 @@ interface ISignUpPageProps {}
 
 const SignUpPage: React.FunctionComponent<ISignUpPageProps> = (props) => {
   return (
-    <div className=" flex justify-center items-center w-screen h-screen">
+    <div className="flex justify-center items-center w-screen min-h-screen py-8 px-4 bg-gray-50 dark:bg-gray-900">
       <SignUpCard />
     </div>
   );

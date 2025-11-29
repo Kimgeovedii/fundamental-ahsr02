@@ -100,21 +100,21 @@ const DigiShareLandingPage = () => {
             <p className="text-lg text-blue-200 dark:text-blue-300 mb-10 max-w-2xl mx-auto">
               {data.hero.description}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <Button
                 onClick={() => router.push("/digi-share/posts")}
                 size="lg"
-                className="bg-white text-blue-600 hover:bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700 font-semibold text-lg px-8 py-6"
+                className="bg-white text-blue-600 hover:bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700 font-semibold text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 w-full sm:w-auto"
               >
                 {data.hero.cta_primary}
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
               {!isLoggedIn && (
-                <Link href="/login">
+                <Link href="/login" className="w-full sm:w-auto">
                   <Button
                     variant="outline"
                     size="lg"
-                    className="border-2 border-white text-white hover:bg-white/10 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/30 font-semibold text-lg px-8 py-6"
+                    className="border-2 border-white text-white hover:bg-white/10 hover:text-white dark:border-white dark:text-white dark:hover:bg-white/20 font-semibold text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 bg-transparent w-full sm:w-auto"
                   >
                     {data.hero.cta_secondary}
                   </Button>
@@ -182,20 +182,20 @@ const DigiShareLandingPage = () => {
               <Link href="/login">
                 <Button
                   size="lg"
-                  className="bg-white text-blue-600 hover:bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700 font-semibold text-lg px-8 py-6"
+                  className="bg-white text-blue-600 hover:bg-blue-50 dark:bg-white dark:text-blue-600 dark:hover:bg-blue-50 font-semibold text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 w-full sm:w-auto"
                 >
                   {data.cta_section.button_text}
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
               </Link>
             ) : (
               <Button
                 onClick={() => router.push("/digi-share/create")}
                 size="lg"
-                className="bg-white text-blue-600 hover:bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700 font-semibold text-lg px-8 py-6"
+                className="bg-white text-blue-600 hover:bg-blue-50 dark:bg-white dark:text-blue-600 dark:hover:bg-blue-50 font-semibold text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 w-full sm:w-auto"
               >
                 {data.cta_section.button_text}
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
               </Button>
             )}
           </motion.div>

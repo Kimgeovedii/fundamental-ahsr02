@@ -9,6 +9,7 @@ import {
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
 import { Spinner } from "@/components/ui/spinner";
+import { motion } from "framer-motion";
 
 interface IFAQSection {
   header: string;
@@ -47,9 +48,15 @@ const FaqSection = () => {
   return (
     <section className="py-24 px-4 sm:px-8 bg-white dark:bg-gray-900 transition-colors duration-500">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold mb-16 text-gray-900 dark:text-white text-center">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-5xl font-bold mb-16 text-gray-900 dark:text-white text-center"
+        >
           {content.header}
-        </h2>
+        </motion.h2>
 
         <Accordion
           type="single"
@@ -58,47 +65,54 @@ const FaqSection = () => {
           className="w-full"
         >
           {content.items.map((item, index) => (
-            <AccordionItem
+            <motion.div
               key={item.id}
-              value={`item-${item.id}`}
-              className={`
-                mt-4 first:mt-0 rounded-xl shadow-lg transition-all duration-300 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 data-[state=open]:dark:bg-gray-900 data-[state=open]:dark:border-blue-600/30
-                data-[state=open]:bg-white data-[state=open]:border-blue-600/20
-              `}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <AccordionTrigger
-                className="
-                  py-4 px-6 md:px-8 flex justify-between items-center text-left 
-                  text-lg font-semibold 
-                  text-gray-900 dark:text-white
-                  data-[state=open]:border-b-0 border-b-transparent
-                  hover:no-underline 
-                "
-              >
-                <div className="flex items-start gap-4">
-                  <span
-                    className={`
-                      text-sm font-bold w-6 h-6 shrink-0
-                      text-blue-600 dark:text-blue-500
-                    `}
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="flex-1">{item.question}</span>
-                </div>
-              </AccordionTrigger>
-
-              <AccordionContent
+              <AccordionItem
+                value={`item-${item.id}`}
                 className={`
-                  pb-6 pt-0 px-6 md:px-8 
-                  text-base leading-relaxed 
-                  text-gray-600 dark:text-gray-400
-                  ${index === 0 ? "data-[state=open]:border-none" : ""}
+                  mt-4 first:mt-0 rounded-xl shadow-lg transition-all duration-300 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 data-[state=open]:dark:bg-gray-900 data-[state=open]:dark:border-blue-600/30
+                  data-[state=open]:bg-white data-[state=open]:border-blue-600/20
                 `}
               >
-                {item.answer}
-              </AccordionContent>
-            </AccordionItem>
+                <AccordionTrigger
+                  className="
+                    py-4 px-6 md:px-8 flex justify-between items-center text-left 
+                    text-lg font-semibold 
+                    text-gray-900 dark:text-white
+                    data-[state=open]:border-b-0 border-b-transparent
+                    hover:no-underline 
+                  "
+                >
+                  <div className="flex items-start gap-4">
+                    <span
+                      className={`
+                        text-sm font-bold w-6 h-6 shrink-0
+                        text-blue-600 dark:text-blue-500
+                      `}
+                    >
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="flex-1">{item.question}</span>
+                  </div>
+                </AccordionTrigger>
+
+                <AccordionContent
+                  className={`
+                    pb-6 pt-0 px-6 md:px-8 
+                    text-base leading-relaxed 
+                    text-gray-600 dark:text-gray-400
+                    ${index === 0 ? "data-[state=open]:border-none" : ""}
+                  `}
+                >
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            </motion.div>
           ))}
         </Accordion>
       </div>

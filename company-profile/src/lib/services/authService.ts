@@ -39,6 +39,7 @@ export const authService = {
         email: data.user.email ?? "",
         displayName: author?.name ?? null,
         authorId: author?.id ?? null,
+        avatar: author?.avatar ?? null,
       },
       token: data.session.access_token,
     } satisfies {
@@ -76,6 +77,7 @@ export const authService = {
           email: session.user.email!,
           displayName: author?.name ?? null,
           authorId: author?.id ?? null,
+          avatar: author?.avatar ?? null,
         },
         token: session.access_token,
       };

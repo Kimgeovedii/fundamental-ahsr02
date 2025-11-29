@@ -14,25 +14,25 @@ export default function ConfirmEmailPageClient() {
         transition={{ duration: 0.6 }}
         className="max-w-md w-full"
       >
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 md:p-10 text-center">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg p-6 sm:p-8 md:p-10 text-center">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="mx-auto w-20 h-20 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-6"
+            className="mx-auto w-16 h-16 sm:w-20 sm:h-20 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mb-6"
           >
-            <Mail className="w-10 h-10 text-blue-600 dark:text-blue-400" />
+            <Mail className="w-8 h-8 sm:w-10 sm:h-10 text-blue-600 dark:text-blue-400" />
           </motion.div>
 
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
             Cek Email Anda
           </h1>
 
-          <p className="text-gray-600 dark:text-gray-400 mb-2">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-2">
             Kami telah mengirimkan link konfirmasi ke email Anda.
           </p>
 
-          <p className="text-gray-600 dark:text-gray-400 mb-8">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-8">
             Silakan klik link tersebut untuk mengaktifkan akun Anda sebelum masuk.
           </p>
 
@@ -56,7 +56,7 @@ export default function ConfirmEmailPageClient() {
             </Link>
 
             <Link href="/signup">
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full border-gray-200 dark:border-gray-700">
                 Kembali ke Pendaftaran
               </Button>
             </Link>

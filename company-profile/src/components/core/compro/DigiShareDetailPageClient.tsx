@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Calendar, User, Tag, ArrowLeft, Share2, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useBlogDetail } from "@/lib/hooks/useBlogDetail";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
@@ -57,11 +57,37 @@ const DigiShareDetailPageClient = () => {
     });
   };
 
-  const calculateReadingTime = (text: string) => {
-    const wordsPerMinute = 200;
-    const words = text.split(/\s+/).length;
-    const minutes = Math.ceil(words / wordsPerMinute);
-    return minutes;
+  const getTimeAgo = (dateString: string): string => {
+    const now = new Date();
+    const date = new Date(dateString);
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    if (diffInSeconds < 60) {
+      return `${diffInSeconds} sec`;
+    }
+
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) {
+      return `${diffInMinutes} min`;
+    }
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) {
+      return `${diffInHours} hour${diffInHours > 1 ? 's' : ''}`;
+    }
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 30) {
+      return `${diffInDays} day${diffInDays > 1 ? 's' : ''}`;
+    }
+
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) {
+      return `${diffInMonths} month${diffInMonths > 1 ? 's' : ''}`;
+    }
+
+    const diffInYears = Math.floor(diffInMonths / 12);
+    return `${diffInYears} year${diffInYears > 1 ? 's' : ''}`;
   };
 
   const getInitials = (name?: string): string => {
@@ -88,9 +114,6 @@ const DigiShareDetailPageClient = () => {
     );
   }
 
-  const readingTime = blog.description
-    ? calculateReadingTime(blog.description)
-    : 1;
 
   return (
     <main className="min-h-screen bg-white dark:bg-gray-900">
@@ -115,6 +138,13 @@ const DigiShareDetailPageClient = () => {
             <div className="flex items-center gap-4 mb-6">
               <Link href={`/digi-share/profile/${blog.author_id}`}>
                 <Avatar className="h-12 w-12 border-2 border-gray-200 dark:border-gray-700 cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all">
+                  {blog.author_avatar ? (
+                    <AvatarImage 
+                      src={blog.author_avatar} 
+                      alt={blog.author_name || "Author"}
+                      className="object-cover"
+                    />
+                  ) : null}
                   <AvatarFallback className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400">
                     {getInitials(blog.author_name)}
                   </AvatarFallback>
@@ -129,7 +159,7 @@ const DigiShareDetailPageClient = () => {
                     {pageData.published_on} {formatDate(blog.created_at)}
                   </span>
                   <span>•</span>
-                  <span>{readingTime} {pageData.reading_time}</span>
+                  <span>{getTimeAgo(blog.created_at)}</span>
                 </div>
               </Link>
               {blog.category && (

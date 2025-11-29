@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
 import { Spinner } from "@/components/ui/spinner";
+import { motion } from "framer-motion";
 
 interface HeroTranslations {
   title_part1: string;
@@ -60,32 +61,75 @@ export default function HeroSection() {
           w-full
         `}
       >
-        <div className="text-center md:text-left max-w-lg space-y-6">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center md:text-left max-w-lg space-y-6"
+        >
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white"
+          >
             {t.title_part1}
-          </h1>
+          </motion.h1>
 
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-md mx-auto md:mx-0 leading-relaxed">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-lg text-gray-600 dark:text-gray-400 max-w-md mx-auto md:mx-0 leading-relaxed"
+          >
             {t.description}
-          </p>
+          </motion.p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
-            <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-xl shadow-lg shadow-blue-500/30 dark:shadow-blue-500/30 flex items-center gap-2 transition">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-xl shadow-lg shadow-blue-500/30 dark:shadow-blue-500/30 flex items-center gap-2 transition"
+            >
               {t.cta_start} <ArrowRight className="w-4 h-4" />
-            </button>
+            </motion.button>
 
-            <button className="px-6 py-3 border border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl flex items-center gap-2 transition">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-6 py-3 border border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl flex items-center gap-2 transition"
+            >
               {t.cta_discover} <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
+            </motion.button>
+          </motion.div>
+        </motion.div>
 
         {!isMobile && (
-          <div className="flex justify-center pointer-events-auto">
-            <div className="w-[300px] h-[300px] lg:w-[380px] lg:h-[380px] opacity-95">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, x: 50 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex justify-center pointer-events-auto"
+          >
+            <motion.div
+              animate={{
+                y: [0, -10, 0],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="w-[300px] h-[300px] lg:w-[380px] lg:h-[380px] opacity-95"
+            >
               <Spline scene="/scene2.splinecode" />
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         )}
       </div>
 
