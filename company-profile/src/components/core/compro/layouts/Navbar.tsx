@@ -216,7 +216,7 @@ const Navbar: React.FC = () => {
                         </Link>
                       ))}
                     </div>
-                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+                    <div className="pt-4 px-2 border-t border-gray-200 dark:border-gray-700 space-y-2">
                       {hydrated && (
                         <Button
                           variant="ghost"
@@ -230,7 +230,7 @@ const Navbar: React.FC = () => {
                       <Link
                         href="/digi-share"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                        className="block px-4 py-2.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                       >
                         <BookOpen className="w-4 h-4 inline mr-2" />
                         Digi-Share
@@ -316,7 +316,7 @@ const Navbar: React.FC = () => {
                         </Link>
                       ))}
                     </div>
-                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+                    <div className="pt-4 px-2 border-t border-gray-200 dark:border-gray-700 space-y-2">
                       {hydrated && (
                         <Button
                           variant="ghost"
@@ -330,7 +330,7 @@ const Navbar: React.FC = () => {
                       <Link
                         href="/digi-share"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block w-full text-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                        className="block w-full text-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2.5 rounded-lg transition-colors mt-2"
                       >
                         {localeData?.login || "Digi-share"}
                       </Link>

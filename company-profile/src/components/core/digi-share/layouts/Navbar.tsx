@@ -263,13 +263,13 @@ const DigiShareNavbar: React.FC = () => {
                       </Link>
                     </div>
                     {isLoggedIn && (
-                      <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+                      <div className="pt-4 px-2 border-t border-gray-200 dark:border-gray-700 space-y-2">
                         <Button
                           onClick={() => {
                             router.push("/digi-share/create");
                             setMobileMenuOpen(false);
                           }}
-                          className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white justify-start"
+                          className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white justify-start py-2.5"
                         >
                           <PenTool className="w-4 h-4 mr-2" />
                           {localeData.write_post}
@@ -300,7 +300,7 @@ const DigiShareNavbar: React.FC = () => {
                         </Link>
                       </div>
                     )}
-                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+                    <div className="pt-4 px-2 border-t border-gray-200 dark:border-gray-700 space-y-2">
                       {hydrated && (
                         <Button
                           variant="ghost"
@@ -328,7 +328,7 @@ const DigiShareNavbar: React.FC = () => {
                         <Link
                           href="/login"
                           onClick={() => setMobileMenuOpen(false)}
-                          className="block w-full text-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                          className="block w-full text-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2.5 rounded-lg transition-colors mt-2"
                         >
                           {localeData.login}
                         </Link>
@@ -417,7 +417,7 @@ const DigiShareNavbar: React.FC = () => {
                         {localeData.search_users}
                       </Link>
                     </div>
-                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-2">
+                    <div className="pt-4 px-2 border-t border-gray-200 dark:border-gray-700 space-y-2">
                       {hydrated && (
                         <Button
                           variant="ghost"
@@ -431,7 +431,7 @@ const DigiShareNavbar: React.FC = () => {
                       <Link
                         href="/login"
                         onClick={() => setMobileMenuOpen(false)}
-                        className="block w-full text-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+                        className="block w-full text-center bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2.5 rounded-lg transition-colors mt-2"
                       >
                         {localeData.login}
                       </Link>

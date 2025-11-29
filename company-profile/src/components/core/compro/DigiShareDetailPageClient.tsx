@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Calendar, User, Tag, ArrowLeft, Share2, BookOpen } from "lucide-react";
+import { Tag, ArrowLeft, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -128,16 +128,16 @@ const DigiShareDetailPageClient = () => {
             <Link href="/digi-share/posts">
               <Button
                 variant="ghost"
-                className="mb-6 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                className="mb-6 text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 {pageData.back_to_digi_share}
               </Button>
             </Link>
 
-            <div className="flex items-center gap-4 mb-6">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-6">
               <Link href={`/digi-share/profile/${blog.author_id}`}>
-                <Avatar className="h-12 w-12 border-2 border-gray-200 dark:border-gray-700 cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all">
+                <Avatar className="h-10 w-10 sm:h-12 sm:w-12 border-2 border-gray-200 dark:border-gray-700 cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all shrink-0">
                   {blog.author_avatar ? (
                     <AvatarImage 
                       src={blog.author_avatar} 
@@ -150,30 +150,31 @@ const DigiShareDetailPageClient = () => {
                   </AvatarFallback>
                 </Avatar>
               </Link>
-              <Link href={`/digi-share/profile/${blog.author_id}`} className="flex-1">
+              <Link href={`/digi-share/profile/${blog.author_id}`} className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-pointer">
                   {blog.author_name || "Anonymous"}
                 </p>
-                <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                  <span>
-                    {pageData.published_on} {formatDate(blog.created_at)}
+                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+                  <span className="whitespace-nowrap">
+                    {pageData.published_on} <span className="hidden sm:inline">{formatDate(blog.created_at)}</span><span className="sm:hidden">{new Date(blog.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
                   </span>
-                  <span>•</span>
-                  <span>{getTimeAgo(blog.created_at)}</span>
+                  <span className="hidden sm:inline">•</span>
+                  <span className="whitespace-nowrap">{getTimeAgo(blog.created_at)}</span>
                 </div>
               </Link>
               {blog.category && (
                 <Badge
                   variant="outline"
-                  className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300"
+                  className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 shrink-0"
                 >
                   <Tag className="w-3 h-3 mr-1" />
-                  {blog.category.name}
+                  <span className="hidden sm:inline">{blog.category.name}</span>
+                  <span className="sm:hidden">{blog.category.name.length > 10 ? blog.category.name.substring(0, 10) + '...' : blog.category.name}</span>
                 </Badge>
               )}
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               {blog.title}
             </h1>
           </motion.div>
@@ -213,16 +214,7 @@ const DigiShareDetailPageClient = () => {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700"
           >
-            <div className="flex items-center justify-between">
-              <Link href="/digi-share/posts">
-                <Button
-                  variant="outline"
-                  className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  {pageData.back_to_digi_share}
-                </Button>
-              </Link>
+            <div className="flex items-center justify-end">
               <Button
                 variant="outline"
                 onClick={() => {
@@ -237,7 +229,7 @@ const DigiShareDetailPageClient = () => {
                     alert("Link copied to clipboard!");
                   }
                 }}
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                className="text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
               >
                 <Share2 className="w-4 h-4 mr-2" />
                 {pageData.share}
