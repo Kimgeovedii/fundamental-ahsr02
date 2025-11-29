@@ -15,10 +15,17 @@ export const metadata: Metadata = {
     "Digiforma Tech Solution",
   ],
   openGraph: {
+    title: "Blog - Digiforma Tech Solution | Artikel & Insights Teknologi",
+    description:
+      "Baca artikel dan insights terbaru tentang IT Master Plan, Enterprise Architecture, COBIT 2019, dan pengembangan software dari tim ahli.",
+    type: "website",
+    url: "/blogs",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Blog - Digiforma Tech Solution",
     description:
       "Artikel dan insights terbaru tentang teknologi dan transformasi digital",
-    type: "website",
   },
 };
 

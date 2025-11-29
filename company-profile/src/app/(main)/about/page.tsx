@@ -16,10 +16,17 @@ export const metadata: Metadata = {
     "Digiforma Tech Solution",
   ],
   openGraph: {
+    title: "Tentang Kami - Digiforma Tech Solution | IT Consulting & Software House",
+    description:
+      "Pelajari lebih lanjut tentang Digiforma Tech Solution, perusahaan konsultasi TI dan software house terpercaya dengan tim ahli berpengalaman.",
+    type: "website",
+    url: "/about",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Tentang Kami - Digiforma Tech Solution",
     description:
       "Pelajari lebih lanjut tentang perusahaan dan tim ahli kami",
-    type: "website",
   },
 };
 

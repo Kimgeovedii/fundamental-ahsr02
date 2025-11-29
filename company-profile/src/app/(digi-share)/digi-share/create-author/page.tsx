@@ -2,8 +2,13 @@ import { Metadata } from "next";
 import CreateAuthorPage from "@/components/core/digi-share/CreateAuthorPage";
 
 export const metadata: Metadata = {
-  title: "Create Author Profile - Digi-Share | Digiforma Tech Solution",
-  description: "Create your author profile to start sharing on Digi-Share",
+  title: "Buat Profil Penulis - Digi-Share | Digiforma Tech Solution",
+  description:
+    "Buat profil penulis Anda untuk mulai berbagi artikel dan insights di Digi-Share. Lengkapi informasi profil Anda sekarang.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function CreateAuthorPageRoute() {

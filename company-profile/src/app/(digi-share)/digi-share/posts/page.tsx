@@ -12,9 +12,16 @@ export const metadata: Metadata = {
     "IT Insights",
   ],
   openGraph: {
+    title: "Timeline - Digi-Share | Artikel & Insights Komunitas",
+    description:
+      "Jelajahi timeline artikel dan insights dari komunitas Digi-Share. Temukan konten menarik seputar teknologi, IT, dan transformasi digital.",
+    type: "website",
+    url: "/digi-share/posts",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Timeline - Digi-Share",
     description: "Jelajahi timeline artikel dari komunitas Digi-Share",
-    type: "website",
   },
 };
 

@@ -14,10 +14,17 @@ export const metadata: Metadata = {
     "Digiforma Tech Solution",
   ],
   openGraph: {
+    title: "Digi-Share - Platform Berbagi Artikel & Insights",
+    description:
+      "Bergabunglah dengan komunitas Digi-Share untuk berbagi artikel, insights, dan pengetahuan tentang teknologi. Platform terbuka untuk semua orang berbagi dan belajar bersama.",
+    type: "website",
+    url: "/digi-share",
+  },
+  twitter: {
+    card: "summary_large_image",
     title: "Digi-Share - Platform Berbagi Artikel",
     description:
       "Bergabunglah dengan komunitas untuk berbagi artikel dan insights",
-    type: "website",
   },
 };
 

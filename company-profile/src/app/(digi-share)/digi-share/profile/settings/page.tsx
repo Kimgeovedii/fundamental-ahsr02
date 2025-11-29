@@ -2,8 +2,13 @@ import { Metadata } from "next";
 import ProfileSettingsPage from "@/components/core/digi-share/ProfileSettingsPage";
 
 export const metadata: Metadata = {
-  title: "Profile Settings - Digi-Share | Digiforma Tech Solution",
-  description: "Manage your profile settings on Digi-Share",
+  title: "Pengaturan Profil - Digi-Share | Digiforma Tech Solution",
+  description:
+    "Kelola pengaturan profil Anda di Digi-Share. Update nama, bio, avatar, email, dan password Anda.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function ProfileSettingsPageRoute() {

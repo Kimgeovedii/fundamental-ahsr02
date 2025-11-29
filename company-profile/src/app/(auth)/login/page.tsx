@@ -1,5 +1,21 @@
+import { Metadata } from "next";
 import * as React from "react";
 import { LoginCard } from "@/components/core/LoginCard";
+
+export const metadata: Metadata = {
+  title: "Masuk - Digiforma Tech Solution",
+  description:
+    "Masuk ke akun Digiforma Tech Solution untuk mengakses layanan dan fitur eksklusif. Login ke Digi-Share untuk mulai berbagi artikel dan insights.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+  openGraph: {
+    title: "Masuk - Digiforma Tech Solution",
+    description: "Login ke akun Anda untuk mengakses platform Digiforma",
+    type: "website",
+  },
+};
 
 interface ILoginPageProps {}
 
