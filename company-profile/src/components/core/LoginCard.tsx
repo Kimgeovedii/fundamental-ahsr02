@@ -46,7 +46,6 @@ export function LoginCard() {
       const success = await login(values.email, values.password);
 
       if (!success) {
-        // tampilkan error dari store
         setErrorMsg(error || "Login gagal. Periksa kembali email/password.");
         toast.error(error || "Login gagal.");
         return;

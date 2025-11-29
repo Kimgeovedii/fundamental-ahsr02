@@ -1,5 +1,5 @@
 {
-  "login": "Masuk",
+  "login": "Digi-share",
   "navigation": [
     {
       "name": "Beranda",
@@ -8,10 +8,6 @@
     {
       "name": "Layanan",
       "url": "/services"
-    },
-    {
-      "name": "Portofolio",
-      "url": "/portofolio"
     },
     {
       "name": "Tentang Kami",
@@ -28,90 +24,400 @@
     "tagline_accent": "Dengan Kemitraan Tata Kelola IT & Solusi Software."
   },
   "hero": {
-    "title_part1": "Tata Kelola IT yang Kokoh",
-    "title_part2": "Solusi Software yang Tepat.",
-    "description": "Digiforma membantu bisnis Anda bertransformasi dengan strategi IT yang jelas dan software kustom yang benar-benar dibutuhkan — bukan yang berlebihan.",
+    "title_part1": "Ciptakan Solusi Digital Anda",
+    "title_part2": "Percepat Bisnis Anda",
+    "description": "Digiforma membantu bisnis Anda bertransformasi dengan strategi IT yang jelas dan perangkat lunak yang dibuat khusus — dirancang hanya untuk kebutuhan operasional Anda.",
     "cta_start": "Mulai Konsultasi Gratis",
-    "cta_discover": "Lihat Solusi",
+    "cta_discover": "Jelajahi Solusi",
     "social_proof": [
-      { "value": "50+", "label": "Strategi IT Terimplementasi" },
-      { "value": "35%", "label": "Efisiensi Operasional Naik" },
-      { "value": "100%", "label": "Sistem Handal & Terukur" }
+      { "value": "50+", "label": "Strategi IT yang Diimplementasikan" },
+      { "value": "35%", "label": "Peningkatan Efisiensi Operasional" },
+      { "value": "100%", "label": "Sistem yang Andal & Skalabel" }
     ]
   },
 
   "about": {
-    "tagline_pre": "MITRA BISNIS STRATEGIS: TATA KELOLA & SOFTWARE",
-    "tagline_main": "Transformasi Bisnis Tepat Sasaran,",
-    "tagline_accent": "Dengan Kemitraan Tata Kelola IT & Solusi Software.",
-    "description": "Sebagai Mitra Bisnis, Digiforma hadir untuk membangun solusi teknologi Anda dari hulu ke hilir. Kami fokus pada pembangunan Tata Kelola IT yang matang dan pengembangan perangkat lunak (software) kustom yang presisi, menjadikan tantangan teknologi sebagai keunggulan kompetitif jangka panjang.",
-    "solutions": [
-      {
-        "icon": "HardHat",
-        "title": "Peningkatan Tata Kelola IT (IT Governance)",
-        "description": "Kami melakukan audit dan pembenahan komprehensif pada struktur dan operasional TI Anda, memastikan tata kelola yang matang, terstruktur, dan siap menopang skalabilitas serta pertumbuhan bisnis jangka panjang."
-      },
-      {
-        "icon": "BarChart3",
-        "title": "Pembangunan Solusi Software Kustom & Data Analytics",
-        "description": "Kami adalah mitra pembangunan perangkat lunak (software) yang spesifik dan presisi untuk kebutuhan bisnis Anda. Pendekatan berbasis data kami menciptakan Transparansi Operasional, memungkinkan pengambilan keputusan yang lebih cepat dan akurat."
-      },
-      {
-        "icon": "FileText",
-        "title": "Perumusan Rencana Induk Strategis TI (IT Master Plan)",
-        "description": "Kami merancang Rencana Induk Strategis TI (RSTI) yang terukur dan selaras 100% dengan tujuan bisnis utama Anda, memberikan peta jalan yang jelas dan terarah untuk implementasi digitalisasi yang efektif."
-      }
-    ]
+    "heading": "Solusi Teknologi Terdepan untuk Transformasi Digital Bisnis Anda",
+    "paragraph1": "Digiforma Tech Solution adalah software house dan jasa konsultasi TI yang mengkhususkan diri dalam IT Master Plan (ITMP), Enterprise Architecture, dan framework tata kelola TI COBIT 2019.",
+    "paragraph2": "Kami menyediakan layanan konsultasi ITMP, merancang Enterprise Architecture yang scalable, dan mengimplementasikan COBIT 2019. Sebagai software house, kami juga mengembangkan aplikasi kustom untuk mendukung digitalisasi bisnis Anda.",
+    "button_text": "Konsultasi Gratis",
+    "experience": {
+      "years": "09",
+      "label1": "Kami memiliki",
+      "label2": "Tahun pengalaman"
+    }
   },
   "whychooseus": {
-    "header": "Mengapa Memilih Kami",
-    "pillars": [
+    "heading": "Apa yang Anda Cari?",
+    "subheading": "Mulai Sekarang",
+    "description": "Dapatkan solusi IT Master Plan, Enterprise Architecture, dan implementasi COBIT 2019 dari tim ahli Digiforma Tech Solution. Kami siap membantu transformasi digital bisnis Anda.",
+    "button_text": "Konsultasi Gratis"
+  },
+  "services": {
+    "page_title": "Layanan Kami - Digiforma Tech Solution",
+    "page_description": "Layanan konsultasi TI dan software house terpercaya untuk IT Master Plan, Enterprise Architecture, COBIT 2019, dan pengembangan aplikasi kustom.",
+    "heading": "Layanan Kami",
+    "subheading": "Solusi Teknologi Lengkap untuk Transformasi Digital Bisnis Anda",
+    "description": "Digiforma Tech Solution menyediakan layanan konsultasi TI dan software house yang komprehensif untuk membantu organisasi mencapai transformasi digital yang berkelanjutan.",
+    "items": [
       {
-        "title": "Inovasi",
-        "description": "Mendorong batasan dalam AI, blockchain, dan trading kuantitatif untuk memberikan solusi mutakhir."
+        "id": 1,
+        "title": "IT Master Plan (ITMP)",
+        "description": "Konsultasi pembangunan Rencana Strategis TI yang terukur dan selaras dengan tujuan bisnis. Kami membantu merancang roadmap digitalisasi jangka panjang untuk organisasi Anda.",
+        "features": [
+          "Assessment kondisi TI saat ini",
+          "Perancangan strategi TI jangka panjang",
+          "Roadmap implementasi terukur",
+          "Alignment dengan tujuan bisnis"
+        ],
+        "icon": "FileText"
       },
       {
-        "title": "Kolaborasi",
-        "description": "Bekerja erat dengan klien untuk mengembangkan solusi yang disesuaikan yang mendorong keberhasilan terukur."
+        "id": 2,
+        "title": "Enterprise Architecture",
+        "description": "Perancangan arsitektur enterprise yang scalable dan terintegrasi untuk mengoptimalkan struktur organisasi, proses bisnis, dan sistem informasi.",
+        "features": [
+          "Business Architecture Design",
+          "Application Architecture",
+          "Data Architecture",
+          "Technology Architecture"
+        ],
+        "icon": "Building2"
       },
       {
-        "title": "Keunggulan",
-        "description": "Mempertahankan standar tertinggi dalam kualitas kode, kinerja sistem, dan hasil yang dicapai klien."
+        "id": 3,
+        "title": "COBIT 2019 Implementation",
+        "description": "Implementasi framework tata kelola TI COBIT 2019 untuk mencapai maturity tata kelola yang efektif sesuai dengan best practices internasional.",
+        "features": [
+          "Maturity Assessment",
+          "Gap Analysis",
+          "Target State Design",
+          "Implementation Roadmap"
+        ],
+        "icon": "Shield"
       },
       {
-        "title": "Integritas",
-        "description": "Beroperasi dengan transparansi dan pertimbangan etis sebagai prioritas utama dalam semua keputusan."
+        "id": 4,
+        "title": "Custom Software Development",
+        "description": "Pengembangan aplikasi kustom sesuai kebutuhan bisnis dengan teknologi modern dan best practices untuk mendukung digitalisasi bisnis Anda.",
+        "features": [
+          "ERP System Development",
+          "Sistem Koperasi",
+          "Point of Sale (POS)",
+          "Decision Support System"
+        ],
+        "icon": "Code"
       }
-    ]
+    ],
+    "contact": {
+      "heading": "Konsultasi Gratis",
+      "subheading": "Hubungi Kami Sekarang",
+      "description": "Dapatkan sesi konsultasi 30 menit GRATIS untuk membahas kebutuhan transformasi digital bisnis Anda.",
+      "form": {
+        "company_name": "Nama Perusahaan",
+        "name": "Nama Lengkap",
+        "email": "Email",
+        "phone": "Nomor Telepon",
+        "service_interest": "Layanan yang Diminati",
+        "message": "Jelaskan kebutuhan Anda",
+        "submit": "Kirim Permintaan Konsultasi",
+        "submitting": "Mengirim...",
+        "success": "Terima kasih! Kami akan menghubungi Anda segera.",
+        "error": "Terjadi kesalahan. Silakan coba lagi."
+      }
+    }
   },
   "faq": {
     "header": "Pertanyaan yang Sering Diajukan",
     "items": [
       {
         "id": 1,
-        "question": "Layanan apa saja yang disediakan Catalyst Analytics?",
-        "answer": "Catalyst Analytics menawarkan berbagai layanan termasuk desain, rekayasa, pengembangan web, pengembangan aplikasi seluler, pengembangan perangkat lunak khusus, branding, identitas, dan lainnya. Kami berspesialisasi dalam desain pengalaman pengguna dan manajemen proyek."
+        "question": "Layanan apa saja yang disediakan Digiforma Tech Solution?",
+        "answer": "Digiforma Tech Solution menyediakan layanan konsultasi TI dan software house, termasuk pembangunan IT Master Plan (ITMP), Enterprise Architecture, implementasi framework tata kelola TI COBIT 2019, serta pengembangan aplikasi kustom untuk mendukung transformasi digital bisnis Anda."
       },
       {
         "id": 2,
-        "question": "Berapa lama waktu yang dibutuhkan untuk proyek biasa?",
-        "answer": "Durasi proyek sangat bervariasi berdasarkan kompleksitas dan cakupan. Situs web kecil mungkin memakan waktu 4-6 minggu, sementara solusi perangkat lunak kustom yang besar dapat memakan waktu 3-6 bulan."
+        "question": "Apa itu IT Master Plan (ITMP) dan mengapa penting untuk bisnis?",
+        "answer": "IT Master Plan (ITMP) adalah rencana strategis jangka panjang yang mengintegrasikan strategi TI dengan tujuan bisnis. ITMP membantu organisasi merancang roadmap digitalisasi yang terukur, mengoptimalkan investasi TI, dan memastikan teknologi mendukung pertumbuhan bisnis secara berkelanjutan."
       },
       {
         "id": 3,
-        "question": "Apakah Anda menawarkan dukungan dan pemeliharaan pasca-peluncuran?",
-        "answer": "Ya, kami menyediakan berbagai paket dukungan untuk memastikan solusi Anda tetap aman, mutakhir, dan berkinerja optimal setelah diluncurkan."
+        "question": "Apa itu Enterprise Architecture dan apa manfaatnya?",
+        "answer": "Enterprise Architecture adalah kerangka kerja untuk merancang struktur organisasi, proses bisnis, sistem informasi, dan teknologi secara terintegrasi. Manfaatnya termasuk meningkatkan efisiensi operasional, mengurangi duplikasi sistem, memfasilitasi skalabilitas, dan memastikan keselarasan antara TI dan strategi bisnis."
       },
       {
         "id": 4,
-        "question": "Apa model penetapan harga Anda?",
-        "answer": "Kami terutama bekerja berdasarkan model harga tetap untuk proyek yang terdefinisi dengan baik, dan model waktu & material untuk pengembangan berkelanjutan atau proyek dengan persyaratan yang terus berkembang."
+        "question": "Apa itu COBIT 2019 dan bagaimana implementasinya?",
+        "answer": "COBIT 2019 adalah framework tata kelola TI yang komprehensif untuk mengelola dan mengatur teknologi informasi. Implementasinya meliputi assessment maturity tata kelola TI, perancangan target state, gap analysis, dan roadmap implementasi untuk mencapai tata kelola TI yang efektif dan sesuai dengan best practices internasional."
       },
       {
         "id": 5,
-        "question": "Bisakah Anda berintegrasi dengan sistem yang sudah ada?",
-        "answer": "Tentu saja. Tim rekayasa kami berspesialisasi dalam integrasi API dan memastikan komunikasi yang mulus antara platform baru dan platform yang sudah ada."
+        "question": "Berapa lama waktu yang dibutuhkan untuk proyek konsultasi TI?",
+        "answer": "Durasi proyek konsultasi TI bervariasi tergantung kompleksitas dan cakupan. IT Master Plan biasanya memakan waktu 2-4 bulan, Enterprise Architecture 3-6 bulan, dan implementasi COBIT 2019 dapat memakan waktu 6-12 bulan tergantung tingkat maturity organisasi. Kami menyediakan timeline yang jelas di awal proyek."
+      },
+      {
+        "id": 6,
+        "question": "Apakah Digiforma juga menyediakan layanan pengembangan software?",
+        "answer": "Ya, sebagai software house, kami juga mengembangkan aplikasi kustom sesuai kebutuhan bisnis. Kami mengembangkan berbagai jenis aplikasi termasuk ERP System, Sistem Koperasi, Point of Sale (POS), Decision Support System, dan aplikasi bisnis lainnya dengan teknologi modern dan best practices."
       }
     ]
+  },
+  "blogs_page": {
+    "page_title": "Blog - Digiforma Tech Solution",
+    "page_description": "Artikel dan insights terbaru tentang teknologi dan transformasi digital",
+    "hero": {
+      "heading": "Blog & Insights",
+      "subheading": "Artikel terbaru tentang IT Master Plan, Enterprise Architecture, COBIT 2019, dan pengembangan software"
+    },
+    "search": {
+      "placeholder": "Cari artikel..."
+    },
+    "filter": {
+      "label": "Kategori",
+      "all": "Semua Kategori"
+    },
+    "no_results": "Tidak ada artikel yang ditemukan"
+  },
+  "blog_detail_page": {
+    "back_to_blogs": "Kembali ke Blog",
+    "share": "Bagikan",
+    "reading_time": "menit membaca"
+  },
+  "digi_share_page": {
+    "page_title": "Digi-Share - Platform Berbagi Artikel",
+    "page_description": "Bergabunglah dengan komunitas Digi-Share untuk berbagi artikel dan insights",
+    "hero": {
+      "heading": "Digi-Share",
+      "subheading": "Platform Berbagi Artikel & Insights",
+      "description": "Bergabunglah dengan komunitas kami untuk berbagi pengetahuan, pengalaman, dan insights tentang teknologi. Semua orang dapat berpartisipasi dan belajar bersama."
+    },
+    "search": {
+      "placeholder": "Cari artikel, penulis, atau topik..."
+    },
+    "filter": {
+      "label": "Kategori",
+      "all": "Semua Kategori"
+    },
+    "no_results": "Belum ada artikel yang dipublikasikan",
+    "write_post": "Tulis Artikel",
+    "read_more": "Baca Selengkapnya",
+    "minutes_read": "menit",
+    "login_to_share": "untuk mulai berbagi artikel"
+  },
+  "digi_share_detail_page": {
+    "back_to_digi_share": "Kembali ke Digi-Share",
+    "share": "Bagikan",
+    "reading_time": "menit membaca",
+    "written_by": "Ditulis oleh",
+    "published_on": "Dipublikasikan pada"
+  },
+  "about_page": {
+    "page_title": "Tentang Kami - Digiforma Tech Solution",
+    "page_description": "Pelajari lebih lanjut tentang Digiforma Tech Solution, perusahaan konsultasi TI dan software house terpercaya.",
+    "hero": {
+      "heading": "Tentang Digiforma Tech Solution",
+      "subheading": "Mengenal Perusahaan Kami",
+      "description": "Digiforma Tech Solution adalah perusahaan konsultasi TI dan software house yang berdedikasi untuk membantu organisasi mencapai transformasi digital yang berkelanjutan melalui solusi teknologi inovatif."
+    },
+    "company": {
+      "heading": "Latar Belakang Perusahaan",
+      "background": "Digiforma Tech Solution didirikan dengan visi untuk menjadi mitra strategis terpercaya dalam transformasi digital. Dengan pengalaman lebih dari 9 tahun di industri teknologi informasi, kami telah membantu berbagai organisasi dari berbagai sektor untuk mengoptimalkan infrastruktur TI mereka, merancang strategi digital yang efektif, dan mengembangkan solusi perangkat lunak yang sesuai dengan kebutuhan bisnis mereka.",
+      "vision_label": "Visi Kami",
+      "vision": "Menjadi perusahaan konsultasi TI dan software house terdepan di Indonesia yang dikenal karena kualitas layanan, inovasi teknologi, dan komitmen terhadap keberhasilan transformasi digital klien kami.",
+      "mission_label": "Misi Kami",
+      "mission": "Memberikan solusi teknologi yang komprehensif, terpercaya, dan berkelanjutan untuk membantu organisasi mencapai tujuan transformasi digital mereka melalui konsultasi strategis, perancangan arsitektur enterprise yang scalable, implementasi framework tata kelola TI terbaik, dan pengembangan perangkat lunak berkualitas tinggi."
+    },
+    "services": {
+      "heading": "Bidang yang Kami Geluti",
+      "description": "Kami menyediakan layanan konsultasi TI dan pengembangan software yang komprehensif untuk mendukung transformasi digital bisnis Anda.",
+      "items": [
+        {
+          "id": 1,
+          "title": "IT Master Plan (ITMP)",
+          "description": "Konsultasi pembangunan Rencana Strategis TI yang terukur dan selaras dengan tujuan bisnis untuk merancang roadmap digitalisasi jangka panjang.",
+          "icon": "FileText"
+        },
+        {
+          "id": 2,
+          "title": "Enterprise Architecture",
+          "description": "Perancangan arsitektur enterprise yang scalable dan terintegrasi untuk mengoptimalkan struktur organisasi, proses bisnis, dan sistem informasi.",
+          "icon": "Building2"
+        },
+        {
+          "id": 3,
+          "title": "COBIT 2019 Implementation",
+          "description": "Implementasi framework tata kelola TI COBIT 2019 untuk mencapai maturity tata kelola yang efektif sesuai dengan best practices internasional.",
+          "icon": "Shield"
+        },
+        {
+          "id": 4,
+          "title": "Custom Software Development",
+          "description": "Pengembangan aplikasi kustom sesuai kebutuhan bisnis dengan teknologi modern dan best practices untuk mendukung digitalisasi bisnis.",
+          "icon": "Code"
+        }
+      ]
+    },
+    "team": {
+      "heading": "Tim Kami",
+      "subheading": "Bertemu dengan Tim Ahli Kami",
+      "description": "Tim profesional kami terdiri dari konsultan TI berpengalaman, arsitek enterprise, developer software, dan ahli tata kelola TI yang berdedikasi untuk membantu Anda mencapai tujuan transformasi digital."
+    }
+  },
+  "digi_share_navbar": {
+    "home": "Beranda",
+    "timeline": "Timeline",
+    "search_users": "Cari User",
+    "write_post": "Tulis Artikel",
+    "login": "Masuk"
+  },
+  "digi_share_footer": {
+    "description": "Platform berbagi artikel dan insights tentang teknologi untuk semua orang. Bergabunglah dengan komunitas kami untuk berbagi dan belajar bersama.",
+    "quick_links": {
+      "title": "Tautan Cepat",
+      "links": [
+        { "label": "Beranda", "url": "/" },
+        { "label": "Timeline", "url": "/digi-share/posts" },
+        { "label": "Tulis Artikel", "url": "/cms/blogs/create" },
+        { "label": "Tentang Digi-Share", "url": "/digi-share" }
+      ]
+    },
+    "company": {
+      "title": "Perusahaan",
+      "links": [
+        { "label": "Tentang Kami", "url": "/about" },
+        { "label": "Layanan", "url": "/services" },
+        { "label": "Kontak", "url": "#" },
+        { "label": "Karir", "url": "/careers" }
+      ]
+    },
+    "copyright": "© 2024 Digi-Share. Hak Cipta Dilindungi."
+  },
+  "digi_share_landing": {
+    "hero": {
+      "heading": "Berbagi Pengetahuan, Membangun Komunitas",
+      "subheading": "Platform Berbagi Artikel & Insights",
+      "description": "Bergabunglah dengan komunitas Digi-Share untuk berbagi artikel, pengalaman, dan insights tentang teknologi. Semua orang dapat berpartisipasi dan belajar bersama dalam ekosistem pengetahuan yang terbuka dan kolaboratif.",
+      "cta_primary": "Jelajahi Timeline",
+      "cta_secondary": "Masuk untuk Menulis"
+    },
+    "features": {
+      "heading": "Mengapa Memilih Digi-Share?",
+      "items": [
+        {
+          "icon": "Users",
+          "title": "Komunitas Terbuka",
+          "description": "Bergabung dengan komunitas yang aktif dan saling mendukung untuk berbagi pengetahuan dan belajar bersama."
+        },
+        {
+          "icon": "BookOpen",
+          "title": "Konten Berkualitas",
+          "description": "Akses artikel dan insights berkualitas tinggi dari para ahli dan praktisi teknologi."
+        },
+        {
+          "icon": "PenTool",
+          "title": "Mudah Berbagi",
+          "description": "Platform yang mudah digunakan untuk menulis dan mempublikasikan artikel Anda dengan cepat."
+        },
+        {
+          "icon": "Sparkles",
+          "title": "Inspirasi Tanpa Batas",
+          "description": "Temukan inspirasi dan ide-ide baru dari berbagai topik teknologi dan transformasi digital."
+        }
+      ]
+    },
+    "cta_section": {
+      "heading": "Siap Memulai Perjalanan Anda?",
+      "description": "Bergabunglah dengan komunitas Digi-Share sekarang dan mulai berbagi pengetahuan serta insights Anda dengan dunia.",
+      "button_text": "Mulai Menulis"
+    }
+  },
+  "search_users_page": {
+    "title": "Cari User",
+    "description": "Temukan dan ikuti user lain di komunitas Digi-Share",
+    "search_placeholder": "Cari nama user...",
+    "no_results": "Tidak ada user yang ditemukan",
+    "posts": "postingan",
+    "view_profile": "Lihat Profile"
+  },
+  "profile_settings_page": {
+    "title": "Pengaturan Profile",
+    "profile_section": {
+      "title": "Informasi Profile",
+      "name_label": "Nama",
+      "bio_label": "Bio",
+      "avatar_label": "Avatar"
+    },
+    "credentials_section": {
+      "title": "Kredensial",
+      "email_label": "Email",
+      "current_password_label": "Password Saat Ini",
+      "new_password_label": "Password Baru",
+      "confirm_password_label": "Konfirmasi Password"
+    },
+    "save_button": "Simpan",
+    "cancel_button": "Batal",
+    "success_message": "Berhasil memperbarui!",
+    "error_message": "Gagal memperbarui"
+  },
+  "create_author_page": {
+    "title": "Lengkapi Profil Author Anda",
+    "description": "Lengkapi informasi berikut untuk membuat profil author dan mulai berbagi artikel",
+    "name_label": "Nama",
+    "name_placeholder": "Masukkan nama Anda",
+    "bio_label": "Bio (Opsional)",
+    "bio_placeholder": "Ceritakan tentang diri Anda...",
+    "avatar_label": "Avatar (Opsional)",
+    "create_button": "Buat Profil Author",
+    "name_required": "Nama wajib diisi",
+    "name_min_length": "Nama minimal 2 karakter",
+    "success_message": "Profil author berhasil dibuat!",
+    "error_message": "Gagal membuat profil author"
+  },
+  "footer": {
+    "description": "Kami menciptakan pengalaman digital untuk merek dan perusahaan dengan menggunakan teknologi.",
+    "sections": {
+      "about": {
+        "title": "Tentang Kami",
+        "links": [
+          { "label": "Beranda", "url": "/" },
+          { "label": "Fitur", "url": "#" },
+          { "label": "Tentang", "url": "/about" },
+          { "label": "Testimoni", "url": "#" }
+        ]
+      },
+      "features": {
+        "title": "Fitur",
+        "links": [
+          { "label": "Cara Kerja", "url": "#" },
+          { "label": "Kebijakan Privasi", "url": "#" },
+          { "label": "Syarat Layanan", "url": "#" },
+          { "label": "Kebijakan Pengembalian", "url": "#" }
+        ]
+      },
+      "products": {
+        "title": "Produk Kami",
+        "links": [
+          { "label": "ERP System", "url": "#" },
+          { "label": "Sistem Koperasi", "url": "#" },
+          { "label": "Point Of Sale System", "url": "#" },
+          { "label": "Decision Support System", "url": "#" }
+        ]
+      },
+      "links": {
+        "title": "Tautan Berguna",
+        "links": [
+          { "label": "FAQ", "url": "#" },
+          { "label": "Blog", "url": "/blogs" },
+          { "label": "Dukungan", "url": "#" },
+          { "label": "Tentang", "url": "/about" }
+        ]
+      }
+    },
+    "bottom": {
+      "privacy": "Kebijakan Privasi",
+      "legal": "Pemberitahuan Hukum",
+      "terms": "Syarat Layanan",
+      "copyright": "Dirancang dan Dikembangkan oleh"
+    }
   }
 }

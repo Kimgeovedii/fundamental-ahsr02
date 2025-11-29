@@ -8,7 +8,7 @@ interface AuthState {
   isLoading: boolean;
   error: string | null;
 
-  signup: (email: string, pw: string, displayName: string) => Promise<boolean>;
+  signup: (email: string, pw: string) => Promise<boolean>;
   login: (email: string, pw: string) => Promise<boolean>;
   logout: () => Promise<boolean>;
   checkSession: () => Promise<void>;
@@ -20,10 +20,10 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: false,
   error: null,
 
-  signup: async (email, pw, displayName) => {
+  signup: async (email, pw) => {
     set({ isLoading: true, error: null });
     try {
-      await authService.signup(email, pw, displayName);
+      await authService.signup(email, pw);
       set({ isLoading: false });
       return true;
     } catch (e: any) {

@@ -24,7 +24,6 @@ export const useBlogStore = create<BlogState>((set, get) => ({
   createBlog: async (payload) => {
     const newBlog = await blogService.create(payload);
 
-    // tambahkan blog baru ke store → langsung update UI
     set((state) => ({
       blogs: [newBlog, ...state.blogs],
     }));

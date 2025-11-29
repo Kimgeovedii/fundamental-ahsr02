@@ -1,5 +1,5 @@
 {
-  "login": "Login",
+  "login": "Digi-share",
   "navigation": [
     {
       "name": "Home",
@@ -8,10 +8,6 @@
     {
       "name": "Services",
       "url": "/services"
-    },
-    {
-      "name": "Portfolio",
-      "url": "/portofolio"
     },
     {
       "name": "About Us",
@@ -41,77 +37,387 @@
   },
 
   "about": {
-    "tagline_pre": "STRATEGIC BUSINESS PARTNER: GOVERNANCE & SOFTWARE",
-    "tagline_main": "Focused Business Transformation,",
-    "tagline_accent": "Powered by IT Governance Partnership & Custom Software.",
-    "description": "As your Business Partner, Digiforma provides end-to-end technology solutions. We focus on building mature IT Governance and developing precise custom software, turning technological challenges into long-term competitive advantages.",
-    "solutions": [
-      {
-        "icon": "HardHat",
-        "title": "Strengthening IT Governance Maturity",
-        "description": "We conduct comprehensive audits and restructuring of your IT operations, ensuring mature, structured governance ready to support scalability and long-term business growth."
-      },
-      {
-        "icon": "BarChart3",
-        "title": "Custom Software Development & Data Analytics",
-        "description": "We are your partner in building specific and precise software for your business needs. Our data-driven approach creates Operational Transparency, enabling faster and more accurate decision-making."
-      },
-      {
-        "icon": "FileText",
-        "title": "Formulating Clear Strategic IT Master Plan (SITP)",
-        "description": "We design a measurable Strategic IT Master Plan (SITP) that is 100% aligned with your core business objectives, providing a clear and directed roadmap for effective digitalization implementation."
-      }
-    ]
+    "heading": "Leading Technology Solutions for Your Business Digital Transformation",
+    "paragraph1": "Digiforma Tech Solution is a software house and IT consulting services company specializing in IT Master Plan (ITMP), Enterprise Architecture, and COBIT 2019 IT governance framework implementation.",
+    "paragraph2": "We provide ITMP consulting services, design scalable Enterprise Architecture, and implement COBIT 2019 framework. As a software house, we also develop custom applications to support your business digitalization strategy.",
+    "button_text": "Free Consultation",
+    "experience": {
+      "years": "09",
+      "label1": "We have",
+      "label2": "Years of experience"
+    }
   },
   "whychooseus": {
-    "header": "Why Choose Us",
-    "pillars": [
+    "heading": "What Are You Looking For?",
+    "subheading": "Get Started Now",
+    "description": "Get IT Master Plan, Enterprise Architecture, and COBIT 2019 implementation solutions from Digiforma Tech Solution's expert team. We're ready to help transform your business digitally.",
+    "button_text": "Free Consultation"
+  },
+  "services": {
+    "page_title": "Our Services - Digiforma Tech Solution",
+    "page_description": "Trusted IT consulting and software house services for IT Master Plan, Enterprise Architecture, COBIT 2019, and custom application development.",
+    "heading": "Our Services",
+    "subheading": "Complete Technology Solutions for Your Business Digital Transformation",
+    "description": "Digiforma Tech Solution provides comprehensive IT consulting and software house services to help organizations achieve sustainable digital transformation.",
+    "items": [
       {
-        "title": "Innovation",
-        "description": "Pushing boundaries in AI, blockchain, and quantitative trading to deliver cutting-edge solutions."
+        "id": 1,
+        "title": "IT Master Plan (ITMP)",
+        "description": "Consulting for developing a measurable Strategic IT Plan aligned with business objectives. We help design long-term digitalization roadmaps for your organization.",
+        "features": [
+          "Current IT condition assessment",
+          "Long-term IT strategy design",
+          "Measurable implementation roadmap",
+          "Alignment with business objectives"
+        ],
+        "icon": "FileText"
       },
       {
-        "title": "Collaboration",
-        "description": "Working closely with clients to develop tailored solutions that drive measurable success."
+        "id": 2,
+        "title": "Enterprise Architecture",
+        "description": "Design scalable and integrated enterprise architecture to optimize organizational structure, business processes, and information systems.",
+        "features": [
+          "Business Architecture Design",
+          "Application Architecture",
+          "Data Architecture",
+          "Technology Architecture"
+        ],
+        "icon": "Building2"
       },
       {
-        "title": "Excellence",
-        "description": "Maintaining the highest standards in code quality, system performance, and client outcomes."
+        "id": 3,
+        "title": "COBIT 2019 Implementation",
+        "description": "Implementation of COBIT 2019 IT governance framework to achieve effective governance maturity aligned with international best practices.",
+        "features": [
+          "Maturity Assessment",
+          "Gap Analysis",
+          "Target State Design",
+          "Implementation Roadmap"
+        ],
+        "icon": "Shield"
       },
       {
-        "title": "Integrity",
-        "description": "Operating with transparency and ethical considerations at the forefront of all decisions."
+        "id": 4,
+        "title": "Custom Software Development",
+        "description": "Custom application development according to business needs using modern technology and best practices to support your business digitalization.",
+        "features": [
+          "ERP System Development",
+          "Cooperative System",
+          "Point of Sale (POS)",
+          "Decision Support System"
+        ],
+        "icon": "Code"
       }
-    ]
+    ],
+    "contact": {
+      "heading": "Free Consultation",
+      "subheading": "Contact Us Now",
+      "description": "Get a FREE 30-minute consultation session to discuss your business digital transformation needs.",
+      "form": {
+        "company_name": "Company Name",
+        "name": "Full Name",
+        "email": "Email",
+        "phone": "Phone Number",
+        "service_interest": "Service of Interest",
+        "message": "Describe your needs",
+        "submit": "Send Consultation Request",
+        "submitting": "Sending...",
+        "success": "Thank you! We will contact you soon.",
+        "error": "An error occurred. Please try again."
+      }
+    }
   },
   "faq": {
     "header": "Frequently Asked Questions",
     "items": [
       {
         "id": 1,
-        "question": "What services does Catalyst Analytics provide?",
-        "answer": "Catalyst Analytics offers a range of services including design, engineering, web development, mobile app development, custom software development, branding and identity, and more. We specialize in user experience design and project management."
+        "question": "What services does Digiforma Tech Solution provide?",
+        "answer": "Digiforma Tech Solution provides IT consulting and software house services, including IT Master Plan (ITMP) development, Enterprise Architecture, COBIT 2019 IT governance framework implementation, as well as custom application development to support your business digital transformation."
       },
       {
         "id": 2,
-        "question": "How long does a typical project take?",
-        "answer": "Project duration varies significantly based on complexity and scope. A small website might take 4-6 weeks, while a large custom software solution can take 3-6 months."
+        "question": "What is IT Master Plan (ITMP) and why is it important for business?",
+        "answer": "IT Master Plan (ITMP) is a long-term strategic plan that integrates IT strategy with business objectives. ITMP helps organizations design a measurable digitalization roadmap, optimize IT investments, and ensure technology supports sustainable business growth."
       },
       {
         "id": 3,
-        "question": "Do you offer post-launch support and maintenance?",
-        "answer": "Yes, we provide various support packages to ensure your solution remains secure, up-to-date, and performs optimally after launch."
+        "question": "What is Enterprise Architecture and what are its benefits?",
+        "answer": "Enterprise Architecture is a framework for designing organizational structure, business processes, information systems, and technology in an integrated manner. Benefits include improving operational efficiency, reducing system duplication, facilitating scalability, and ensuring alignment between IT and business strategy."
       },
       {
         "id": 4,
-        "question": "What is your pricing model?",
-        "answer": "We primarily work on a fixed-price model for well-defined projects, and a time & material model for ongoing development or projects with evolving requirements."
+        "question": "What is COBIT 2019 and how is it implemented?",
+        "answer": "COBIT 2019 is a comprehensive IT governance framework for managing and governing information technology. Implementation includes IT governance maturity assessment, target state design, gap analysis, and implementation roadmap to achieve effective IT governance aligned with international best practices."
       },
       {
         "id": 5,
-        "question": "Can you integrate with existing systems?",
-        "answer": "Absolutely. Our engineering team specializes in API integration and ensuring seamless communication between new and existing platforms."
+        "question": "How long does an IT consulting project take?",
+        "answer": "IT consulting project duration varies depending on complexity and scope. IT Master Plan typically takes 2-4 months, Enterprise Architecture 3-6 months, and COBIT 2019 implementation can take 6-12 months depending on organizational maturity level. We provide a clear timeline at the beginning of the project."
+      },
+      {
+        "id": 6,
+        "question": "Does Digiforma also provide software development services?",
+        "answer": "Yes, as a software house, we also develop custom applications according to business needs. We develop various types of applications including ERP System, Cooperative System, Point of Sale (POS), Decision Support System, and other business applications using modern technology and best practices."
       }
     ]
+  },
+  "blogs_page": {
+    "page_title": "Blog - Digiforma Tech Solution",
+    "page_description": "Latest articles and insights about technology and digital transformation",
+    "hero": {
+      "heading": "Blog & Insights",
+      "subheading": "Latest articles about IT Master Plan, Enterprise Architecture, COBIT 2019, and software development"
+    },
+    "search": {
+      "placeholder": "Search articles..."
+    },
+    "filter": {
+      "label": "Category",
+      "all": "All Categories"
+    },
+    "no_results": "No articles found"
+  },
+  "blog_detail_page": {
+    "back_to_blogs": "Back to Blog",
+    "share": "Share",
+    "reading_time": "min read"
+  },
+  "digi_share_page": {
+    "page_title": "Digi-Share - Article Sharing Platform",
+    "page_description": "Join the Digi-Share community to share articles and insights",
+    "hero": {
+      "heading": "Digi-Share",
+      "subheading": "Article & Insights Sharing Platform",
+      "description": "Join our community to share knowledge, experiences, and insights about technology. Everyone can participate and learn together."
+    },
+    "search": {
+      "placeholder": "Search articles, authors, or topics..."
+    },
+    "filter": {
+      "label": "Category",
+      "all": "All Categories"
+    },
+    "no_results": "No articles published yet",
+    "write_post": "Write Article",
+    "read_more": "Read More",
+    "minutes_read": "min",
+    "login_to_share": "to start sharing articles"
+  },
+  "digi_share_detail_page": {
+    "back_to_digi_share": "Back to Digi-Share",
+    "share": "Share",
+    "reading_time": "min read",
+    "written_by": "Written by",
+    "published_on": "Published on"
+  },
+  "about_page": {
+    "page_title": "About Us - Digiforma Tech Solution",
+    "page_description": "Learn more about Digiforma Tech Solution, a trusted IT consulting and software house company.",
+    "hero": {
+      "heading": "About Digiforma Tech Solution",
+      "subheading": "Get to Know Our Company",
+      "description": "Digiforma Tech Solution is an IT consulting and software house company dedicated to helping organizations achieve sustainable digital transformation through innovative technology solutions."
+    },
+    "company": {
+      "heading": "Company Background",
+      "background": "Digiforma Tech Solution was founded with the vision to become a trusted strategic partner in digital transformation. With over 9 years of experience in the information technology industry, we have helped various organizations from various sectors to optimize their IT infrastructure, design effective digital strategies, and develop software solutions that fit their business needs.",
+      "vision_label": "Our Vision",
+      "vision": "To become a leading IT consulting and software house company in Indonesia known for service quality, technological innovation, and commitment to our clients' digital transformation success.",
+      "mission_label": "Our Mission",
+      "mission": "To provide comprehensive, trusted, and sustainable technology solutions to help organizations achieve their digital transformation goals through strategic consulting, scalable enterprise architecture design, implementation of the best IT governance frameworks, and high-quality software development."
+    },
+    "services": {
+      "heading": "Our Areas of Expertise",
+      "description": "We provide comprehensive IT consulting and software development services to support your business digital transformation.",
+      "items": [
+        {
+          "id": 1,
+          "title": "IT Master Plan (ITMP)",
+          "description": "Consulting for developing a measurable Strategic IT Plan aligned with business objectives to design long-term digitalization roadmaps.",
+          "icon": "FileText"
+        },
+        {
+          "id": 2,
+          "title": "Enterprise Architecture",
+          "description": "Design scalable and integrated enterprise architecture to optimize organizational structure, business processes, and information systems.",
+          "icon": "Building2"
+        },
+        {
+          "id": 3,
+          "title": "COBIT 2019 Implementation",
+          "description": "Implementation of COBIT 2019 IT governance framework to achieve effective governance maturity aligned with international best practices.",
+          "icon": "Shield"
+        },
+        {
+          "id": 4,
+          "title": "Custom Software Development",
+          "description": "Custom application development according to business needs using modern technology and best practices to support business digitalization.",
+          "icon": "Code"
+        }
+      ]
+    },
+    "team": {
+      "heading": "Our Team",
+      "subheading": "Meet Our Expert Team",
+      "description": "Our professional team consists of experienced IT consultants, enterprise architects, software developers, and IT governance experts dedicated to helping you achieve your digital transformation goals."
+    }
+  },
+  "digi_share_navbar": {
+    "home": "Home",
+    "timeline": "Timeline",
+    "search_users": "Search Users",
+    "write_post": "Write Article",
+    "login": "Login"
+  },
+  "digi_share_footer": {
+    "description": "A platform for sharing articles and insights about technology for everyone. Join our community to share and learn together.",
+    "quick_links": {
+      "title": "Quick Links",
+      "links": [
+        { "label": "Home", "url": "/" },
+        { "label": "Timeline", "url": "/digi-share/posts" },
+        { "label": "Write Article", "url": "/cms/blogs/create" },
+        { "label": "About Digi-Share", "url": "/digi-share" }
+      ]
+    },
+    "company": {
+      "title": "Company",
+      "links": [
+        { "label": "About Us", "url": "/about" },
+        { "label": "Services", "url": "/services" },
+        { "label": "Contact", "url": "#" },
+        { "label": "Careers", "url": "/careers" }
+      ]
+    },
+    "copyright": "© 2024 Digi-Share. All Rights Reserved."
+  },
+  "digi_share_landing": {
+    "hero": {
+      "heading": "Share Knowledge, Build Community",
+      "subheading": "Article & Insights Sharing Platform",
+      "description": "Join the Digi-Share community to share articles, experiences, and insights about technology. Everyone can participate and learn together in an open and collaborative knowledge ecosystem.",
+      "cta_primary": "Explore Timeline",
+      "cta_secondary": "Login to Write"
+    },
+    "features": {
+      "heading": "Why Choose Digi-Share?",
+      "items": [
+        {
+          "icon": "Users",
+          "title": "Open Community",
+          "description": "Join an active and supportive community to share knowledge and learn together."
+        },
+        {
+          "icon": "BookOpen",
+          "title": "Quality Content",
+          "description": "Access high-quality articles and insights from technology experts and practitioners."
+        },
+        {
+          "icon": "PenTool",
+          "title": "Easy Sharing",
+          "description": "User-friendly platform to write and publish your articles quickly and easily."
+        },
+        {
+          "icon": "Sparkles",
+          "title": "Unlimited Inspiration",
+          "description": "Discover inspiration and new ideas from various technology and digital transformation topics."
+        }
+      ]
+    },
+    "cta_section": {
+      "heading": "Ready to Start Your Journey?",
+      "description": "Join the Digi-Share community now and start sharing your knowledge and insights with the world.",
+      "button_text": "Start Writing"
+    }
+  },
+  "search_users_page": {
+    "title": "Search Users",
+    "description": "Discover and follow other users in the Digi-Share community",
+    "search_placeholder": "Search user name...",
+    "no_results": "No users found",
+    "posts": "posts",
+    "view_profile": "View Profile"
+  },
+  "profile_settings_page": {
+    "title": "Profile Settings",
+    "profile_section": {
+      "title": "Profile Information",
+      "name_label": "Name",
+      "bio_label": "Bio",
+      "avatar_label": "Avatar"
+    },
+    "credentials_section": {
+      "title": "Credentials",
+      "email_label": "Email",
+      "current_password_label": "Current Password",
+      "new_password_label": "New Password",
+      "confirm_password_label": "Confirm Password"
+    },
+    "save_button": "Save",
+    "cancel_button": "Cancel",
+    "success_message": "Successfully updated!",
+    "error_message": "Failed to update"
+  },
+  "create_author_page": {
+    "title": "Complete Your Author Profile",
+    "description": "Fill in the information below to create your author profile and start sharing articles",
+    "name_label": "Name",
+    "name_placeholder": "Enter your name",
+    "bio_label": "Bio (Optional)",
+    "bio_placeholder": "Tell us about yourself...",
+    "avatar_label": "Avatar (Optional)",
+    "create_button": "Create Author Profile",
+    "name_required": "Name is required",
+    "name_min_length": "Name must be at least 2 characters",
+    "success_message": "Author profile created successfully!",
+    "error_message": "Failed to create author profile"
+  },
+  "footer": {
+    "description": "We create digital experiences for brands and companies by using technology.",
+    "sections": {
+      "about": {
+        "title": "About Us",
+        "links": [
+          { "label": "Home", "url": "/" },
+          { "label": "Features", "url": "#" },
+          { "label": "About", "url": "/about" },
+          { "label": "Testimonial", "url": "#" }
+        ]
+      },
+      "features": {
+        "title": "Features",
+        "links": [
+          { "label": "How it works", "url": "#" },
+          { "label": "Privacy policy", "url": "#" },
+          { "label": "Terms of Service", "url": "#" },
+          { "label": "Refund policy", "url": "#" }
+        ]
+      },
+      "products": {
+        "title": "Our Products",
+        "links": [
+          { "label": "ERP System", "url": "#" },
+          { "label": "Sistem Koperasi", "url": "#" },
+          { "label": "Point Of Sale System", "url": "#" },
+          { "label": "Decision Support System", "url": "#" }
+        ]
+      },
+      "links": {
+        "title": "Useful Links",
+        "links": [
+          { "label": "FAQ", "url": "#" },
+          { "label": "Blogs", "url": "/blogs" },
+          { "label": "Support", "url": "#" },
+          { "label": "About", "url": "/about" }
+        ]
+      }
+    },
+    "bottom": {
+      "privacy": "Privacy policy",
+      "legal": "Legal notice",
+      "terms": "Terms of service",
+      "copyright": "Designed and Developed by"
+    }
   }
 }

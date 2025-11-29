@@ -31,11 +31,9 @@ export function SignUpCard() {
   const formik = useFormik({
     initialValues: {
       email: "",
-      username: "",
       password: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("username wajib diisi"),
       email: Yup.string()
         .email("email tidak valid")
         .required("email wajib diisi"),
@@ -47,18 +45,15 @@ export function SignUpCard() {
       setErrorMsg("");
       const success = await signup(
         values.email,
-        values.password,
-        values.username
+        values.password
       );
 
       if (!success) {
-        // tampilkan error dari store
         setErrorMsg(error || "Terjadi kesalahan pada severs");
-        toast.error(error || "Login gagal.");
+        toast.error(error || "Sign up gagal.");
         return;
       }
-      toast.success("Sign Up berhasil! Cek email kamu untuk verifikasi akun.");
-      router.push("/login");
+      router.push("/signup/confirm-email");
     },
   });
   return (
@@ -74,22 +69,6 @@ export function SignUpCard() {
 
       <CardContent>
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-6">
-          <div className="grid gap-2">
-            <Label htmlFor="username">Username</Label>
-            <Input
-              id="username"
-              type="text"
-              placeholder="your username"
-              required
-              {...formik.getFieldProps("username")}
-            />
-            {formik.touched.username && formik.errors.username && (
-              <p className="text-red-500 text-sm italic">
-                {formik.errors.username}
-              </p>
-            )}
-          </div>
-
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
             <Input

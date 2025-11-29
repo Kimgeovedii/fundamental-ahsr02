@@ -1,5 +1,3 @@
-// ./src/components/LogoMarquee.js
-
 "use client";
 
 import Image from "next/image";
@@ -41,7 +39,7 @@ const logos = [...randomLogos, ...randomLogos];
 
 export default function LogoMarquee() {
   return (
-    <div className="w-full h-full border py-8 bg-white dark:bg-[#0B0E14] overflow-hidden border-t border-b border-gray-700/50">
+    <div className="border-x-0 border-y border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 py-11">
       <div className="flex flex-nowrap w-fit gap-x-20 animate-marquee">
         {logos.map((logo, index) => (
           <div
@@ -67,12 +65,10 @@ export default function LogoMarquee() {
             transform: translateX(0);
           }
           to {
-            /* Pindahkan separuh dari lebar total (karena digandakan) */
             transform: translateX(-50%);
           }
         }
 
-        /* Kecepatan animasi 30 detik (lebih lambat) */
         .animate-marquee {
           animation: marquee 30s linear infinite;
         }

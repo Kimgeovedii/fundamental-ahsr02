@@ -35,7 +35,7 @@ export function NavUser({
   const handleLogout = async () => {
     const success = await logout();
     if (success) {
-      window.location.href = "/login"; // opsional redirect
+      window.location.href = "/login";
     }
   };
 

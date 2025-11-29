@@ -20,8 +20,10 @@ import {
 import { useAuthStore, useCategoryStore } from "@/lib/stores";
 import { supabase } from "@/lib/supabase/client";
 import { blogService } from "@/lib/services";
+import { authorService } from "@/lib/services/authorService";
 import { toast } from "sonner";
 import { useBlogs } from "@/lib/hooks";
+import { useRouter } from "next/navigation";
 
 const BlogSchema = Yup.object().shape({
   title: Yup.string().required("Title wajib diisi"),
@@ -29,73 +31,142 @@ const BlogSchema = Yup.object().shape({
   category: Yup.string().required("Category wajib dipilih"),
 });
 
-export const BlogForm: React.FC<{ onSuccess?: () => void }> = ({
+interface BlogFormProps {
+  onSuccess?: () => void;
+  blogId?: string;
+  initialBlog?: {
+    title: string;
+    description: string;
+    image_url: string;
+    category_id: string;
+    is_featured: boolean;
+  };
+}
+
+export const BlogForm: React.FC<BlogFormProps> = ({
   onSuccess,
+  blogId,
+  initialBlog,
 }) => {
   const { user } = useAuthStore();
   const { categories, fetchCategory } = useCategoryStore();
   const { fetchBlogs } = useBlogs();
+  const [loading, setLoading] = React.useState(!!blogId && !initialBlog);
 
   const [imageFile, setImageFile] = React.useState<File | null>(null);
+  const [currentImageUrl, setCurrentImageUrl] = React.useState<string>(
+    initialBlog?.image_url || ""
+  );
+
+  const isEditMode = !!blogId;
 
   React.useEffect(() => {
     fetchCategory();
-  }, []);
+    if (blogId && !initialBlog) {
+      loadBlogData();
+    }
+  }, [blogId]);
+
+  React.useEffect(() => {
+    if (initialBlog?.image_url) {
+      setCurrentImageUrl(initialBlog.image_url);
+    }
+  }, [initialBlog?.image_url]);
+
+  const loadBlogData = async () => {
+    if (!blogId) return;
+    try {
+      const blog = await blogService.getById(blogId);
+      if (blog) {
+        setCurrentImageUrl(blog.image_url || "");
+      }
+    } catch (error) {
+      toast.error("Failed to load blog data");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleImageUpload = async () => {
-    if (!imageFile) return "";
+    if (imageFile) {
+      const ext = imageFile.name.split(".").pop();
+      const fileName = `${Date.now()}.${ext}`;
 
-    const ext = imageFile.name.split(".").pop();
-    const fileName = `${Date.now()}.${ext}`;
+      const { data, error } = await supabase.storage
+        .from("blog-images")
+        .upload(fileName, imageFile);
 
-    const { data, error } = await supabase.storage
-      .from("blog-images")
-      .upload(fileName, imageFile);
+      if (error) throw error;
 
-    if (error) throw error;
+      const { data: publicData } = supabase.storage
+        .from("blog-images")
+        .getPublicUrl(data.path);
 
-    const { data: publicData } = supabase.storage
-      .from("blog-images")
-      .getPublicUrl(data.path);
-
-    return publicData.publicUrl;
+      return publicData.publicUrl;
+    }
+    return currentImageUrl;
   };
+
+  const initialValues = {
+    title: initialBlog?.title || "",
+    content: initialBlog?.description || "",
+    category: initialBlog?.category_id || "",
+    featured: initialBlog?.is_featured || false,
+  };
+
+  if (loading) {
+    return <div className="text-center py-8">Loading...</div>;
+  }
 
   return (
     <Formik
-      initialValues={{
-        title: "",
-        content: "",
-        category: "",
-        featured: false,
-      }}
+      initialValues={initialValues}
       validationSchema={BlogSchema}
+      enableReinitialize={isEditMode}
       onSubmit={async (values, { resetForm, setSubmitting }) => {
         try {
           if (!user) return toast.error("User tidak ditemukan");
+          if (!user.authorId) return toast.error("Author profile tidak ditemukan. Silakan lengkapi profil Anda.");
+
+          const author = await authorService.getById(user.authorId);
+          if (!author || !author.name) {
+            toast.error("Silakan lengkapi nama Anda di Profile Settings terlebih dahulu sebelum membuat postingan.");
+            return;
+          }
 
           const imageUrl = await handleImageUpload();
 
-          await blogService.create({
-            title: values.title,
-            description: values.content,
-            image_url: imageUrl,
-            category_id: values.category,
-            is_featured: values.featured,
-            author_id: user.id,
-            created_at: new Date().toISOString(),
-          });
+          if (isEditMode && blogId) {
+            await blogService.update(blogId, {
+              title: values.title,
+              description: values.content,
+              image_url: imageUrl,
+              category_id: values.category,
+              is_featured: values.featured,
+            });
 
-          toast.success("Blog berhasil dibuat!");
+            toast.success("Blog berhasil diupdate!");
+          } else {
+            await blogService.create({
+              title: values.title,
+              description: values.content,
+              image_url: imageUrl,
+              category_id: values.category,
+              is_featured: values.featured,
+              author_id: user.authorId,
+              created_at: new Date().toISOString(),
+            });
 
-          resetForm();
-          setImageFile(null);
+            toast.success("Blog berhasil dibuat!");
+            resetForm();
+            setImageFile(null);
+          }
 
           await fetchBlogs();
 
           if (onSuccess) onSuccess();
         } catch (err: any) {
-          toast.error(err.message || "Gagal membuat blog");
+          toast.error(err.message || (isEditMode ? "Gagal mengupdate blog" : "Gagal membuat blog"));
         } finally {
           setSubmitting(false);
         }
@@ -117,16 +188,27 @@ export const BlogForm: React.FC<{ onSuccess?: () => void }> = ({
             </div>
 
             <div className="space-y-3">
-              <Label>Image *</Label>
+              <Label>Image {!isEditMode ? "*" : ""}</Label>
               <Input
                 type="file"
                 accept="image/png, image/jpeg, image/jpg"
                 onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}
-                required
+                required={!isEditMode}
               />
 
               {imageFile && (
-                <p className="text-sm text-gray-600">{imageFile.name}</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{imageFile.name}</p>
+              )}
+
+              {currentImageUrl && !imageFile && (
+                <div className="mt-2">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Current image:</p>
+                  <img
+                    src={currentImageUrl}
+                    alt="Current"
+                    className="w-full h-48 object-cover rounded-lg border border-gray-200 dark:border-gray-700"
+                  />
+                </div>
               )}
             </div>
           </div>
@@ -190,7 +272,13 @@ export const BlogForm: React.FC<{ onSuccess?: () => void }> = ({
             disabled={isSubmitting}
             className="w-full md:w-auto"
           >
-            {isSubmitting ? "Submitting..." : "Create Blog"}
+            {isSubmitting
+              ? isEditMode
+                ? "Updating..."
+                : "Submitting..."
+              : isEditMode
+              ? "Update Blog"
+              : "Create Blog"}
           </Button>
         </Form>
       )}

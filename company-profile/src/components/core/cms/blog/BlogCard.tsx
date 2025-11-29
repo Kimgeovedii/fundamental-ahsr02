@@ -49,7 +49,6 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onDeleted }) => {
       onClick={() => router.push(`/blog/${post.id}`)}
     >
       <div className="flex items-start justify-between gap-6">
-        {/* LEFT */}
         <div className="space-y-3 flex-1">
           <div className="flex items-center gap-3 flex-wrap">
             <h3 className="font-semibold text-lg text-gray-900 line-clamp-1">
@@ -85,10 +84,9 @@ const BlogCard: React.FC<BlogCardProps> = ({ post, onDeleted }) => {
           </div>
         </div>
 
-        {/* ACTIONS */}
         <div
           className="flex flex-col gap-2"
-          onClick={(e) => e.stopPropagation()} // biar ga ikut klik open detail
+          onClick={(e) => e.stopPropagation()}
         >
           <Button
             variant="outline"

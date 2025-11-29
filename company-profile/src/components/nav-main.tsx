@@ -10,7 +10,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useRouter } from "next/navigation";
-import { Skeleton } from "@/components/ui/skeleton"; // pastikan shadcn punya component Skeleton
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function NavMain({
   items,

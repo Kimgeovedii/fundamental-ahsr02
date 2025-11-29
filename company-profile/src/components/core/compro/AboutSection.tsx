@@ -1,35 +1,25 @@
 "use client";
 import * as React from "react";
-import { HardHat, FileText, BarChart3, LucideIcon } from "lucide-react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
 
-// --- 1. PETA IKON: Menghubungkan string dari JSON dengan komponen Lucide ---
-const IconMap: { [key: string]: LucideIcon } = {
-  HardHat: HardHat,
-  FileText: FileText,
-  BarChart3: BarChart3,
-};
-
-interface Solution {
-  icon: keyof typeof IconMap;
-  title: string;
-  description: string;
-}
-
 interface AboutData {
-  tagline_pre: string;
-  tagline_main: string;
-  tagline_accent: string;
-  description: string;
-  solutions: Solution[];
+  heading: string;
+  paragraph1: string;
+  paragraph2: string;
+  button_text: string;
+  experience: {
+    years: string;
+    label1: string;
+    label2: string;
+  };
 }
 
 const AboutSection: React.FunctionComponent = () => {
-  // Ambil state bahasa dan status hidrasi
   const { lang, hydrated } = useHydratedLanguageStore();
 
-  // State untuk data about
   const [aboutData, setAboutData] = React.useState<AboutData | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
 
@@ -38,130 +28,102 @@ const AboutSection: React.FunctionComponent = () => {
       setIsLoading(true);
       getLocale(lang)
         .then((data: any) => {
-          // Asumsi data yang dikembalikan memiliki key "about"
           if (data && data.about) {
             setAboutData(data.about as AboutData);
           }
         })
         .catch((error) => {
           console.error("Failed to load about section locale data:", error);
-          setAboutData(null); // Atur ke null jika gagal
+          setAboutData(null);
         })
         .finally(() => {
           setIsLoading(false);
         });
     }
-  }, [lang, hydrated]); // Re-run ketika bahasa atau status hidrasi berubah
+  }, [lang, hydrated]);
 
-  // Tampilkan loading state atau null jika data belum siap
   if (isLoading || !hydrated || !aboutData) {
     return (
-      <div className="bg-[#0B0E14] text-white py-24 px-4 sm:px-8">
+      <div className="bg-white dark:bg-gray-900 py-24 px-4 sm:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-gray-400 animate-pulse">Loading content...</p>
+          <p className="text-gray-400 dark:text-gray-500 animate-pulse">
+            Loading content...
+          </p>
         </div>
       </div>
     );
   }
 
-  // Gunakan data yang sudah dimuat
   const data = aboutData;
 
   return (
-    // Container Utama (Background gelap)
-    <div className="bg-white text-gray-900 dark:bg-[#0B0E14] dark:text-white py-24 px-4 sm:px-8">
+    <section className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white py-24 px-4 sm:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* === HEADER SECTION (GRID 2 KOLOM) === */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 mb-16">
-          {/* KOLOM KIRI: Judul Utama dengan Tagline */}
-          <div>
-            <p
-              className="
-            text-xs sm:text-sm font-semibold 
-            uppercase tracking-widest 
-            text-gray-500 dark:text-gray-400 
-            mb-3 py-1 px-3 
-            border border-gray-300 dark:border-gray-700/50 rounded-full 
-            inline-block
-          "
-            >
-              {data.tagline_pre}
-            </p>
-
-            {/* IMPLEMENTASI TAGLINE MULTIBHASA */}
-            <h2
-              className="
-            text-4xl md:text-5xl lg:text-6xl 
-            font-extrabold 
-            text-gray-900 dark:text-white 
-            tracking-tight
-            mb-3
-          "
-            >
-              {data.tagline_main} <br />
-              <span className="text-indigo-600 dark:text-indigo-500">
-                {data.tagline_accent}
-              </span>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          <div className="flex flex-col justify-center space-y-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+              {data.heading}
             </h2>
-          </div>
 
-          {/* KOLOM KANAN: Deskripsi Singkat */}
-          <div className="flex items-end pt-4 lg:pt-0">
-            <p
-              className="
-            text-lg 
-            text-gray-600 dark:text-gray-400 
-            leading-relaxed 
-            lg:max-w-md
-          "
-            >
-              {data.description}
-            </p>
-          </div>
-        </div>
+            <div className="space-y-4">
+              <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                {data.paragraph1}
+              </p>
+              <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 leading-relaxed">
+                {data.paragraph2}
+              </p>
+            </div>
 
-        {/* --- HR --- */}
-        <hr className="border-gray-200 dark:border-gray-700 my-16" />
-
-        {/* === PILAR LAYANAN (3 KOLOM) === */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {data.solutions.map((solution, index) => {
-            const IconComponent = IconMap[solution.icon];
-
-            // Pastikan ikon ada sebelum dirender
-            if (!IconComponent) {
-              console.warn(
-                `Icon component not found for key: ${solution.icon}`
-              );
-              return null;
-            }
-
-            return (
-              <div
-                key={index}
-                className="p-8 bg-gray-50 dark:bg-[#181C26] rounded-xl border border-gray-200 dark:border-gray-700/50 
-            hover:shadow-indigo-500/20 hover:shadow-2xl transition duration-300"
+            <div className="pt-2">
+              <Button
+                className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-colors"
+                size="lg"
               >
-                {/* Ikon: Menggunakan komponen yang dipetakan dari string */}
-                <div className="w-12 h-12 flex items-center justify-center bg-indigo-100 dark:bg-indigo-600/10 rounded-lg mb-6 text-indigo-600 dark:text-indigo-500">
-                  <IconComponent className="h-6 w-6" />
+                {data.button_text}
+              </Button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4 lg:gap-6">
+            <div className="row-span-2 relative w-full h-full min-h-[500px] rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-700">
+              <Image
+                src="/images/about/team-working-1.jpg"
+                alt="Digiforma Tech Solution team working on IT consulting and software development"
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+
+            <div className="relative w-full h-56 rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-700">
+              <Image
+                src="/images/about/team-working-2.jpg"
+                alt="Enterprise Architecture and IT Master Plan consulting collaboration"
+                fill
+                className="object-cover"
+                unoptimized
+              />
+            </div>
+
+            <div className="bg-blue-600 dark:bg-blue-500 rounded-lg p-6 md:p-8 shadow-xl flex items-center justify-center">
+              <div className="flex flex-col">
+                <span className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-3">
+                  {data.experience.years}
+                </span>
+                <div className="space-y-0.5">
+                  <p className="text-white text-base md:text-lg font-medium">
+                    {data.experience.label1}
+                  </p>
+                  <p className="text-white/90 text-sm md:text-base">
+                    {data.experience.label2}
+                  </p>
                 </div>
-
-                {/* Judul Layanan Multibahasa */}
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
-                  {solution.title}
-                </h3>
-
-                {/* Deskripsi Layanan Multibahasa */}
-                <p className="text-base text-gray-600 dark:text-gray-400 leading-normal">
-                  {solution.description}
-                </p>
               </div>
-            );
-          })}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

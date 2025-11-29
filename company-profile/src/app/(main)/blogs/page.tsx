@@ -1,13 +1,27 @@
-import * as React from "react";
+import { Metadata } from "next";
+import BlogsPageClient from "@/components/core/compro/BlogsPageClient";
 
-interface IBlogPagesProps {}
-
-const BlogPages: React.FunctionComponent<IBlogPagesProps> = (props) => {
-  return (
-    <div>
-      <h1>Blog Pages</h1>
-    </div>
-  );
+export const metadata: Metadata = {
+  title: "Blog - Digiforma Tech Solution | Artikel & Insights Teknologi",
+  description:
+    "Baca artikel dan insights terbaru tentang IT Master Plan, Enterprise Architecture, COBIT 2019, dan pengembangan software dari tim ahli Digiforma Tech Solution.",
+  keywords: [
+    "Blog IT",
+    "Artikel Teknologi",
+    "IT Master Plan",
+    "Enterprise Architecture",
+    "COBIT 2019",
+    "Software Development",
+    "Digiforma Tech Solution",
+  ],
+  openGraph: {
+    title: "Blog - Digiforma Tech Solution",
+    description:
+      "Artikel dan insights terbaru tentang teknologi dan transformasi digital",
+    type: "website",
+  },
 };
 
-export default BlogPages;
+export default function BlogsPage() {
+  return <BlogsPageClient />;
+}

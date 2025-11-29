@@ -40,7 +40,7 @@ export default function HeroSection() {
 
   if (isLoading || !heroData) {
     return (
-      <div className="bg-[#0B0E14] text-white py-24 px-4 sm:px-8 text-center">
+      <div className="bg-white dark:bg-gray-900 py-24 px-4 sm:px-8 text-center">
         <Spinner />
       </div>
     );
@@ -49,7 +49,7 @@ export default function HeroSection() {
   const t = heroData;
 
   return (
-    <section className="w-full min-h-screen bg-white dark:bg-[#0B0E14] dark:text-white flex flex-col py-10  sm:py-0 relative overflow-hidden">
+    <section className="w-full min-h-screen bg-white dark:bg-gray-900 flex flex-col py-10 sm:py-0 relative overflow-hidden">
       <div
         className={`
           max-w-7xl mx-auto px-6
@@ -60,7 +60,6 @@ export default function HeroSection() {
           w-full
         `}
       >
-        {/* LEFT CONTENT */}
         <div className="text-center md:text-left max-w-lg space-y-6">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-gray-900 dark:text-white">
             {t.title_part1}
@@ -71,11 +70,11 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
-            <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white rounded-xl shadow-lg shadow-blue-500/30 dark:shadow-indigo-600/30 flex items-center gap-2 transition">
+            <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white rounded-xl shadow-lg shadow-blue-500/30 dark:shadow-blue-500/30 flex items-center gap-2 transition">
               {t.cta_start} <ArrowRight className="w-4 h-4" />
             </button>
 
-            <button className="px-6 py-3 border border-blue-400 dark:border-indigo-500 text-blue-600 dark:text-indigo-400 hover:bg-blue-50 dark:hover:bg-indigo-900/30 rounded-xl flex items-center gap-2 transition">
+            <button className="px-6 py-3 border border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl flex items-center gap-2 transition">
               {t.cta_discover} <ArrowRight className="w-4 h-4" />
             </button>
           </div>

@@ -27,12 +27,12 @@ export function BlogMenu() {
   const [loading, setLoading] = useState(true);
 
   async function fetchMyLatestBlogs() {
-    if (!user?.id) return;
+    if (!user?.authorId) return;
 
     const { data, error } = await supabase
       .from("blogs")
       .select("id, title")
-      .eq("author_id", user.id)
+      .eq("author_id", user.authorId)
       .order("created_at", { ascending: false })
       .limit(3);
 

@@ -3,10 +3,17 @@ import * as React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/lib/stores";
 import { useRouter } from "next/navigation";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
-import { Languages } from "lucide-react";
+import { Languages, LogOut, BookOpen } from "lucide-react";
 import { getLocale } from "@/lib/get-locale";
 
 interface NavLink {
@@ -71,7 +78,7 @@ const Navbar: React.FC = () => {
   w-full fixed top-0 z-50 transition-all duration-300
   ${
     isScrolled
-      ? "bg-white/80 backdrop-blur-md border-b border-gray-200 dark:bg-black/80 dark:backdrop-blur-md dark:border-b dark:border-white/10"
+      ? "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700"
       : "bg-transparent border-b border-transparent"
   }
 `;
@@ -80,7 +87,7 @@ const Navbar: React.FC = () => {
     return (
       <div className={navbarClasses}>
         <div className="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
-          <div className=" text-black dark:text-white font-bold text-xl">
+          <div className="text-gray-900 dark:text-white font-bold text-xl">
             Digiforma Tech
           </div>
         </div>
@@ -94,19 +101,16 @@ const Navbar: React.FC = () => {
     <nav className={navbarClasses}>
       <div className="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
         <div className="flex items-center gap-2">
-          {/* 1. Judul Brand */}
           <div className="text-gray-900 dark:text-white font-bold text-xl">
             Digiforma Tech
           </div>
         </div>
 
-        {/* 2. Navigasi Utama */}
-        <ul className="hidden md:flex items-center gap-8 text-gray-700/80 dark:text-white/80 text-sm">
+        <ul className="hidden md:flex items-center gap-8 text-gray-600 dark:text-gray-400 text-sm">
           {navLinks.map((link, i) => (
             <li key={i}>
               <Link
                 href={link.url}
-                // Warna hover disesuaikan untuk kedua mode
                 className="hover:text-gray-900 dark:hover:text-white transition-colors"
               >
                 {link.name}
@@ -115,7 +119,6 @@ const Navbar: React.FC = () => {
           ))}
         </ul>
 
-        {/* 3. Aksi (Tombol Bahasa & Login) */}
         <div className="flex gap-4">
           {hydrated && (
             <div>
@@ -123,8 +126,7 @@ const Navbar: React.FC = () => {
                 variant="ghost"
                 size="sm"
                 onClick={toggleLang}
-                // Warna teks default dan hover diubah agar terlihat di Light Mode
-                className="text-gray-700/80 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/10 hover:text-gray-900 dark:hover:text-white transition-colors duration-500 p-2 h-auto"
+                className="text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white transition-colors duration-500 p-2 h-auto"
                 aria-label="Toggle language"
               >
                 <Languages className="w-4 h-4 mr-1" />
@@ -133,26 +135,48 @@ const Navbar: React.FC = () => {
             </div>
           )}
           {isLoggedIn ? (
-            <Button
-              variant="ghost"
-              onClick={() => router.push("/cms/dashboard")}
-              // Hover dan border disesuaikan
-              className="rounded-full h-10 w-10 p-0 focus-visible:ring-offset-0 hover:bg-gray-200 dark:hover:bg-white/30 transition-colors"
-              aria-label="User menu"
-            >
-              <Avatar className="h-9 w-9 border-2 border-gray-400 dark:border-white/80 hover:bg-gray-200 dark:hover:bg-white/30 cursor-pointer">
-                <AvatarFallback className="bg-gray-200 dark:bg-white text-blue-700 text-sm font-medium">
-                  {getInitials(user?.displayName ?? undefined)}
-                </AvatarFallback>
-              </Avatar>
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="rounded-full h-10 w-10 p-0 focus-visible:ring-offset-0 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                  aria-label="User menu"
+                >
+                  <Avatar className="h-9 w-9 border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
+                    <AvatarFallback className="bg-gray-200 dark:bg-white text-blue-700 text-sm font-medium">
+                      {getInitials(user?.displayName ?? undefined)}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                <DropdownMenuItem
+                  onClick={() => router.push("/digi-share")}
+                  className="cursor-pointer text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Digi-Share
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-gray-200 dark:bg-gray-700" />
+                <DropdownMenuItem
+                  onClick={async () => {
+                    await useAuthStore.getState().logout();
+                    router.push("/");
+                  }}
+                  className="cursor-pointer text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  variant="destructive"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
-            // Tombol Login (Warna tetap, karena ini tombol aksi utama)
             <Link
-              href="/login"
-              className="bg-[#1A73E8] hover:bg-[#155AC1] transition text-white text-sm px-5 py-2 rounded-xl shadow-lg"
+              href="/digi-share"
+              className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition text-white text-sm px-5 py-2 rounded-xl shadow-lg"
             >
-              {localeData?.login || "Login"}
+              {localeData?.login || "Digi-share"}
             </Link>
           )}
         </div>

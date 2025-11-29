@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import ThemeToggle from "@/components/core/compro/layouts/ThemeToggle";
 import { Providers } from "@/components/core/compro/layouts/Providers";
+import Lines from "@/components/core/Lines/Lines";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,9 +28,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body suppressHydrationWarning className="transition-colors duration-500">
+      <body
+        suppressHydrationWarning
+        className="transition-colors duration-500 bg-white dark:bg-black"
+      >
         <ThemeToggle />
-        <Providers>{children}</Providers>
+        <Providers>
+          <Lines />
+          <Toaster />
+          {children}
+        </Providers>
       </body>
     </html>
   );

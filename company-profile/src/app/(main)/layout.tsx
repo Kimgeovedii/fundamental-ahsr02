@@ -1,9 +1,7 @@
-"use client";
+import Footer from "@/components/core/compro/layouts/Footer";
 import Navbar from "@/components/core/compro/layouts/Navbar";
-import { useAuthStore } from "@/lib/stores";
-import { useRouter } from "next/navigation";
+
 import React from "react";
-import { useEffect } from "react";
 
 export default function MainLayout({
   children,
@@ -14,6 +12,7 @@ export default function MainLayout({
     <div>
       <Navbar />
       {children}
+      <Footer />
     </div>
   );
 }

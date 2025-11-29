@@ -17,7 +17,6 @@ import {
 import { CompanyProfile } from "./CompanyProfile";
 import { useAuthStore } from "@/lib/stores";
 
-// This is sample data.
 const data = {
   navMain: [
     {
