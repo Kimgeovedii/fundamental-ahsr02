@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { BlogForm } from "@/components/core/cms/blog/BlogForm";
+import { BlogForm } from "@/components/core/digi-share/BlogForm";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";

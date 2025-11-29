@@ -51,8 +51,8 @@ const BlogsPageClient = () => {
             setPageData(data.blogs_page as BlogsPageData);
           }
         })
-        .catch((error) => {
-          console.error("Failed to load blogs page locale data:", error);
+        .catch(() => {
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoadingLocale(false);

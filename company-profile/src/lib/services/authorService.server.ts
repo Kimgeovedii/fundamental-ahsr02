@@ -1,13 +1,15 @@
 import { createClient } from "@supabase/supabase-js";
 import { Author } from "../types/author";
 
-export async function getAuthorByIdForMetadata(authorId: string): Promise<Author | null> {
+export async function getAuthorByIdForMetadata(
+  authorId: string
+): Promise<Author | null> {
   try {
     const supabase = createClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
     );
-    
+
     const { data, error } = await supabase
       .from("author")
       .select("*")
@@ -21,8 +23,6 @@ export async function getAuthorByIdForMetadata(authorId: string): Promise<Author
 
     return data;
   } catch (error) {
-    console.error("Error fetching author for metadata:", error);
     return null;
   }
 }
-

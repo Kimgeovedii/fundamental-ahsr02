@@ -38,8 +38,8 @@ const SearchUsersPage = () => {
             setPageData(data.search_users_page as SearchUsersPageData);
           }
         })
-        .catch((error) => {
-          console.error("Failed to load search users page locale data:", error);
+        .catch(() => {
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -59,7 +59,7 @@ const SearchUsersPage = () => {
         const results = await userService.searchUsers(searchQuery);
         setUsers(results);
       } catch (error) {
-        console.error("Failed to search users:", error);
+        // Silent fail - error will be handled by UI state
       } finally {
         setLoading(false);
       }

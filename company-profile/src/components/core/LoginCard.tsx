@@ -51,7 +51,7 @@ export function LoginCard() {
         return;
       }
       toast.success("Login sukses! Selamat datang 👋");
-      router.push("/cms/dashboard");
+      router.push("/digi-share/manage");
     },
   });
   return (

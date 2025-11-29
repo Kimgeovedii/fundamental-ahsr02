@@ -31,8 +31,7 @@ const DigiShareFooter = () => {
             setFooterData(data.digi_share_footer as DigiShareFooterLocale);
           }
         })
-        .catch((error) => {
-          console.error("Failed to load digi-share footer locale data:", error);
+        .catch(() => {
           setFooterData(null);
         })
         .finally(() => {

@@ -97,7 +97,7 @@ const ServicesPageClient = () => {
           }
         })
         .catch((error) => {
-          console.error("Failed to load services locale data:", error);
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoading(false);

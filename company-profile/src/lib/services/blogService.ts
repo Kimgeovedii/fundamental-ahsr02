@@ -99,4 +99,143 @@ export const blogService = {
       author_id: blog.author_id,
     }));
   },
+
+  async getByAuthorIdPaginated(options: {
+    authorId: string;
+    limit: number;
+    offset: number;
+    isFeatured?: boolean;
+    categoryId?: string;
+    searchQuery?: string;
+  }): Promise<{ data: Blog[]; hasMore: boolean }> {
+    let query = supabase
+      .from("blogs")
+      .select(
+        `
+        *,
+        category:categories(*),
+        author!blogs_author_id_fkey(id, name, avatar, bio)
+      `,
+        { count: "exact" }
+      )
+      .eq("author_id", options.authorId)
+      .order("created_at", { ascending: false });
+
+    if (options.isFeatured !== undefined) {
+      query = query.eq("is_featured", options.isFeatured);
+    }
+
+    if (options.categoryId) {
+      query = query.eq("category_id", options.categoryId);
+    }
+
+    const fetchLimit = options.searchQuery ? 1000 : options.limit;
+    const fetchOffset = options.searchQuery ? 0 : options.offset;
+    
+    query = query.range(fetchOffset, fetchOffset + fetchLimit - 1);
+
+    const { data, error, count } = await query;
+    if (error) throw error;
+
+    let blogs = (data || []).map((blog: any) => ({
+      ...blog,
+      author_name: blog.author?.name || null,
+      author_avatar: blog.author?.avatar || null,
+      author_id: blog.author_id,
+    }));
+
+    if (options.searchQuery?.trim()) {
+      const searchLower = options.searchQuery.toLowerCase();
+      blogs = blogs.filter(
+        (blog: Blog) =>
+          blog.title.toLowerCase().includes(searchLower) ||
+          blog.description?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    if (options.searchQuery) {
+      const start = options.offset;
+      const end = options.offset + options.limit;
+      const paginatedBlogs = blogs.slice(start, end);
+      const hasMore = end < blogs.length;
+
+      return {
+        data: paginatedBlogs,
+        hasMore,
+      };
+    }
+    const hasMore = count ? options.offset + options.limit < count : false;
+
+    return {
+      data: blogs,
+      hasMore,
+    };
+  },
+
+  async getAllPaginated(options: {
+    limit: number;
+    offset: number;
+    categoryId?: string;
+    searchQuery?: string;
+  }): Promise<{ data: Blog[]; hasMore: boolean }> {
+    let query = supabase
+      .from("blogs")
+      .select(
+        `
+        *,
+        category:categories(*),
+        author!blogs_author_id_fkey(id, name, avatar, bio)
+      `,
+        { count: "exact" }
+      )
+      .eq("is_featured", true)
+      .order("created_at", { ascending: false });
+
+    if (options.categoryId) {
+      query = query.eq("category_id", options.categoryId);
+    }
+
+    const fetchLimit = options.searchQuery ? 1000 : options.limit;
+    const fetchOffset = options.searchQuery ? 0 : options.offset;
+    
+    query = query.range(fetchOffset, fetchOffset + fetchLimit - 1);
+
+    const { data, error, count } = await query;
+    if (error) throw error;
+
+    let blogs = (data || []).map((blog: any) => ({
+      ...blog,
+      author_name: blog.author?.name || null,
+      author_avatar: blog.author?.avatar || null,
+      author_id: blog.author_id,
+    }));
+
+    if (options.searchQuery?.trim()) {
+      const searchLower = options.searchQuery.toLowerCase();
+      blogs = blogs.filter(
+        (blog: Blog) =>
+          blog.title.toLowerCase().includes(searchLower) ||
+          blog.description?.toLowerCase().includes(searchLower) ||
+          blog.author_name?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    if (options.searchQuery) {
+      const start = options.offset;
+      const end = options.offset + options.limit;
+      const paginatedBlogs = blogs.slice(start, end);
+      const hasMore = end < blogs.length;
+
+      return {
+        data: paginatedBlogs,
+        hasMore,
+      };
+    }
+    const hasMore = count ? options.offset + options.limit < count : false;
+
+    return {
+      data: blogs,
+      hasMore,
+    };
+  },
 };

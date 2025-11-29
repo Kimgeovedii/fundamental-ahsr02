@@ -52,8 +52,8 @@ const CreateAuthorPage = () => {
             setPageData(data.create_author_page as CreateAuthorPageData);
           }
         })
-        .catch((error) => {
-          console.error("Failed to load create author page locale data:", error);
+        .catch(() => {
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -76,7 +76,7 @@ const CreateAuthorPage = () => {
           return;
         }
       } catch (error) {
-        console.error("Failed to check author:", error);
+        // Silent fail - error will be handled by redirect
       } finally {
         setLoading(false);
       }
@@ -116,7 +116,6 @@ const CreateAuthorPage = () => {
           try {
             avatarUrl = await authorService.uploadAvatar(avatarFile, user.id);
           } catch (error) {
-            console.error("Failed to upload avatar:", error);
             toast.error("Failed to upload avatar");
           }
         }
@@ -138,7 +137,6 @@ const CreateAuthorPage = () => {
             if (error.code === "23503" && retries < maxRetries - 1) {
               retries++;
               const waitTime = 2000 * retries;
-              console.log(`Foreign key error, retrying after ${waitTime}ms (attempt ${retries}/${maxRetries})...`);
               await new Promise((resolve) => setTimeout(resolve, waitTime));
               continue;
             }
@@ -150,7 +148,6 @@ const CreateAuthorPage = () => {
         toast.success(pageData?.success_message || "Author profile created successfully!");
         router.push("/digi-share/posts");
       } catch (error: any) {
-        console.error("Failed to create author:", error);
         toast.error(error.message || pageData?.error_message || "Failed to create author profile");
       } finally {
         setSaving(false);

@@ -34,7 +34,7 @@ const AboutSection: React.FunctionComponent = () => {
           }
         })
         .catch((error) => {
-          console.error("Failed to load about section locale data:", error);
+          // Silent fail - locale will use default
           setAboutData(null);
         })
         .finally(() => {

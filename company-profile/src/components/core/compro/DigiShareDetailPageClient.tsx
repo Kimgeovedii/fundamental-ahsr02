@@ -40,8 +40,8 @@ const DigiShareDetailPageClient = () => {
             setPageData(data.digi_share_detail_page as DigiShareDetailPageData);
           }
         })
-        .catch((error) => {
-          console.error("Failed to load digi-share detail page locale data:", error);
+        .catch(() => {
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -203,7 +203,7 @@ const DigiShareDetailPageClient = () => {
             className="prose prose-lg dark:prose-invert max-w-none"
           >
             <div
-              className="text-gray-900 dark:text-gray-100 leading-relaxed"
+              className="prose-content text-gray-900 dark:text-gray-100 leading-relaxed"
               dangerouslySetInnerHTML={{ __html: blog.description }}
             />
           </motion.div>

@@ -62,8 +62,8 @@ const ProfileSettingsPage = () => {
             setPageData(data.profile_settings_page as ProfileSettingsPageData);
           }
         })
-        .catch((error) => {
-          console.error("Failed to load profile settings page locale data:", error);
+        .catch(() => {
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -86,7 +86,6 @@ const ProfileSettingsPage = () => {
           setAvatarPreview(authorData.avatar);
         }
       } catch (error) {
-        console.error("Failed to fetch author:", error);
         toast.error("Failed to load profile");
       } finally {
         setLoading(false);
@@ -130,7 +129,6 @@ const ProfileSettingsPage = () => {
         toast.success(pageData?.success_message || "Profile updated successfully");
         setAvatarFile(null);
       } catch (error: any) {
-        console.error("Failed to update profile:", error);
         toast.error(error.message || pageData?.error_message || "Failed to update profile");
       } finally {
         setSaving(false);
@@ -191,7 +189,6 @@ const ProfileSettingsPage = () => {
           toast.success(pageData?.success_message || "Email updated successfully");
         }
       } catch (error: any) {
-        console.error("Failed to update credentials:", error);
         toast.error(error.message || pageData?.error_message || "Failed to update credentials");
       } finally {
         setSaving(false);

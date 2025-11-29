@@ -38,8 +38,8 @@ const BlogDetailPageClient = () => {
             setPageData(data.blog_detail_page as BlogDetailPageData);
           }
         })
-        .catch((error) => {
-          console.error("Failed to load blog detail page locale data:", error);
+        .catch(() => {
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -162,7 +162,7 @@ const BlogDetailPageClient = () => {
             className="prose prose-lg dark:prose-invert max-w-none"
           >
             <div
-              className="text-gray-900 dark:text-gray-100 leading-relaxed"
+              className="prose-content text-gray-900 dark:text-gray-100 leading-relaxed"
               dangerouslySetInnerHTML={{ __html: blog.description }}
             />
           </motion.div>

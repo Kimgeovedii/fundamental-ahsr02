@@ -55,7 +55,7 @@ export default function NotFoundPageClient() {
           }
         })
         .catch((error) => {
-          console.error("Failed to load not found page locale data:", error);
+          // Silent fail - locale will use default
           setPageData({
             title: "404",
             subtitle: "Page Not Found",

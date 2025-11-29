@@ -50,7 +50,7 @@ const DigiShareLandingPage = () => {
           }
         })
         .catch((error) => {
-          console.error("Failed to load digi-share landing page locale data:", error);
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoadingLocale(false);

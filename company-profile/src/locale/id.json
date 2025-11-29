@@ -277,7 +277,7 @@
       "links": [
         { "label": "Beranda", "url": "/" },
         { "label": "Timeline", "url": "/digi-share/posts" },
-        { "label": "Tulis Artikel", "url": "/cms/blogs/create" },
+        { "label": "Tulis Artikel", "url": "/digi-share/create" },
         { "label": "Tentang Digi-Share", "url": "/digi-share" }
       ]
     },

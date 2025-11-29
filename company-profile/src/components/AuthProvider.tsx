@@ -13,7 +13,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       try {
         await checkSession();
       } catch (error) {
-        console.error("Failed to check session:", error);
       } finally {
         setHasChecked(true);
       }
@@ -24,4 +23,3 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return <>{children}</>;
 }
-

@@ -7,8 +7,8 @@ import * as Yup from "yup";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+import RichTextEditor from "@/components/ui/rich-text-editor";
 import {
   Select,
   SelectContent,
@@ -49,7 +49,7 @@ export const BlogForm: React.FC<BlogFormProps> = ({
   initialBlog,
 }) => {
   const { user } = useAuthStore();
-  const { categories, fetchCategory } = useCategoryStore();
+  const { categories, loading: categoriesLoading, fetchCategory } = useCategoryStore();
   const { fetchBlogs } = useBlogs();
   const [loading, setLoading] = React.useState(!!blogId && !initialBlog);
 
@@ -65,7 +65,7 @@ export const BlogForm: React.FC<BlogFormProps> = ({
     if (blogId && !initialBlog) {
       loadBlogData();
     }
-  }, [blogId]);
+  }, [blogId, fetchCategory]);
 
   React.useEffect(() => {
     if (initialBlog?.image_url) {
@@ -110,19 +110,20 @@ export const BlogForm: React.FC<BlogFormProps> = ({
   const initialValues = {
     title: initialBlog?.title || "",
     content: initialBlog?.description || "",
-    category: initialBlog?.category_id || "",
+    category: initialBlog?.category_id ? String(initialBlog.category_id) : "",
     featured: initialBlog?.is_featured || false,
   };
 
-  if (loading) {
+  if (loading || categoriesLoading) {
     return <div className="text-center py-8">Loading...</div>;
   }
 
   return (
     <Formik
+      key={initialBlog?.category_id || blogId || "new"} // Force re-initialize when category changes
       initialValues={initialValues}
       validationSchema={BlogSchema}
-      enableReinitialize={isEditMode}
+      enableReinitialize={true}
       onSubmit={async (values, { resetForm, setSubmitting }) => {
         try {
           if (!user) return toast.error("User tidak ditemukan");
@@ -216,18 +217,12 @@ export const BlogForm: React.FC<BlogFormProps> = ({
 
           <div className="space-y-3">
             <Label className="text-gray-900 dark:text-white">Article Content *</Label>
-            <Field name="content">
-              {({ field }: any) => (
-                <Textarea
-                  {...field}
-                  className="min-h-[200px] text-gray-900 dark:text-white"
-                  placeholder="Write here..."
-                />
-              )}
-            </Field>
-            {errors.content && touched.content && (
-              <p className="text-red-500 dark:text-red-400 text-sm">{errors.content}</p>
-            )}
+            <RichTextEditor
+              content={values.content}
+              onChange={(html) => setFieldValue("content", html)}
+              placeholder="Write your article content here..."
+              error={errors.content && touched.content ? errors.content : undefined}
+            />
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -235,11 +230,12 @@ export const BlogForm: React.FC<BlogFormProps> = ({
               <Label className="text-gray-900 dark:text-white">Category *</Label>
 
               <Select
-                value={values.category}
+                value={values.category || undefined}
                 onValueChange={(v) => setFieldValue("category", v)}
+                disabled={categoriesLoading || categories.length === 0}
               >
                 <SelectTrigger className="text-gray-900 dark:text-white">
-                  <SelectValue placeholder="Select category" />
+                  <SelectValue placeholder={categoriesLoading ? "Loading categories..." : categories.length === 0 ? "No categories available" : "Select category"} />
                 </SelectTrigger>
 
                 <SelectContent className="text-gray-900 dark:text-white">

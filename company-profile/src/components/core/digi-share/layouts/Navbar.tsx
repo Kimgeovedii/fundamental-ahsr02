@@ -49,7 +49,9 @@ const DigiShareNavbar: React.FC = () => {
             setLocaleData(data.digi_share_navbar as DigiShareNavbarLocale);
           }
         })
-        .catch(console.error)
+        .catch(() => {
+          // Silent fail - locale will use default
+        })
         .finally(() => {
           setIsLoadingLocale(false);
         });

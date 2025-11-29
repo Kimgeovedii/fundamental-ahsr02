@@ -6,16 +6,24 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useBlogs } from "@/lib/hooks/useBlogs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useCategoryStore } from "@/lib/stores/categoryStore";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { useAuthStore } from "@/lib/stores";
 import { getLocale } from "@/lib/get-locale";
 import { Spinner } from "@/components/ui/spinner";
+import { blogService } from "@/lib/services/blogService";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Blog } from "@/lib/types/blog";
+import { BlogPostCardSkeleton } from "./BlogPostCardSkeleton";
 
 interface DigiShareTimelinePageData {
   search: {
@@ -57,6 +65,19 @@ const BlogPostCard = ({
       month: "long",
       day: "numeric",
     });
+  };
+
+  const stripHtmlTags = (html: string): string => {
+    if (!html) return "";
+    const tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+  };
+
+  const getPreviewText = (html: string, maxLength: number = 150): string => {
+    const text = stripHtmlTags(html);
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + "...";
   };
 
   const getTimeAgo = (dateString: string): string => {
@@ -151,7 +172,7 @@ const BlogPostCard = ({
             </h2>
 
             <p className="text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
-              {blog.description?.replace(/<[^>]*>/g, "").substring(0, 150)}...
+              {getPreviewText(blog.description || "", 150)}
             </p>
 
             {blog.image_url && (
@@ -178,11 +199,12 @@ const BlogPostCard = ({
   );
 };
 
+const POSTS_PER_PAGE = 10;
+
 const DigiShareTimelinePage = () => {
   const router = useRouter();
   const { lang, hydrated } = useHydratedLanguageStore();
   const { user, token } = useAuthStore();
-  const { blogs, loading: blogsLoading } = useBlogs();
   const { categories, loading: categoriesLoading, fetchCategory } =
     useCategoryStore();
   const [pageData, setPageData] = React.useState<DigiShareTimelinePageData | null>(
@@ -191,6 +213,24 @@ const DigiShareTimelinePage = () => {
   const [isLoadingLocale, setIsLoadingLocale] = React.useState(true);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState<string>("all");
+  
+  // Pagination states
+  const [blogs, setBlogs] = React.useState<Blog[]>([]);
+  const [loading, setLoading] = React.useState(true);
+  const [loadingMore, setLoadingMore] = React.useState(false);
+  const [hasMore, setHasMore] = React.useState(true);
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = React.useState("");
+  const loadMoreRef = React.useRef<HTMLDivElement>(null);
+
+  // Debounce search query
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   React.useEffect(() => {
     if (hydrated) {
@@ -209,8 +249,8 @@ const DigiShareTimelinePage = () => {
             } as DigiShareTimelinePageData);
           }
         })
-        .catch((error) => {
-          console.error("Failed to load digi-share timeline page locale data:", error);
+        .catch(() => {
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -222,32 +262,86 @@ const DigiShareTimelinePage = () => {
     fetchCategory();
   }, [fetchCategory]);
 
-  const filteredBlogs = React.useMemo(() => {
-    let filtered = blogs || [];
+  // Fetch initial blogs
+  React.useEffect(() => {
+    const fetchInitialBlogs = async () => {
+      setLoading(true);
+      setCurrentPage(0);
+      setBlogs([]);
+      
+      try {
+        const result = await blogService.getAllPaginated({
+          limit: POSTS_PER_PAGE,
+          offset: 0,
+          categoryId: selectedCategory !== "all" ? selectedCategory : undefined,
+          searchQuery: debouncedSearchQuery.trim() || undefined,
+        });
+        
+        setBlogs(result.data);
+        setHasMore(result.hasMore);
+      } catch (error) {
+        // Silent fail - error will be handled by UI state
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    filtered = filtered.filter((blog) => blog.is_featured === true);
-
-    if (selectedCategory !== "all") {
-      filtered = filtered.filter(
-        (blog) => blog.category_id === selectedCategory
-      );
+    if (hydrated) {
+      fetchInitialBlogs();
     }
+  }, [selectedCategory, debouncedSearchQuery, hydrated]);
 
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (blog) =>
-          blog.title.toLowerCase().includes(query) ||
-          blog.description?.toLowerCase().includes(query) ||
-          blog.author_name?.toLowerCase().includes(query)
-      );
+  // Load more blogs function
+  const loadMoreBlogs = React.useCallback(async () => {
+    if (loadingMore || !hasMore || loading) return;
+
+    setLoadingMore(true);
+    try {
+      const nextPage = currentPage + 1;
+      const result = await blogService.getAllPaginated({
+        limit: POSTS_PER_PAGE,
+        offset: nextPage * POSTS_PER_PAGE,
+        categoryId: selectedCategory !== "all" ? selectedCategory : undefined,
+        searchQuery: debouncedSearchQuery.trim() || undefined,
+      });
+
+      // Filter out duplicates
+      setBlogs((prev) => {
+        const existingIds = new Set(prev.map((b) => b.id));
+        const newBlogs = result.data.filter((b) => !existingIds.has(b.id));
+        return [...prev, ...newBlogs];
+      });
+      setHasMore(result.hasMore);
+      setCurrentPage(nextPage);
+    } catch (error) {
+      // Silent fail - error will be handled by UI state
+    } finally {
+      setLoadingMore(false);
     }
+  }, [currentPage, hasMore, loadingMore, loading, selectedCategory, debouncedSearchQuery]);
 
-    return filtered.sort(
-      (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+  // Intersection Observer for infinite scroll
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
+          loadMoreBlogs();
+        }
+      },
+      { threshold: 0.1 }
     );
-  }, [blogs, selectedCategory, searchQuery]);
+
+    const currentRef = loadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [hasMore, loadingMore, loading, loadMoreBlogs]);
 
   const isLoggedIn = !!token && !!user;
 
@@ -305,19 +399,30 @@ const DigiShareTimelinePage = () => {
             </div>
             <div className="md:w-64">
               <div className="relative">
-                <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 z-10" />
-                <select
+                <Select
                   value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  onValueChange={(value) => setSelectedCategory(value)}
+                  disabled={categoriesLoading}
                 >
-                  <option value="all">{data.filter.all}</option>
-                  {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
+                  <SelectTrigger className="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white pl-10">
+                    <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none z-10" />
+                    <SelectValue placeholder={data.filter.all} />
+                  </SelectTrigger>
+                  <SelectContent className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                    <SelectItem value="all" className="text-gray-900 dark:text-white focus:bg-gray-100 dark:focus:bg-gray-700">
+                      {data.filter.all}
+                    </SelectItem>
+                    {categories.map((category) => (
+                      <SelectItem 
+                        key={category.id} 
+                        value={String(category.id)}
+                        className="text-gray-900 dark:text-white focus:bg-gray-100 dark:focus:bg-gray-700"
+                      >
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
@@ -326,11 +431,13 @@ const DigiShareTimelinePage = () => {
 
       <section className="py-12 px-4 sm:px-8 bg-white dark:bg-gray-900">
         <div className="max-w-4xl mx-auto">
-          {blogsLoading || categoriesLoading ? (
-            <div className="flex justify-center items-center py-12">
-              <Spinner />
+          {(loading && blogs.length === 0) || categoriesLoading ? (
+            <div className="space-y-0">
+              {Array.from({ length: 3 }).map((_, index) => (
+                <BlogPostCardSkeleton key={index} />
+              ))}
             </div>
-          ) : filteredBlogs.length === 0 ? (
+          ) : blogs.length === 0 ? (
             <div className="text-center py-12">
               <BookOpen className="w-16 h-16 mx-auto text-gray-400 dark:text-gray-500 mb-4" />
               <p className="text-gray-600 dark:text-gray-400 text-lg">
@@ -349,17 +456,33 @@ const DigiShareTimelinePage = () => {
               )}
             </div>
           ) : (
-            <div className="space-y-0">
-              {filteredBlogs.map((blog, index) => (
-                <BlogPostCard 
-                  key={blog.id} 
-                  blog={blog} 
-                  index={index} 
-                  minutesReadText={data.minutes_read}
-                  readMoreText={data.read_more}
-                />
-              ))}
-            </div>
+            <>
+              <div className="space-y-0">
+                {blogs.map((blog, index) => (
+                  <BlogPostCard 
+                    key={blog.id} 
+                    blog={blog} 
+                    index={index} 
+                    minutesReadText={data.minutes_read}
+                    readMoreText={data.read_more}
+                  />
+                ))}
+              </div>
+              
+              {/* Loading more indicator */}
+              {loadingMore && (
+                <div className="space-y-0 mt-4">
+                  {Array.from({ length: 2 }).map((_, index) => (
+                    <BlogPostCardSkeleton key={`skeleton-${index}`} />
+                  ))}
+                </div>
+              )}
+              
+              {/* Intersection Observer target */}
+              {hasMore && !loadingMore && (
+                <div ref={loadMoreRef} className="h-10 w-full" />
+              )}
+            </>
           )}
         </div>
       </section>

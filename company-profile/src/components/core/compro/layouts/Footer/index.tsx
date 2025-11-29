@@ -45,8 +45,7 @@ const Footer = () => {
             setFooterData(data.footer as FooterData);
           }
         })
-        .catch((error) => {
-          console.error("Failed to load footer locale data:", error);
+        .catch(() => {
           setFooterData(null);
         })
         .finally(() => {

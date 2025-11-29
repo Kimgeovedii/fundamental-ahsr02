@@ -82,7 +82,6 @@ export const authService = {
         token: session.access_token,
       };
     } catch (error) {
-      console.error("Error checking session:", error);
       Cookies.remove("token");
       return null;
     }

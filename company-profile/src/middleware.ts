@@ -6,14 +6,13 @@ export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   
   const isAuthPage = pathname.startsWith("/login") || pathname.startsWith("/signup");
-  const isCmsRoute = pathname.startsWith("/cms");
   const isDigiShareProtectedRoute = 
     pathname.startsWith("/digi-share/create") ||
     pathname.startsWith("/digi-share/manage") ||
     pathname.startsWith("/digi-share/profile/settings") ||
     pathname.startsWith("/digi-share/edit");
 
-  if ((isCmsRoute || isDigiShareProtectedRoute) && !token) {
+  if (isDigiShareProtectedRoute && !token) {
     const loginUrl = new URL("/login", req.url);
     return NextResponse.redirect(loginUrl);
   }
@@ -28,7 +27,6 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    "/cms/:path*",
     "/login",
     "/signup",
     "/digi-share/create/:path*",

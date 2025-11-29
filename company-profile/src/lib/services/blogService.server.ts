@@ -28,7 +28,7 @@ export async function getBlogByIdForMetadata(id: string): Promise<Blog | null> {
       author_id: data.author_id,
     };
   } catch (error) {
-    console.error("Error fetching blog for metadata:", error);
+    // Silent fail - return null to show default metadata
     return null;
   }
 }

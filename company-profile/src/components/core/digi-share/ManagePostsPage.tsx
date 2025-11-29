@@ -3,11 +3,27 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Plus, Edit, Trash2, Calendar, Search, Star, Eye, EyeOff } from "lucide-react";
+import {
+  Plus,
+  Edit,
+  Trash2,
+  Calendar,
+  Search,
+  Star,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -20,34 +36,82 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useAuthStore } from "@/lib/stores";
+import { useCategoryStore } from "@/lib/stores/categoryStore";
 import { blogService } from "@/lib/services/blogService";
 import { Blog } from "@/lib/types/blog";
 import { toast } from "sonner";
+import { ManagePostCardSkeleton } from "./BlogCardSkeleton";
+import { Tag } from "lucide-react";
+
+const POSTS_PER_PAGE = 10;
 
 const ManagePostsPage = () => {
   const router = useRouter();
   const { user } = useAuthStore();
   const [blogs, setBlogs] = React.useState<Blog[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [loadingMore, setLoadingMore] = React.useState(false);
+  const [hasMore, setHasMore] = React.useState(true);
+  const [currentPage, setCurrentPage] = React.useState(0);
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [featuredFilter, setFeaturedFilter] = React.useState<"all" | "featured" | "not_featured">("all");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = React.useState("");
+  const [featuredFilter, setFeaturedFilter] = React.useState<
+    "all" | "featured" | "not_featured"
+  >("all");
+  const [selectedCategory, setSelectedCategory] = React.useState<string>("all");
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [postToDelete, setPostToDelete] = React.useState<string | null>(null);
+  const loadMoreRef = React.useRef<HTMLDivElement>(null);
+  const {
+    categories,
+    loading: categoriesLoading,
+    fetchCategory,
+  } = useCategoryStore();
+
+  React.useEffect(() => {
+    fetchCategory();
+  }, [fetchCategory]);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   React.useEffect(() => {
     if (user?.authorId) {
-      fetchUserBlogs();
+      fetchInitialBlogs();
     }
-  }, [user]);
+  }, [user?.authorId, featuredFilter, selectedCategory, debouncedSearchQuery]);
 
-  const fetchUserBlogs = async () => {
+  const fetchInitialBlogs = async () => {
     if (!user?.authorId) return;
     setLoading(true);
+    setCurrentPage(0);
+    setBlogs([]);
+
     try {
-      const userBlogs = await blogService.getByAuthorId(user.authorId);
-      setBlogs(userBlogs);
+      const isFeaturedFilter =
+        featuredFilter === "featured"
+          ? true
+          : featuredFilter === "not_featured"
+          ? false
+          : undefined;
+
+      const result = await blogService.getByAuthorIdPaginated({
+        authorId: user.authorId,
+        limit: POSTS_PER_PAGE,
+        offset: 0,
+        isFeatured: isFeaturedFilter,
+        categoryId: selectedCategory !== "all" ? selectedCategory : undefined,
+        searchQuery: debouncedSearchQuery.trim() || undefined,
+      });
+
+      setBlogs(result.data);
+      setHasMore(result.hasMore);
     } catch (error) {
-      console.error("Failed to fetch user blogs:", error);
       toast.error("Failed to load your posts");
     } finally {
       setLoading(false);
@@ -59,6 +123,71 @@ const ManagePostsPage = () => {
     setDeleteDialogOpen(true);
   };
 
+  const loadMoreBlogs = React.useCallback(async () => {
+    if (loadingMore || !hasMore || loading || !user?.authorId) return;
+
+    setLoadingMore(true);
+    try {
+      const nextPage = currentPage + 1;
+      const isFeaturedFilter =
+        featuredFilter === "featured"
+          ? true
+          : featuredFilter === "not_featured"
+          ? false
+          : undefined;
+
+      const result = await blogService.getByAuthorIdPaginated({
+        authorId: user.authorId,
+        limit: POSTS_PER_PAGE,
+        offset: nextPage * POSTS_PER_PAGE,
+        isFeatured: isFeaturedFilter,
+        categoryId: selectedCategory !== "all" ? selectedCategory : undefined,
+        searchQuery: debouncedSearchQuery.trim() || undefined,
+      });
+      setBlogs((prev) => {
+        const existingIds = new Set(prev.map((b) => b.id));
+        const newBlogs = result.data.filter((b) => !existingIds.has(b.id));
+        return [...prev, ...newBlogs];
+      });
+      setHasMore(result.hasMore);
+      setCurrentPage(nextPage);
+    } catch (error) {
+      toast.error("Failed to load more posts");
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [
+    currentPage,
+    hasMore,
+    loadingMore,
+    loading,
+    user?.authorId,
+    featuredFilter,
+    selectedCategory,
+    debouncedSearchQuery,
+  ]);
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
+          loadMoreBlogs();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRef = loadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [hasMore, loadingMore, loading, loadMoreBlogs]);
+
   const handleDeleteConfirm = async () => {
     if (!postToDelete) return;
     try {
@@ -66,9 +195,13 @@ const ManagePostsPage = () => {
       toast.success("Post deleted successfully");
       setDeleteDialogOpen(false);
       setPostToDelete(null);
-      fetchUserBlogs();
+
+      setBlogs((prev) => prev.filter((b) => b.id !== postToDelete));
+
+      if (blogs.length === 1 && hasMore) {
+        loadMoreBlogs();
+      }
     } catch (error) {
-      console.error("Failed to delete blog:", error);
       toast.error("Failed to delete post");
       setDeleteDialogOpen(false);
       setPostToDelete(null);
@@ -82,30 +215,6 @@ const ManagePostsPage = () => {
       day: "numeric",
     });
   };
-
-  const filteredBlogs = React.useMemo(() => {
-    let filtered = blogs || [];
-
-    if (featuredFilter === "featured") {
-      filtered = filtered.filter((blog) => blog.is_featured === true);
-    } else if (featuredFilter === "not_featured") {
-      filtered = filtered.filter((blog) => blog.is_featured === false);
-    }
-
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (blog) =>
-          blog.title.toLowerCase().includes(query) ||
-          blog.description?.toLowerCase().includes(query)
-      );
-    }
-
-    return filtered.sort(
-      (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    );
-  }, [blogs, searchQuery, featuredFilter]);
 
   if (loading) {
     return (
@@ -143,50 +252,114 @@ const ManagePostsPage = () => {
               />
             </div>
             <div className="md:w-64">
-              <select
+              <div className="relative">
+                <Select
+                  value={selectedCategory}
+                  onValueChange={(value) => setSelectedCategory(value)}
+                  disabled={categoriesLoading}
+                >
+                  <SelectTrigger className="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white pl-10">
+                    <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none z-10" />
+                    <SelectValue placeholder="All Categories" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                    <SelectItem
+                      value="all"
+                      className="text-gray-900 dark:text-white focus:bg-gray-100 dark:focus:bg-gray-700"
+                    >
+                      All Categories
+                    </SelectItem>
+                    {categories.map((category) => (
+                      <SelectItem
+                        key={category.id}
+                        value={String(category.id)}
+                        className="text-gray-900 dark:text-white focus:bg-gray-100 dark:focus:bg-gray-700"
+                      >
+                        {category.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="md:w-64">
+              <Select
                 value={featuredFilter}
-                onChange={(e) => setFeaturedFilter(e.target.value as "all" | "featured" | "not_featured")}
-                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onValueChange={(value) =>
+                  setFeaturedFilter(
+                    value as "all" | "featured" | "not_featured"
+                  )
+                }
               >
-                <option value="all">All Posts</option>
-                <option value="featured">Featured Only</option>
-                <option value="not_featured">Not Featured</option>
-              </select>
+                <SelectTrigger className="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white">
+                  <SelectValue placeholder="All Posts" />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                  <SelectItem
+                    value="all"
+                    className="text-gray-900 dark:text-white focus:bg-gray-100 dark:focus:bg-gray-700"
+                  >
+                    All Posts
+                  </SelectItem>
+                  <SelectItem
+                    value="featured"
+                    className="text-gray-900 dark:text-white focus:bg-gray-100 dark:focus:bg-gray-700"
+                  >
+                    Featured Only
+                  </SelectItem>
+                  <SelectItem
+                    value="not_featured"
+                    className="text-gray-900 dark:text-white focus:bg-gray-100 dark:focus:bg-gray-700"
+                  >
+                    Not Featured
+                  </SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
-          {blogs.length === 0 ? (
-            <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-              <p className="text-gray-600 dark:text-gray-400 text-lg mb-4">
-                You haven't created any posts yet.
-              </p>
-              <Link href="/digi-share/create">
-                <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Create Your First Post
-                </Button>
-              </Link>
+          {loading && blogs.length === 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <ManagePostCardSkeleton key={index} />
+              ))}
             </div>
-          ) : filteredBlogs.length === 0 ? (
+          ) : blogs.length === 0 ? (
             <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
               <p className="text-gray-600 dark:text-gray-400 text-lg mb-4">
-                No posts found matching your search or filter criteria.
+                {debouncedSearchQuery ||
+                featuredFilter !== "all" ||
+                selectedCategory !== "all"
+                  ? "No posts found matching your search or filter criteria."
+                  : "You haven't created any posts yet."}
               </p>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setSearchQuery("");
-                  setFeaturedFilter("all");
-                }}
-                className="mt-2"
-              >
-                Clear Filters
-              </Button>
+              {debouncedSearchQuery ||
+              featuredFilter !== "all" ||
+              selectedCategory !== "all" ? (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setFeaturedFilter("all");
+                    setSelectedCategory("all");
+                  }}
+                  className="mt-2"
+                >
+                  Clear Filters
+                </Button>
+              ) : (
+                <Link href="/digi-share/create">
+                  <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Create Your First Post
+                  </Button>
+                </Link>
+              )}
             </div>
           ) : (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredBlogs.map((blog, index) => (
+                {blogs.map((blog, index) => (
                   <motion.div
                     key={blog.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -212,28 +385,41 @@ const ManagePostsPage = () => {
                             Featured
                           </Badge>
                         ) : (
-                          <Badge variant="outline" className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400">
+                          <Badge
+                            variant="outline"
+                            className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400"
+                          >
                             <EyeOff className="w-3 h-3 mr-1" />
                             Not Featured
                           </Badge>
                         )}
-                        <Badge 
-                          variant="outline" 
-                          className={`text-xs ${blog.is_featured ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400' : 'bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400'}`}
+                        <Badge
+                          variant="outline"
+                          className={`text-xs ${
+                            blog.is_featured
+                              ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 text-green-700 dark:text-green-400"
+                              : "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400"
+                          }`}
                         >
                           <Eye className="w-3 h-3 mr-1" />
                           {blog.is_featured ? "On Timeline" : "Hidden"}
                         </Badge>
                       </div>
                       <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                        {blog.description?.replace(/<[^>]*>/g, "").substring(0, 100)}...
+                        {blog.description
+                          ?.replace(/<[^>]*>/g, "")
+                          .substring(0, 100)}
+                        ...
                       </p>
                       <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                         <Calendar className="w-3 h-3" />
                         <span>{formatDate(blog.created_at)}</span>
                       </div>
                       <div className="flex gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
-                        <Link href={`/digi-share/edit/${blog.id}`} className="flex-1">
+                        <Link
+                          href={`/digi-share/edit/${blog.id}`}
+                          className="flex-1"
+                        >
                           <Button
                             variant="outline"
                             size="sm"
@@ -256,8 +442,19 @@ const ManagePostsPage = () => {
                 ))}
               </div>
 
-              <AlertDialog 
-                open={deleteDialogOpen} 
+              {loadingMore && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                  {Array.from({ length: 3 }).map((_, index) => (
+                    <ManagePostCardSkeleton key={`skeleton-${index}`} />
+                  ))}
+                </div>
+              )}
+              {hasMore && !loadingMore && (
+                <div ref={loadMoreRef} className="h-10 w-full" />
+              )}
+
+              <AlertDialog
+                open={deleteDialogOpen}
                 onOpenChange={(open) => {
                   setDeleteDialogOpen(open);
                   if (!open) {
@@ -267,15 +464,14 @@ const ManagePostsPage = () => {
               >
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      Delete Post
-                    </AlertDialogTitle>
+                    <AlertDialogTitle>Delete Post</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Are you sure you want to delete this post? This action cannot be undone.
+                      Are you sure you want to delete this post? This action
+                      cannot be undone.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel 
+                    <AlertDialogCancel
                       onClick={() => {
                         setDeleteDialogOpen(false);
                         setPostToDelete(null);
@@ -301,4 +497,3 @@ const ManagePostsPage = () => {
 };
 
 export default ManagePostsPage;
-

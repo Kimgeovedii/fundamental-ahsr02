@@ -30,13 +30,15 @@ export default function DigiShareLayout({
         "/digi-share/search-users",
         "/digi-share/create-author",
       ];
-      
+
       const isDetailPage = pathname?.match(/^\/digi-share\/[a-f0-9-]{36}$/);
-      const isProfilePage = pathname?.match(/^\/digi-share\/profile\/[a-f0-9-]+$/);
-      
+      const isProfilePage = pathname?.match(
+        /^\/digi-share\/profile\/[a-f0-9-]+$/
+      );
+
       if (
-        publicRoutes.includes(pathname || "") || 
-        isDetailPage || 
+        publicRoutes.includes(pathname || "") ||
+        isDetailPage ||
         isProfilePage
       ) {
         setChecking(false);
@@ -50,7 +52,9 @@ export default function DigiShareLayout({
         "/digi-share/edit",
       ];
 
-      const requiresAuthor = routesRequiringAuthor.some(route => pathname?.startsWith(route));
+      const requiresAuthor = routesRequiringAuthor.some((route) =>
+        pathname?.startsWith(route)
+      );
 
       if (!requiresAuthor) {
         setChecking(false);
@@ -59,13 +63,12 @@ export default function DigiShareLayout({
 
       try {
         const author = await authorService.getByUserId(user.id);
-        
+
         if (!author) {
           router.push("/digi-share/create-author");
           return;
         }
       } catch (error) {
-        console.error("Failed to check author:", error);
       } finally {
         setChecking(false);
       }
@@ -90,4 +93,3 @@ export default function DigiShareLayout({
     </div>
   );
 }
-

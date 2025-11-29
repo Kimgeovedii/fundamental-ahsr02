@@ -95,8 +95,8 @@ const AboutPageClient = () => {
             setAboutData(data.about_page as AboutPageData);
           }
         })
-        .catch((error) => {
-          console.error("Failed to load about page locale data:", error);
+        .catch(() => {
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoading(false);
@@ -113,8 +113,8 @@ const AboutPageClient = () => {
           setTeamMembers(data.results);
         }
       })
-      .catch((error) => {
-        console.error("Failed to load team members:", error);
+      .catch(() => {
+        // Silent fail - team members will remain empty
       })
       .finally(() => {
         setIsLoadingTeam(false);

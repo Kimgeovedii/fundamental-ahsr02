@@ -3,7 +3,6 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Calendar, User, BookOpen } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useBlogs } from "@/lib/hooks/useBlogs";
 import { useAuthStore } from "@/lib/stores";
 import { blogService } from "@/lib/services/blogService";
 import { authorService } from "@/lib/services/authorService";
@@ -16,6 +15,7 @@ import { Author } from "@/lib/types/author";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Settings } from "lucide-react";
+import { BlogCardSkeleton } from "./BlogCardSkeleton";
 
 const BlogCard = ({
   blog,
@@ -30,6 +30,19 @@ const BlogCard = ({
       month: "long",
       day: "numeric",
     });
+  };
+
+  const stripHtmlTags = (html: string): string => {
+    if (!html) return "";
+    const tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+  };
+
+  const getPreviewText = (html: string, maxLength: number = 120): string => {
+    const text = stripHtmlTags(html);
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + "...";
   };
 
   return (
@@ -66,7 +79,7 @@ const BlogCard = ({
               {blog.title}
             </h3>
             <p className="text-gray-600 dark:text-gray-400 mb-3 line-clamp-2 text-sm">
-              {blog.description?.replace(/<[^>]*>/g, "").substring(0, 120)}...
+              {getPreviewText(blog.description || "", 120)}
             </p>
             <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
               <Calendar className="w-3 h-3" />
@@ -79,6 +92,8 @@ const BlogCard = ({
   );
 };
 
+const POSTS_PER_PAGE = 10;
+
 const UserProfilePage = () => {
   const params = useParams();
   const router = useRouter();
@@ -87,37 +102,108 @@ const UserProfilePage = () => {
   const [userBlogs, setUserBlogs] = React.useState<Blog[]>([]);
   const [author, setAuthor] = React.useState<Author | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const [loadingMore, setLoadingMore] = React.useState(false);
+  const [hasMore, setHasMore] = React.useState(true);
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const loadMoreRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    const fetchData = async () => {
+    const fetchAuthor = async () => {
       if (!authorId) return;
-      setLoading(true);
       try {
-        const [authorData, blogs] = await Promise.all([
-          authorService.getById(authorId),
-          blogService.getByAuthorId(authorId),
-        ]);
-        
+        const authorData = await authorService.getById(authorId);
         if (authorData) {
           setAuthor(authorData);
         }
-        if (blogs) {
-          setUserBlogs(blogs.filter((blog) => blog.is_featured === true));
-        }
-      } catch (error: any) {
-        console.error("Failed to fetch data:", error);
-        console.error("Error details:", {
-          message: error?.message,
-          code: error?.code,
-          details: error?.details,
+      } catch (error) {
+        // Silent fail - error will be handled by UI state
+      }
+    };
+
+    fetchAuthor();
+  }, [authorId]);
+
+  // Fetch initial blogs
+  React.useEffect(() => {
+    const fetchInitialBlogs = async () => {
+      if (!authorId) return;
+      setLoading(true);
+      setCurrentPage(0);
+      setUserBlogs([]);
+      
+      try {
+        const result = await blogService.getByAuthorIdPaginated({
+          authorId,
+          limit: POSTS_PER_PAGE,
+          offset: 0,
+          isFeatured: true, // Only show featured posts in profile
         });
+        
+        setUserBlogs(result.data);
+        setHasMore(result.hasMore);
+      } catch (error) {
+        // Silent fail - error will be handled by UI state
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    if (authorId) {
+      fetchInitialBlogs();
+    }
   }, [authorId]);
+
+  // Load more blogs function
+  const loadMoreBlogs = React.useCallback(async () => {
+    if (loadingMore || !hasMore || loading || !authorId) return;
+
+    setLoadingMore(true);
+    try {
+      const nextPage = currentPage + 1;
+      const result = await blogService.getByAuthorIdPaginated({
+        authorId,
+        limit: POSTS_PER_PAGE,
+        offset: nextPage * POSTS_PER_PAGE,
+        isFeatured: true,
+      });
+
+      // Filter out duplicates
+      setUserBlogs((prev) => {
+        const existingIds = new Set(prev.map((b) => b.id));
+        const newBlogs = result.data.filter((b) => !existingIds.has(b.id));
+        return [...prev, ...newBlogs];
+      });
+      setHasMore(result.hasMore);
+      setCurrentPage(nextPage);
+    } catch (error) {
+      // Silent fail - error will be handled by UI state
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [currentPage, hasMore, loadingMore, loading, authorId]);
+
+  // Intersection Observer for infinite scroll
+  React.useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loadingMore && !loading) {
+          loadMoreBlogs();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const currentRef = loadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [hasMore, loadingMore, loading, loadMoreBlogs]);
 
   const getInitials = (name?: string): string => {
     if (!name) return "U";
@@ -181,7 +267,7 @@ const UserProfilePage = () => {
               <div className="flex items-center gap-4 text-blue-100 dark:text-blue-200">
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-5 h-5" />
-                  <span>{userBlogs.length} Featured Posts</span>
+                  <span>{userBlogs.length} {userBlogs.length === 1 ? 'Featured Post' : 'Featured Posts'}{hasMore && ' +'}</span>
                 </div>
               </div>
             </div>
@@ -191,7 +277,13 @@ const UserProfilePage = () => {
 
       <section className="py-12 px-4 sm:px-8 bg-white dark:bg-gray-900">
         <div className="max-w-4xl mx-auto">
-          {userBlogs.length === 0 ? (
+          {loading && userBlogs.length === 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {Array.from({ length: 4 }).map((_, index) => (
+                <BlogCardSkeleton key={index} />
+              ))}
+            </div>
+          ) : userBlogs.length === 0 ? (
             <div className="text-center py-12">
               <BookOpen className="w-16 h-16 mx-auto text-gray-400 dark:text-gray-500 mb-4" />
               <p className="text-gray-600 dark:text-gray-400 text-lg">
@@ -218,6 +310,20 @@ const UserProfilePage = () => {
                   <BlogCard key={blog.id} blog={blog} index={index} />
                 ))}
               </div>
+
+              {/* Loading more indicator */}
+              {loadingMore && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                  {Array.from({ length: 2 }).map((_, index) => (
+                    <BlogCardSkeleton key={`skeleton-${index}`} />
+                  ))}
+                </div>
+              )}
+
+              {/* Intersection Observer target */}
+              {hasMore && !loadingMore && (
+                <div ref={loadMoreRef} className="h-10 w-full" />
+              )}
             </>
           )}
         </div>

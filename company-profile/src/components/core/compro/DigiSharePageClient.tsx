@@ -186,7 +186,7 @@ const DigiSharePageClient = () => {
           }
         })
         .catch((error) => {
-          console.error("Failed to load digi-share page locale data:", error);
+          // Silent fail - locale will use default
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -257,7 +257,7 @@ const DigiSharePageClient = () => {
             </div>
             {isLoggedIn && (
               <Button
-                onClick={() => router.push("/cms/blogs/create")}
+                onClick={() => router.push("/digi-share/create")}
                 className="bg-white text-blue-600 hover:bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700 font-semibold"
               >
                 <Plus className="w-4 h-4 mr-2" />
