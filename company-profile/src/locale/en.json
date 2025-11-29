@@ -419,5 +419,21 @@
       "terms": "Terms of service",
       "copyright": "Designed and Developed by"
     }
+  },
+  "not_found_page": {
+    "title": "404",
+    "subtitle": "Page Not Found",
+    "description": "The page you are looking for does not exist or has been moved.",
+    "back_home": "Back to Home",
+    "go_back": "Go Back",
+    "suggestions": {
+      "title": "Here are some helpful links:",
+      "items": [
+        "Check the URL for typos",
+        "Visit our homepage",
+        "Browse our services",
+        "Contact support if the problem persists"
+      ]
+    }
   }
 }

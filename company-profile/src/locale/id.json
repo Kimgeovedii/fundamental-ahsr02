@@ -419,5 +419,21 @@
       "terms": "Syarat Layanan",
       "copyright": "Dirancang dan Dikembangkan oleh"
     }
+  },
+  "not_found_page": {
+    "title": "404",
+    "subtitle": "Halaman Tidak Ditemukan",
+    "description": "Halaman yang Anda cari tidak ditemukan atau telah dipindahkan.",
+    "back_home": "Kembali ke Beranda",
+    "go_back": "Kembali",
+    "suggestions": {
+      "title": "Berikut beberapa tautan yang mungkin membantu:",
+      "items": [
+        "Periksa URL untuk kesalahan ketik",
+        "Kunjungi halaman beranda kami",
+        "Jelajahi layanan kami",
+        "Hubungi dukungan jika masalah masih berlanjut"
+      ]
+    }
   }
 }
