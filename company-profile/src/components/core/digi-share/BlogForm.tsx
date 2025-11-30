@@ -22,7 +22,6 @@ import { supabase } from "@/lib/supabase/client";
 import { blogService } from "@/lib/services";
 import { authorService } from "@/lib/services/authorService";
 import { toast } from "sonner";
-import { useBlogs } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
 
 const BlogSchema = Yup.object().shape({
@@ -48,9 +47,9 @@ export const BlogForm: React.FC<BlogFormProps> = ({
   blogId,
   initialBlog,
 }) => {
+  const router = useRouter();
   const { user } = useAuthStore();
   const { categories, loading: categoriesLoading, fetchCategory } = useCategoryStore();
-  const { fetchBlogs } = useBlogs();
   const [loading, setLoading] = React.useState(!!blogId && !initialBlog);
 
   const [imageFile, setImageFile] = React.useState<File | null>(null);
@@ -163,7 +162,7 @@ export const BlogForm: React.FC<BlogFormProps> = ({
             setImageFile(null);
           }
 
-          await fetchBlogs();
+          router.refresh();
 
           if (onSuccess) onSuccess();
         } catch (err: any) {

@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useBlogs } from "@/lib/hooks/useBlogs";
+import { useFeaturedBlogsList } from "@/lib/hooks/useFeaturedBlogsList";
 import { useCategoryStore } from "@/lib/stores/categoryStore";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { useAuthStore } from "@/lib/stores";
@@ -166,15 +166,19 @@ const DigiSharePageClient = () => {
   const router = useRouter();
   const { lang, hydrated } = useHydratedLanguageStore();
   const { user, token } = useAuthStore();
-  const { blogs, loading: blogsLoading } = useBlogs();
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [debouncedSearchQuery, setDebouncedSearchQuery] = React.useState("");
+  const [selectedCategory, setSelectedCategory] = React.useState<string>("all");
   const { categories, loading: categoriesLoading, fetchCategory } =
     useCategoryStore();
+  const { blogs, loading: blogsLoading } = useFeaturedBlogsList({
+    categoryId: selectedCategory,
+    searchQuery: debouncedSearchQuery,
+  });
   const [pageData, setPageData] = React.useState<DigiSharePageData | null>(
     null
   );
   const [isLoadingLocale, setIsLoadingLocale] = React.useState(true);
-  const [searchQuery, setSearchQuery] = React.useState("");
-  const [selectedCategory, setSelectedCategory] = React.useState<string>("all");
 
   React.useEffect(() => {
     if (hydrated) {
@@ -185,9 +189,7 @@ const DigiSharePageClient = () => {
             setPageData(data.digi_share_page as DigiSharePageData);
           }
         })
-        .catch((error) => {
-          // Silent fail - locale will use default
-        })
+        .catch(() => {})
         .finally(() => {
           setIsLoadingLocale(false);
         });
@@ -198,32 +200,13 @@ const DigiSharePageClient = () => {
     fetchCategory();
   }, [fetchCategory]);
 
-  const filteredBlogs = React.useMemo(() => {
-    let filtered = blogs || [];
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchQuery(searchQuery);
+    }, 500);
 
-    filtered = filtered.filter((blog) => blog.is_featured === true);
-
-    if (selectedCategory !== "all") {
-      filtered = filtered.filter(
-        (blog) => blog.category_id === selectedCategory
-      );
-    }
-
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (blog) =>
-          blog.title.toLowerCase().includes(query) ||
-          blog.description?.toLowerCase().includes(query) ||
-          blog.author_name?.toLowerCase().includes(query)
-      );
-    }
-
-    return filtered.sort(
-      (a, b) =>
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-    );
-  }, [blogs, selectedCategory, searchQuery]);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const isLoggedIn = !!token && !!user;
 
@@ -316,7 +299,7 @@ const DigiSharePageClient = () => {
             <div className="flex justify-center items-center py-12">
               <Spinner />
             </div>
-          ) : filteredBlogs.length === 0 ? (
+          ) : blogs.length === 0 ? (
             <div className="text-center py-12">
               <BookOpen className="w-16 h-16 mx-auto text-gray-400 dark:text-gray-500 mb-4" />
               <p className="text-gray-600 dark:text-gray-400 text-lg">
@@ -336,7 +319,7 @@ const DigiSharePageClient = () => {
             </div>
           ) : (
             <div className="space-y-0">
-              {filteredBlogs.map((blog, index) => (
+              {blogs.map((blog, index) => (
                 <BlogPostCard 
                   key={blog.id} 
                   blog={blog} 

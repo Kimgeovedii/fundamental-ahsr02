@@ -59,7 +59,7 @@ const Footer = () => {
       <footer className="relative z-10 bg-gray-900 dark:bg-gray-900 pt-20 lg:pt-[100px]">
         <div className="container">
           <div className="py-8 text-center">
-            <p className="text-gray-400 dark:text-gray-500 animate-pulse">
+            <p className="text-gray-400 dark:text-gray-400 animate-pulse">
               Loading footer...
             </p>
           </div>
@@ -83,7 +83,14 @@ const Footer = () => {
                   alt="logo"
                   width={140}
                   height={30}
-                  className="max-w-full"
+                  className="max-w-full dark:block hidden"
+                />
+                <Image
+                  src="/images/logo/logo-white.svg"
+                  alt="logo"
+                  width={140}
+                  height={30}
+                  className="max-w-full dark:hidden block"
                 />
               </Link>
               <p className="mb-8 max-w-[270px] text-base text-gray-400 dark:text-gray-300">

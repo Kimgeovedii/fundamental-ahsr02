@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useBlogs } from "@/lib/hooks/useBlogs";
+import { useBlogsList } from "@/lib/hooks/useBlogsList";
 import { useCategoryStore } from "@/lib/stores/categoryStore";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
@@ -34,7 +34,7 @@ interface BlogsPageData {
 
 const BlogsPageClient = () => {
   const { lang, hydrated } = useHydratedLanguageStore();
-  const { blogs, loading: blogsLoading } = useBlogs();
+  const { blogs, loading: blogsLoading } = useBlogsList();
   const { categories, loading: categoriesLoading, fetchCategory } =
     useCategoryStore();
   const [pageData, setPageData] = React.useState<BlogsPageData | null>(null);
@@ -51,9 +51,7 @@ const BlogsPageClient = () => {
             setPageData(data.blogs_page as BlogsPageData);
           }
         })
-        .catch(() => {
-          // Silent fail - locale will use default
-        })
+        .catch(() => {})
         .finally(() => {
           setIsLoadingLocale(false);
         });

@@ -128,7 +128,7 @@ const DigiShareDetailPageClient = () => {
             <Link href="/digi-share/posts">
               <Button
                 variant="ghost"
-                className="mb-6 text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="mb-8 mt-8 text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 {pageData.back_to_digi_share}
@@ -229,7 +229,7 @@ const DigiShareDetailPageClient = () => {
                     alert("Link copied to clipboard!");
                   }
                 }}
-                className="text-gray-800 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800"
+                className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
               >
                 <Share2 className="w-4 h-4 mr-2" />
                 {pageData.share}

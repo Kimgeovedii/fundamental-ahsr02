@@ -43,10 +43,10 @@ const DigiShareFooter = () => {
 
   if (isLoading || !hydrated || !footerData) {
     return (
-      <footer className="relative z-10 bg-gray-900 dark:bg-gray-900 ">
+      <footer className="relative z-10 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
         <div className="container">
           <div className="py-8 text-center">
-            <p className="text-gray-400 dark:text-gray-500 animate-pulse">
+            <p className="text-gray-600 dark:text-gray-400 animate-pulse">
               Loading footer...
             </p>
           </div>
@@ -56,11 +56,11 @@ const DigiShareFooter = () => {
   }
 
   return (
-    <footer className="relative z-10 bg-gray-900 dark:bg-gray-900 ">
-      <div className=" border-t border-gray-700 dark:border-gray-700 border-opacity-40 dark:border-opacity-40 py-8 ">
+    <footer className="relative z-10 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+      <div className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-8">
           <div className="text-center">
-            <p className="text-base text-gray-400 dark:text-gray-300">
+            <p className="text-base text-gray-600 dark:text-gray-300">
               {footerData.copyright}
             </p>
           </div>
