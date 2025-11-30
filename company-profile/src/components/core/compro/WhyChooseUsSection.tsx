@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import bgParalax from "@/assets/img/bg-paralax.png";
 
 interface IWhyChooseUsSection {
@@ -152,9 +152,18 @@ const WhyChooseUsSection = () => {
 
   if (isLoading || !sectionData) {
     return (
-      <div className="py-24 px-4 sm:px-8 text-center">
-        <Spinner />
-      </div>
+      <section className="relative py-24 md:py-32 px-4 sm:px-8 overflow-hidden min-h-[500px]">
+        <div className="absolute inset-0 z-0">
+          <Skeleton className="h-full w-full" />
+        </div>
+        <div className="absolute inset-0 z-[1] bg-blue-600/70 dark:bg-blue-800/75 backdrop-blur-[1px]" />
+        <div className="relative z-[3] max-w-4xl mx-auto text-center">
+          <Skeleton className="h-16 w-3/4 mx-auto mb-6 bg-white/20" />
+          <Skeleton className="h-10 w-1/2 mx-auto mb-4 bg-white/20" />
+          <Skeleton className="h-6 w-2/3 mx-auto mb-8 bg-white/20" />
+          <Skeleton className="h-12 w-48 mx-auto bg-white/20" />
+        </div>
+      </section>
     );
   }
 

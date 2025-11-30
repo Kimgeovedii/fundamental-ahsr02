@@ -96,7 +96,7 @@ const AboutPageClient = () => {
           }
         })
         .catch(() => {
-          // Silent fail - locale will use default
+          setAboutData(null);
         })
         .finally(() => {
           setIsLoading(false);
@@ -114,7 +114,7 @@ const AboutPageClient = () => {
         }
       })
       .catch(() => {
-        // Silent fail - team members will remain empty
+        setTeamMembers([]);
       })
       .finally(() => {
         setIsLoadingTeam(false);

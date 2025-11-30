@@ -1,7 +1,14 @@
 "use client";
 import * as React from "react";
 import { motion } from "framer-motion";
-import { ArrowLeft, User, Mail, Lock, Image as ImageIcon, FileText } from "lucide-react";
+import {
+  ArrowLeft,
+  User,
+  Mail,
+  Lock,
+  Image as ImageIcon,
+  FileText,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,7 +17,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuthStore } from "@/lib/stores";
 import { authorService } from "@/lib/services/authorService";
 import { authService } from "@/lib/services/authService";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -50,7 +57,8 @@ const ProfileSettingsPage = () => {
   const [author, setAuthor] = React.useState<Author | null>(null);
   const [avatarFile, setAvatarFile] = React.useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = React.useState<string | null>(null);
-  const [pageData, setPageData] = React.useState<ProfileSettingsPageData | null>(null);
+  const [pageData, setPageData] =
+    React.useState<ProfileSettingsPageData | null>(null);
   const [isLoadingLocale, setIsLoadingLocale] = React.useState(true);
 
   React.useEffect(() => {
@@ -63,7 +71,7 @@ const ProfileSettingsPage = () => {
           }
         })
         .catch(() => {
-          // Silent fail - locale will use default
+          setPageData(null);
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -102,7 +110,9 @@ const ProfileSettingsPage = () => {
       bio: author?.bio || "",
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Name is required").min(2, "Name must be at least 2 characters"),
+      name: Yup.string()
+        .required("Name is required")
+        .min(2, "Name must be at least 2 characters"),
       bio: Yup.string(),
     }),
     onSubmit: async (values) => {
@@ -126,10 +136,14 @@ const ProfileSettingsPage = () => {
         });
 
         await checkSession();
-        toast.success(pageData?.success_message || "Profile updated successfully");
+        toast.success(
+          pageData?.success_message || "Profile updated successfully"
+        );
         setAvatarFile(null);
       } catch (error: any) {
-        toast.error(error.message || pageData?.error_message || "Failed to update profile");
+        toast.error(
+          error.message || pageData?.error_message || "Failed to update profile"
+        );
       } finally {
         setSaving(false);
       }
@@ -146,12 +160,19 @@ const ProfileSettingsPage = () => {
     validationSchema: Yup.object({
       email: Yup.string().email("Invalid email").required("Email is required"),
       currentPassword: Yup.string().when(["newPassword", "confirmPassword"], {
-        is: (newPassword: string, confirmPassword: string) => newPassword || confirmPassword,
+        is: (newPassword: string, confirmPassword: string) =>
+          newPassword || confirmPassword,
         then: (schema) => schema.required("Current password is required"),
         otherwise: (schema) => schema,
       }),
-      newPassword: Yup.string().min(6, "Password must be at least 6 characters"),
-      confirmPassword: Yup.string().oneOf([Yup.ref("newPassword")], "Passwords must match"),
+      newPassword: Yup.string().min(
+        6,
+        "Password must be at least 6 characters"
+      ),
+      confirmPassword: Yup.string().oneOf(
+        [Yup.ref("newPassword")],
+        "Passwords must match"
+      ),
     }),
     onSubmit: async (values) => {
       if (!user) return;
@@ -159,20 +180,26 @@ const ProfileSettingsPage = () => {
       setSaving(true);
       try {
         if (values.newPassword) {
-          const { data, error } = await (await import("@/lib/supabase/client")).supabase.auth.updateUser({
+          const { data, error } = await (
+            await import("@/lib/supabase/client")
+          ).supabase.auth.updateUser({
             password: values.newPassword,
           });
 
           if (error) throw error;
 
           if (values.email !== user.email) {
-            const { error: emailError } = await (await import("@/lib/supabase/client")).supabase.auth.updateUser({
+            const { error: emailError } = await (
+              await import("@/lib/supabase/client")
+            ).supabase.auth.updateUser({
               email: values.email,
             });
             if (emailError) throw emailError;
           }
 
-          toast.success(pageData?.success_message || "Credentials updated successfully");
+          toast.success(
+            pageData?.success_message || "Credentials updated successfully"
+          );
           credentialsFormik.resetForm({
             values: {
               email: values.email,
@@ -182,14 +209,22 @@ const ProfileSettingsPage = () => {
             },
           });
         } else if (values.email !== user.email) {
-          const { error: emailError } = await (await import("@/lib/supabase/client")).supabase.auth.updateUser({
+          const { error: emailError } = await (
+            await import("@/lib/supabase/client")
+          ).supabase.auth.updateUser({
             email: values.email,
           });
           if (emailError) throw emailError;
-          toast.success(pageData?.success_message || "Email updated successfully");
+          toast.success(
+            pageData?.success_message || "Email updated successfully"
+          );
         }
       } catch (error: any) {
-        toast.error(error.message || pageData?.error_message || "Failed to update credentials");
+        toast.error(
+          error.message ||
+            pageData?.error_message ||
+            "Failed to update credentials"
+        );
       } finally {
         setSaving(false);
       }
@@ -218,9 +253,37 @@ const ProfileSettingsPage = () => {
 
   if (isLoadingLocale || !hydrated || loading || !pageData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 pt-20">
-        <Spinner />
-      </div>
+      <main className="min-h-screen bg-white dark:bg-gray-900 pt-20">
+        <section className="py-12 px-4 sm:px-8">
+          <div className="max-w-4xl mx-auto">
+            <Skeleton className="h-10 w-48 mb-8" />
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8 space-y-6">
+              <div>
+                <Skeleton className="h-5 w-32 mb-4" />
+                <div className="flex items-center gap-6">
+                  <Skeleton className="h-24 w-24 rounded-full" />
+                  <div className="flex-1 space-y-3">
+                    <Skeleton className="h-4 w-24" />
+                    <Skeleton className="h-10 w-full" />
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <Skeleton className="h-5 w-32" />
+                <Skeleton className="h-10 w-full" />
+              </div>
+              <div className="space-y-3">
+                <Skeleton className="h-5 w-24" />
+                <Skeleton className="h-32 w-full" />
+              </div>
+              <div className="flex gap-4 pt-4">
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-24" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     );
   }
 
@@ -246,7 +309,7 @@ const ProfileSettingsPage = () => {
           <Link href={`/digi-share/profile/${user.authorId}`}>
             <Button
               variant="ghost"
-              className="mb-6 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              className="mb-6 text-gray-600 dark:hover:bg-gray-800 hover:bg-gray-200 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Profile
@@ -281,7 +344,10 @@ const ProfileSettingsPage = () => {
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
-                      <Label htmlFor="avatar" className="flex items-center gap-2 cursor-pointer">
+                      <Label
+                        htmlFor="avatar"
+                        className="flex items-center gap-2 cursor-pointer text-gray-900 dark:text-white"
+                      >
                         <ImageIcon className="w-4 h-4" />
                         {pageData.profile_section.avatar_label}
                       </Label>
@@ -290,7 +356,7 @@ const ProfileSettingsPage = () => {
                         type="file"
                         accept="image/png, image/jpeg, image/jpg"
                         onChange={handleAvatarChange}
-                        className="mt-2"
+                        className=" file:mr-4 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:text-black dark:file:text-white hover:opacity-60  cursor-pointer text-gray-900 dark:text-gray-300 file:cursor-pointer bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
                       />
                       {avatarFile && (
                         <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -301,20 +367,31 @@ const ProfileSettingsPage = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="name">{pageData.profile_section.name_label} *</Label>
+                    <Label
+                      htmlFor="name"
+                      className="text-gray-900 dark:text-white"
+                    >
+                      {pageData.profile_section.name_label} *
+                    </Label>
                     <Input
                       id="name"
                       type="text"
                       {...profileFormik.getFieldProps("name")}
-                      className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                      className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
                     />
-                    {profileFormik.touched.name && profileFormik.errors.name && (
-                      <p className="text-red-500 text-sm">{profileFormik.errors.name}</p>
-                    )}
+                    {profileFormik.touched.name &&
+                      profileFormik.errors.name && (
+                        <p className="text-red-500 dark:text-red-400 text-sm">
+                          {profileFormik.errors.name}
+                        </p>
+                      )}
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="bio" className="flex items-center gap-2">
+                    <Label
+                      htmlFor="bio"
+                      className="flex items-center gap-2 text-gray-900 dark:text-white"
+                    >
                       <FileText className="w-4 h-4" />
                       {pageData.profile_section.bio_label}
                     </Label>
@@ -322,11 +399,13 @@ const ProfileSettingsPage = () => {
                       id="bio"
                       rows={4}
                       {...profileFormik.getFieldProps("bio")}
-                      className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                      className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
                       placeholder="Tell us about yourself..."
                     />
                     {profileFormik.touched.bio && profileFormik.errors.bio && (
-                      <p className="text-red-500 text-sm">{profileFormik.errors.bio}</p>
+                      <p className="text-red-500 dark:text-red-400 text-sm">
+                        {profileFormik.errors.bio}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -336,11 +415,11 @@ const ProfileSettingsPage = () => {
                 <Button
                   type="submit"
                   disabled={saving}
-                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                  className="bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
                 >
                   {saving ? (
                     <>
-                      <Spinner className="mr-2" />
+                      <Skeleton className="h-4 w-4 rounded-full mr-2" />
                       Saving...
                     </>
                   ) : (
@@ -348,7 +427,11 @@ const ProfileSettingsPage = () => {
                   )}
                 </Button>
                 <Link href={`/digi-share/profile/${user.authorId}`}>
-                  <Button type="button" variant="outline">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="border-gray-200 bg-gray-400 dark:bg-gray-700 text-gray-100 dark:border-gray-700 hover:opacity-70 dark:hover:bg-gray-700"
+                  >
                     {pageData.cancel_button}
                   </Button>
                 </Link>
@@ -362,7 +445,10 @@ const ProfileSettingsPage = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 md:p-8"
           >
-            <form onSubmit={credentialsFormik.handleSubmit} className="space-y-6">
+            <form
+              onSubmit={credentialsFormik.handleSubmit}
+              className="space-y-6"
+            >
               <div>
                 <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                   <Lock className="w-5 h-5" />
@@ -371,7 +457,10 @@ const ProfileSettingsPage = () => {
 
                 <div className="space-y-4">
                   <div className="space-y-3">
-                    <Label htmlFor="email" className="flex items-center gap-2">
+                    <Label
+                      htmlFor="email"
+                      className="flex items-center gap-2 text-gray-900 dark:text-white"
+                    >
                       <Mail className="w-4 h-4" />
                       {pageData.credentials_section.email_label}
                     </Label>
@@ -379,7 +468,7 @@ const ProfileSettingsPage = () => {
                       id="email"
                       type="email"
                       {...credentialsFormik.getFieldProps("email")}
-                      className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                      className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 dark:text-white text-black"
                       disabled
                     />
                     <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -388,51 +477,69 @@ const ProfileSettingsPage = () => {
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="currentPassword">
+                    <Label
+                      htmlFor="currentPassword"
+                      className="text-gray-900 dark:text-white"
+                    >
                       {pageData.credentials_section.current_password_label}
                     </Label>
                     <Input
                       id="currentPassword"
                       type="password"
                       {...credentialsFormik.getFieldProps("currentPassword")}
-                      className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                      className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
                       placeholder="Leave empty if not changing password"
                     />
-                    {credentialsFormik.touched.currentPassword && credentialsFormik.errors.currentPassword && (
-                      <p className="text-red-500 text-sm">{credentialsFormik.errors.currentPassword}</p>
-                    )}
+                    {credentialsFormik.touched.currentPassword &&
+                      credentialsFormik.errors.currentPassword && (
+                        <p className="text-red-500 dark:text-red-400 text-sm">
+                          {credentialsFormik.errors.currentPassword}
+                        </p>
+                      )}
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="newPassword">
+                    <Label
+                      htmlFor="newPassword"
+                      className="text-gray-900 dark:text-white"
+                    >
                       {pageData.credentials_section.new_password_label}
                     </Label>
                     <Input
                       id="newPassword"
                       type="password"
                       {...credentialsFormik.getFieldProps("newPassword")}
-                      className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                      className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
                       placeholder="Leave empty if not changing password"
                     />
-                    {credentialsFormik.touched.newPassword && credentialsFormik.errors.newPassword && (
-                      <p className="text-red-500 text-sm">{credentialsFormik.errors.newPassword}</p>
-                    )}
+                    {credentialsFormik.touched.newPassword &&
+                      credentialsFormik.errors.newPassword && (
+                        <p className="text-red-500 dark:text-red-400 text-sm">
+                          {credentialsFormik.errors.newPassword}
+                        </p>
+                      )}
                   </div>
 
                   <div className="space-y-3">
-                    <Label htmlFor="confirmPassword">
+                    <Label
+                      htmlFor="confirmPassword"
+                      className="text-gray-900 dark:text-white"
+                    >
                       {pageData.credentials_section.confirm_password_label}
                     </Label>
                     <Input
                       id="confirmPassword"
                       type="password"
                       {...credentialsFormik.getFieldProps("confirmPassword")}
-                      className="bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                      className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white"
                       placeholder="Confirm new password"
                     />
-                    {credentialsFormik.touched.confirmPassword && credentialsFormik.errors.confirmPassword && (
-                      <p className="text-red-500 text-sm">{credentialsFormik.errors.confirmPassword}</p>
-                    )}
+                    {credentialsFormik.touched.confirmPassword &&
+                      credentialsFormik.errors.confirmPassword && (
+                        <p className="text-red-500 dark:text-red-400 text-sm">
+                          {credentialsFormik.errors.confirmPassword}
+                        </p>
+                      )}
                   </div>
                 </div>
               </div>
@@ -441,11 +548,11 @@ const ProfileSettingsPage = () => {
                 <Button
                   type="submit"
                   disabled={saving}
-                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600"
+                  className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 text-white dark:hover:bg-blue-600"
                 >
                   {saving ? (
                     <>
-                      <Spinner className="mr-2" />
+                      <Skeleton className="h-4 w-4 rounded-full mr-2" />
                       Saving...
                     </>
                   ) : (
@@ -462,4 +569,3 @@ const ProfileSettingsPage = () => {
 };
 
 export default ProfileSettingsPage;
-

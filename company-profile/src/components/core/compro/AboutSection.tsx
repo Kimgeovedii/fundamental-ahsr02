@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
 import { motion } from "framer-motion";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface AboutData {
   heading: string;
@@ -33,8 +34,7 @@ const AboutSection: React.FunctionComponent = () => {
             setAboutData(data.about as AboutData);
           }
         })
-        .catch((error) => {
-          // Silent fail - locale will use default
+        .catch(() => {
           setAboutData(null);
         })
         .finally(() => {
@@ -46,10 +46,16 @@ const AboutSection: React.FunctionComponent = () => {
   if (isLoading || !hydrated || !aboutData) {
     return (
       <div className="bg-white dark:bg-gray-900 py-24 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-gray-400 dark:text-gray-500 animate-pulse">
-            Loading content...
-          </p>
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            <div className="flex flex-col justify-center space-y-6">
+              <Skeleton className="h-12 w-3/4 mb-4" />
+              <Skeleton className="h-6 w-full mb-2" />
+              <Skeleton className="h-6 w-full mb-2" />
+              <Skeleton className="h-6 w-5/6" />
+            </div>
+            <Skeleton className="h-96 w-full rounded-lg" />
+          </div>
         </div>
       </div>
     );
@@ -100,7 +106,10 @@ const AboutSection: React.FunctionComponent = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="pt-2"
             >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-colors"
                   size="lg"
@@ -120,7 +129,7 @@ const AboutSection: React.FunctionComponent = () => {
               className="row-span-2 relative w-full h-full min-h-[500px] rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-700"
             >
               <Image
-                src="/images/about/team-working-1.jpg"
+                src="/images/about/team-working-1.png"
                 alt="Digiforma Tech Solution team working on IT consulting and software development"
                 fill
                 className="object-cover"
@@ -136,7 +145,7 @@ const AboutSection: React.FunctionComponent = () => {
               className="relative w-full h-56 rounded-lg overflow-hidden shadow-lg bg-gray-200 dark:bg-gray-700"
             >
               <Image
-                src="/images/about/team-working-2.jpg"
+                src="/images/about/team-working-2.png"
                 alt="Enterprise Architecture and IT Master Plan consulting collaboration"
                 fill
                 className="object-cover"

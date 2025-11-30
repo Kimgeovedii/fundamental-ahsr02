@@ -16,7 +16,7 @@ import { useCategoryStore } from "@/lib/stores/categoryStore";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { useAuthStore } from "@/lib/stores";
 import { getLocale } from "@/lib/get-locale";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { blogService } from "@/lib/services/blogService";
 import Image from "next/image";
 import Link from "next/link";
@@ -253,7 +253,7 @@ const DigiShareTimelinePage = () => {
           }
         })
         .catch(() => {
-          // Silent fail - locale will use default
+          setPageData(null);
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -282,8 +282,9 @@ const DigiShareTimelinePage = () => {
         
         setBlogs(result.data);
         setHasMore(result.hasMore);
-      } catch (error) {
-        // Silent fail - error will be handled by UI state
+      } catch {
+        setBlogs([]);
+        setHasMore(false);
       } finally {
         setLoading(false);
       }
@@ -316,8 +317,9 @@ const DigiShareTimelinePage = () => {
       });
       setHasMore(result.hasMore);
       setCurrentPage(nextPage);
-    } catch (error) {
-      // Silent fail - error will be handled by UI state
+    } catch {
+      setBlogs((prev) => prev);
+      setHasMore(false);
     } finally {
       setLoadingMore(false);
     }
@@ -350,9 +352,19 @@ const DigiShareTimelinePage = () => {
 
   if (isLoadingLocale || !hydrated || !pageData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-        <Spinner />
-      </div>
+      <main className="min-h-screen bg-white dark:bg-gray-900 pt-20">
+        <section className="py-12 px-4 sm:px-8">
+          <div className="max-w-4xl mx-auto">
+            <Skeleton className="h-10 w-48 mx-auto mb-8" />
+            <Skeleton className="h-12 w-full mb-8" />
+            <div className="space-y-8">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton key={i} className="h-64 w-full rounded-lg" />
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
     );
   }
 

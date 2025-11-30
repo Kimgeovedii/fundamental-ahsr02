@@ -6,6 +6,7 @@ export interface UserProfile {
   author_name: string;
   email?: string;
   posts_count?: number;
+  avatar?: string | null;
 }
 
 export const userService = {
@@ -14,7 +15,7 @@ export const userService = {
 
     const { data, error } = await supabase
       .from("author")
-      .select("id, name")
+      .select("id, name, avatar")
       .ilike("name", `%${query.trim()}%`)
       .limit(20);
 
@@ -32,6 +33,7 @@ export const userService = {
           author_id: author.id,
           author_name: author.name,
           posts_count: count || 0,
+          avatar: author.avatar || null,
         };
       })
     );
@@ -42,7 +44,7 @@ export const userService = {
   async getAllUsers(): Promise<UserProfile[]> {
     const { data, error } = await supabase
       .from("author")
-      .select("id, name")
+      .select("id, name, avatar")
       .limit(100);
 
     if (error) throw error;
@@ -59,6 +61,7 @@ export const userService = {
           author_id: author.id,
           author_name: author.name,
           posts_count: count || 0,
+          avatar: author.avatar || null,
         };
       })
     );

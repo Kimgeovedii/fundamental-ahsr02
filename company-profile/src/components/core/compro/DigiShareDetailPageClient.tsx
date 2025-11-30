@@ -41,7 +41,7 @@ const DigiShareDetailPageClient = () => {
           }
         })
         .catch(() => {
-          // Silent fail - locale will use default
+          setPageData(null);
         })
         .finally(() => {
           setIsLoadingLocale(false);

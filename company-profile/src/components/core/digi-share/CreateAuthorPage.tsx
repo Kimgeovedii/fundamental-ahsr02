@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuthStore } from "@/lib/stores";
 import { authorService } from "@/lib/services/authorService";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useFormik } from "formik";
@@ -53,7 +53,7 @@ const CreateAuthorPage = () => {
           }
         })
         .catch(() => {
-          // Silent fail - locale will use default
+          setPageData(null);
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -75,8 +75,8 @@ const CreateAuthorPage = () => {
           router.push("/digi-share/posts");
           return;
         }
-      } catch (error) {
-        // Silent fail - error will be handled by redirect
+      } catch {
+        router.push("/login");
       } finally {
         setLoading(false);
       }
@@ -177,9 +177,25 @@ const CreateAuthorPage = () => {
 
   if (isLoadingLocale || !hydrated || loading || !pageData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 pt-20">
-        <Spinner />
-      </div>
+      <main className="min-h-screen bg-white dark:bg-gray-900 pt-20">
+        <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 dark:from-blue-900 dark:via-blue-950 dark:to-indigo-950 text-white py-16 md:py-20 px-4 sm:px-8">
+          <div className="max-w-4xl mx-auto">
+            <Skeleton className="h-12 w-64 mx-auto mb-4 bg-white/20" />
+            <Skeleton className="h-6 w-96 mx-auto bg-white/20" />
+          </div>
+        </section>
+        <section className="py-12 px-4 sm:px-8">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8 space-y-6">
+              <Skeleton className="h-24 w-24 rounded-full mx-auto" />
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-32 w-full" />
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-32 mx-auto" />
+            </div>
+          </div>
+        </section>
+      </main>
     );
   }
 
@@ -285,7 +301,7 @@ const CreateAuthorPage = () => {
                 >
                   {saving ? (
                     <>
-                      <Spinner className="mr-2" />
+                      <Skeleton className="h-4 w-4 rounded-full mr-2" />
                       Creating...
                     </>
                   ) : (

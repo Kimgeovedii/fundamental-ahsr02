@@ -3,9 +3,9 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Search, User as UserIcon, BookOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { userService, UserProfile } from "@/lib/services/userService";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
@@ -39,7 +39,7 @@ const SearchUsersPage = () => {
           }
         })
         .catch(() => {
-          // Silent fail - locale will use default
+          setPageData(null);
         })
         .finally(() => {
           setIsLoadingLocale(false);
@@ -58,8 +58,8 @@ const SearchUsersPage = () => {
       try {
         const results = await userService.searchUsers(searchQuery);
         setUsers(results);
-      } catch (error) {
-        // Silent fail - error will be handled by UI state
+      } catch {
+        setUsers([]);
       } finally {
         setLoading(false);
       }
@@ -82,9 +82,20 @@ const SearchUsersPage = () => {
 
   if (isLoadingLocale || !hydrated || !pageData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 pt-20">
-        <Spinner />
-      </div>
+      <main className="min-h-screen bg-white dark:bg-gray-900 pt-20">
+        <section className="py-12 px-4 sm:px-8">
+          <div className="max-w-4xl mx-auto">
+            <Skeleton className="h-10 w-48 mx-auto mb-4" />
+            <Skeleton className="h-6 w-96 mx-auto mb-8" />
+            <Skeleton className="h-12 w-full mb-8" />
+            <div className="space-y-4">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Skeleton key={i} className="h-20 w-full rounded-lg" />
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
     );
   }
 
@@ -124,8 +135,10 @@ const SearchUsersPage = () => {
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center py-12">
-              <Spinner />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-12">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton key={i} className="h-20 w-full rounded-lg" />
+              ))}
             </div>
           ) : searchQuery.trim() && users.length === 0 ? (
             <div className="text-center py-12">
@@ -147,6 +160,12 @@ const SearchUsersPage = () => {
                   <div className="flex items-center gap-4">
                     <Link href={`/digi-share/profile/${user.author_id || user.id}`}>
                       <Avatar className="h-16 w-16 border-2 border-gray-200 dark:border-gray-700 cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all">
+                        {user.avatar && (
+                          <AvatarImage 
+                            src={user.avatar} 
+                            alt={user.author_name}
+                          />
+                        )}
                         <AvatarFallback className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 text-xl font-bold">
                           {getInitials(user.author_name)}
                         </AvatarFallback>

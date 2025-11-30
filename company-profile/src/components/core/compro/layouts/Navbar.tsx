@@ -49,7 +49,7 @@ const Navbar: React.FC = () => {
           setLocaleData(data as LocaleData);
         })
         .catch(() => {
-          // Silent fail - locale will use default
+          setLocaleData(null);
         })
         .finally(() => {
           setIsLoadingLocale(false);

@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/accordion";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 
 interface IFAQSection {
@@ -34,8 +34,15 @@ const FaqSection = () => {
   }, [lang, hydrated]);
   if (isLoading || !sectionData) {
     return (
-      <div className="bg-white dark:bg-gray-900 py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-8 text-center">
-        <Spinner />
+      <div className="bg-white dark:bg-gray-900 py-12 sm:py-16 md:py-20 lg:py-24 px-4 sm:px-6 md:px-8">
+        <div className="max-w-4xl mx-auto">
+          <Skeleton className="h-12 w-1/2 mx-auto mb-12" />
+          <div className="space-y-4">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className="h-20 w-full rounded-lg" />
+            ))}
+          </div>
+        </div>
       </div>
     );
   }

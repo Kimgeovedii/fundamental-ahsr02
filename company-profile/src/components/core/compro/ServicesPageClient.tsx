@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
 const IconMap: { [key: string]: LucideIcon } = {
@@ -96,8 +96,8 @@ const ServicesPageClient = () => {
             setServicesData(data.services as ServicesData);
           }
         })
-        .catch((error) => {
-          // Silent fail - locale will use default
+        .catch(() => {
+          setServicesData(null);
         })
         .finally(() => {
           setIsLoading(false);
@@ -137,9 +137,24 @@ const ServicesPageClient = () => {
 
   if (isLoading || !hydrated || !servicesData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-        <Spinner />
-      </div>
+      <main className="min-h-screen">
+        <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 dark:from-blue-900 dark:via-blue-950 dark:to-indigo-950 text-white py-20 md:py-32 px-4 sm:px-8">
+          <div className="max-w-7xl mx-auto text-center">
+            <Skeleton className="h-16 w-3/4 mx-auto mb-6 bg-white/20" />
+            <Skeleton className="h-8 w-1/2 mx-auto mb-4 bg-white/20" />
+            <Skeleton className="h-6 w-2/3 mx-auto bg-white/20" />
+          </div>
+        </section>
+        <section className="py-24 px-4 sm:px-8 bg-gray-50 dark:bg-gray-900">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton key={i} className="h-64 w-full rounded-lg" />
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
     );
   }
 

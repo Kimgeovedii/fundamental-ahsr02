@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useAuthStore } from "@/lib/stores";
 import { blogService } from "@/lib/services/blogService";
 import { authorService } from "@/lib/services/authorService";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -115,8 +115,8 @@ const UserProfilePage = () => {
         if (authorData) {
           setAuthor(authorData);
         }
-      } catch (error) {
-        // Silent fail - error will be handled by UI state
+      } catch {
+        setAuthor(null);
       }
     };
 
@@ -141,8 +141,9 @@ const UserProfilePage = () => {
         
         setUserBlogs(result.data);
         setHasMore(result.hasMore);
-      } catch (error) {
-        // Silent fail - error will be handled by UI state
+      } catch {
+        setUserBlogs([]);
+        setHasMore(false);
       } finally {
         setLoading(false);
       }
@@ -175,8 +176,9 @@ const UserProfilePage = () => {
       });
       setHasMore(result.hasMore);
       setCurrentPage(nextPage);
-    } catch (error) {
-      // Silent fail - error will be handled by UI state
+    } catch {
+      setUserBlogs((prev) => prev);
+      setHasMore(false);
     } finally {
       setLoadingMore(false);
     }
@@ -217,9 +219,24 @@ const UserProfilePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 pt-20">
-        <Spinner />
-      </div>
+      <main className="min-h-screen bg-white dark:bg-gray-900 pt-20">
+        <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 dark:from-blue-900 dark:via-blue-950 dark:to-indigo-950 text-white py-16 md:py-20 px-4 sm:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <Skeleton className="h-24 w-24 rounded-full mx-auto mb-4 bg-white/20" />
+            <Skeleton className="h-8 w-48 mx-auto mb-2 bg-white/20" />
+            <Skeleton className="h-4 w-32 mx-auto bg-white/20" />
+          </div>
+        </section>
+        <section className="py-12 px-4 sm:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton key={i} className="h-64 w-full rounded-lg" />
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
     );
   }
 

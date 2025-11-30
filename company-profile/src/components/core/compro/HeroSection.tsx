@@ -6,8 +6,9 @@ import LogoMarquee from "@/components/LogoMarquee";
 import { ArrowRight } from "lucide-react";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 interface HeroTranslations {
   title_part1: string;
@@ -19,6 +20,7 @@ interface HeroTranslations {
 }
 
 export default function HeroSection() {
+  const router = useRouter();
   const { lang, hydrated } = useHydratedLanguageStore();
   const [heroData, setHeroData] = React.useState<HeroTranslations | null>(null);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -41,9 +43,18 @@ export default function HeroSection() {
 
   if (isLoading || !heroData) {
     return (
-      <div className="bg-white dark:bg-gray-900 py-24 px-4 sm:px-8 text-center">
-        <Spinner />
-      </div>
+      <section className="w-full min-h-screen bg-white dark:bg-gray-900 flex flex-col py-10 sm:py-0 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center gap-10 md:gap-16 min-h-[calc(100vh-120px)] w-full">
+          <div className="text-center md:text-left max-w-lg space-y-6">
+            <Skeleton className="h-16 w-full mb-4" />
+            <Skeleton className="h-6 w-full mb-6" />
+            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+              <Skeleton className="h-12 w-48" />
+              <Skeleton className="h-12 w-48" />
+            </div>
+          </div>
+        </div>
+      </section>
     );
   }
 
@@ -102,6 +113,7 @@ export default function HeroSection() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => router.push("/services")}
               className="px-6 py-3 border border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-xl flex items-center gap-2 transition"
             >
               {t.cta_discover} <ArrowRight className="w-4 h-4" />

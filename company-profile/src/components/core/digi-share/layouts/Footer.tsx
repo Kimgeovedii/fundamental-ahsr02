@@ -3,7 +3,6 @@ import * as React from "react";
 import Link from "next/link";
 import { useHydratedLanguageStore } from "@/lib/stores/language-store";
 import { getLocale } from "@/lib/get-locale";
-
 interface DigiShareFooterLocale {
   description: string;
   quick_links: {
@@ -60,9 +59,12 @@ const DigiShareFooter = () => {
       <div className="py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-8">
           <div className="text-center">
-            <p className="text-base text-gray-600 dark:text-gray-300">
+            <Link
+              href={"/"}
+              className="text-base text-gray-600 dark:text-gray-300 hover:underline"
+            >
               {footerData.copyright}
-            </p>
+            </Link>
           </div>
         </div>
       </div>

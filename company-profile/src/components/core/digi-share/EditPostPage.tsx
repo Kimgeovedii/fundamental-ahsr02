@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { blogService } from "@/lib/services/blogService";
 import { Blog } from "@/lib/types/blog";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAuthStore } from "@/lib/stores";
 import { toast } from "sonner";
 
@@ -55,9 +55,23 @@ const EditPostPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 pt-20">
-        <Spinner />
-      </div>
+      <main className="min-h-screen bg-white dark:bg-gray-900 pt-20">
+        <section className="py-12 px-4 sm:px-8">
+          <div className="max-w-4xl mx-auto">
+            <Skeleton className="h-10 w-32 mb-6" />
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 md:p-8 space-y-6">
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-32 w-full" />
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-64 w-full" />
+              <div className="flex gap-4">
+                <Skeleton className="h-10 w-24" />
+                <Skeleton className="h-10 w-24" />
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     );
   }
 

@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Select,
   SelectContent,
@@ -218,9 +218,19 @@ const ManagePostsPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 pt-20">
-        <Spinner />
-      </div>
+      <main className="min-h-screen bg-white dark:bg-gray-900 pt-20">
+        <section className="py-12 px-4 sm:px-8">
+          <div className="max-w-6xl mx-auto">
+            <Skeleton className="h-10 w-48 mb-6" />
+            <Skeleton className="h-12 w-full mb-6" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton key={i} className="h-64 w-full rounded-lg" />
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
     );
   }
 
@@ -233,7 +243,7 @@ const ManagePostsPage = () => {
               Manage Your Posts
             </h1>
             <Link href="/digi-share/create">
-              <Button className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600">
                 <Plus className="w-4 h-4 mr-2" />
                 Create New Post
               </Button>
@@ -343,7 +353,7 @@ const ManagePostsPage = () => {
                     setFeaturedFilter("all");
                     setSelectedCategory("all");
                   }}
-                  className="mt-2"
+                  className="mt-2 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   Clear Filters
                 </Button>
@@ -375,7 +385,10 @@ const ManagePostsPage = () => {
                       </div>
                       <div className="flex items-center gap-2 flex-wrap">
                         {blog.category && (
-                          <Badge variant="outline" className="text-xs">
+                          <Badge
+                            variant="outline"
+                            className="text-xs dark:text-gray-300 text-black dark:border-gray-400 border-gray-500"
+                          >
                             {blog.category.name}
                           </Badge>
                         )}
@@ -423,7 +436,7 @@ const ManagePostsPage = () => {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="w-full"
+                            className="w-full border-gray-200 dark:border-gray-700 text-gray-200 dark:text-white dark:bg-gray-700 bg-blue-600 hover:opacity-80 "
                           >
                             <Edit className="w-4 h-4 mr-1" />
                             Edit
@@ -462,10 +475,12 @@ const ManagePostsPage = () => {
                   }
                 }}
               >
-                <AlertDialogContent>
+                <AlertDialogContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Delete Post</AlertDialogTitle>
-                    <AlertDialogDescription>
+                    <AlertDialogTitle className="text-gray-900 dark:text-white">
+                      Delete Post
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-gray-600 dark:text-gray-400">
                       Are you sure you want to delete this post? This action
                       cannot be undone.
                     </AlertDialogDescription>
@@ -476,6 +491,7 @@ const ManagePostsPage = () => {
                         setDeleteDialogOpen(false);
                         setPostToDelete(null);
                       }}
+                      className="border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700"
                     >
                       Cancel
                     </AlertDialogCancel>

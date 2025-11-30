@@ -146,7 +146,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     <div className={cn("w-full", className)}>
       <div className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-white dark:bg-gray-800">
         {/* Toolbar */}
-        <div className="flex flex-wrap items-center gap-1 p-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+        <div className="flex flex-wrap items-center gap-1 p-2 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
           {/* Text Formatting */}
           <Button
             type="button"
@@ -155,7 +155,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             onClick={() => editor.chain().focus().toggleBold().run()}
             disabled={!editor.can().chain().focus().toggleBold().run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive("bold") &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -170,7 +170,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             onClick={() => editor.chain().focus().toggleItalic().run()}
             disabled={!editor.can().chain().focus().toggleItalic().run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive("italic") &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -188,7 +188,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive("heading", { level: 1 }) &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -202,7 +202,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive("heading", { level: 2 }) &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -216,7 +216,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive("heading", { level: 3 }) &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -234,7 +234,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().toggleBulletList().run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive("bulletList") &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -248,7 +248,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().toggleOrderedList().run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive("orderedList") &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -262,7 +262,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().toggleBlockquote().run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive("blockquote") &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -280,7 +280,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().setTextAlign("left").run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive({ textAlign: "left" }) &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -294,7 +294,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().setTextAlign("center").run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive({ textAlign: "center" }) &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -308,7 +308,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().setTextAlign("right").run()}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive({ textAlign: "right" }) &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -326,7 +326,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={addLink}
             className={cn(
-              "h-8 w-8 p-0",
+              "h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700",
               editor.isActive("link") &&
                 "bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white"
             )}
@@ -344,7 +344,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().chain().focus().undo().run()}
-            className="h-8 w-8 p-0"
+            className="h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Undo"
           >
             <Undo className="h-4 w-4" />
@@ -355,7 +355,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
             size="sm"
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().chain().focus().redo().run()}
-            className="h-8 w-8 p-0"
+            className="h-8 w-8 p-0 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Redo"
           >
             <Redo className="h-4 w-4" />

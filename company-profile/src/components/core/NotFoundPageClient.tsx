@@ -54,8 +54,7 @@ export default function NotFoundPageClient() {
             });
           }
         })
-        .catch((error) => {
-          // Silent fail - locale will use default
+        .catch(() => {
           setPageData({
             title: "404",
             subtitle: "Page Not Found",

@@ -3,6 +3,7 @@ import AboutSection from "@/components/core/compro/AboutSection";
 import FaqSection from "@/components/core/compro/FaqSection";
 import HerSection from "@/components/core/compro/HeroSection";
 import WhyChooseUsSection from "@/components/core/compro/WhyChooseUsSection";
+import TestimonialSection from "@/components/core/compro/TestimonialSection";
 
 export const metadata: Metadata = {
   title: "Home - IT Consulting & Software House Terpercaya",
@@ -40,6 +41,7 @@ export default function Home() {
     <main className="">
       <HerSection />
       <AboutSection />
+      <TestimonialSection />
       <WhyChooseUsSection />
       <FaqSection />
     </main>

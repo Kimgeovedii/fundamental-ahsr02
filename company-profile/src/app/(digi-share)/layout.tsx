@@ -5,7 +5,7 @@ import { useAuthStore } from "@/lib/stores";
 import { authorService } from "@/lib/services/authorService";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
-import { Spinner } from "@/components/ui/spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DigiShareLayout({
   children,
@@ -79,8 +79,16 @@ export default function DigiShareLayout({
 
   if (checking && token && user && pathname !== "/digi-share/create-author") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-        <Spinner />
+      <div className="min-h-screen bg-white dark:bg-gray-900">
+        <Skeleton className="h-16 w-full" />
+        <div className="flex items-center justify-center min-h-[calc(100vh-4rem)]">
+          <div className="space-y-4 w-full max-w-md px-4">
+            <Skeleton className="h-8 w-3/4" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-5/6" />
+          </div>
+        </div>
+        <Skeleton className="h-24 w-full" />
       </div>
     );
   }
